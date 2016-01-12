@@ -1,0 +1,142 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
+
+namespace ArchsimLib
+{
+    enum ConstructionTypes  {
+            Facade,
+            Roof,
+            GroundFloor,
+            InteriorFloor,
+            ExteriorFloor,
+            Partition
+        };
+
+
+    [DataContract]
+    public class OpaqueConstruction : BaseConstruction
+    {
+        [DataMember]
+        public List<Layer<OpaqueMaterial>> Layers = new List<Layer<OpaqueMaterial>>();
+
+
+        public OpaqueConstruction() { }
+
+
+        public bool Correct()
+        {
+            bool changed = false;
+
+            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
+
+            foreach (Layer<OpaqueMaterial> l in Layers) { if (l.Correct()) { changed = true; } }
+
+            return changed;
+        }
+
+       
+    }
+    [DataContract]
+    public class GlazingConstruction : BaseConstruction
+    {
+        [DataMember]
+        public List<Layer<WindowMaterialBase>> Layers = new List<Layer<WindowMaterialBase>>();
+        public GlazingConstruction() { }
+        public bool Correct()
+        {
+            bool changed = false;
+
+            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
+
+            foreach (var l in Layers) { if (l.Correct()) { changed = true; } }
+
+            return changed;
+        }
+
+
+
+    }
+
+    [DataContract]
+    public class GlazingConstructionSimple : BaseMaterial
+    {
+        [DataMember]
+        public double SHGF = 0.837;
+        /// <summary>
+        /// W/m2-k
+        /// </summary>
+        [DataMember]
+        public double UVAL = 0.075;
+
+        [DataMember]
+        public double VisibleTransmittance = 0.898;
+
+        public GlazingConstructionSimple() { }
+        public GlazingConstructionSimple(string name, string category,string comment, double tvis, double uval, double shgf ) {
+
+            this.Name = name.Trim();
+            this.Category = category.Trim();
+            this.Comment = comment.Trim();
+            this.VisibleTransmittance = tvis;
+            this.UVAL = uval;
+            this.SHGF = shgf;
+            this.Comment = comment;
+        }
+
+        public bool Correct()
+        {
+            bool changed = false;
+
+            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
+
+            if (this.SHGF < 0.0) { this.SHGF = 0.0; changed = true; }
+            if (this.SHGF > 1.0) { this.SHGF = 1.0; changed = true; }
+
+            if (this.VisibleTransmittance < 0.0) { this.VisibleTransmittance = 0.0; changed = true; }
+            if (this.VisibleTransmittance > 1.0) { this.VisibleTransmittance = 1.0; changed = true; }
+
+            return changed;
+        }
+
+    }
+
+    [DataContract]
+    public class BaseConstruction : LibraryComponent
+    {
+        //[DataMember]
+        //public string Name = "";
+        [DataMember]
+        public string Type = "Default";
+        //[DataMember]
+        //public string DataSource = "";
+        //[DataMember]
+        //public string Comment = "";
+        [DataMember]
+        public double AssemblyEnergy { get; set; } = 0;
+        [DataMember]
+        public double AssemblyCarbon { get; set; } = 0;
+        [DataMember]
+        public double AssemblyCost { get; set; } = 0;
+        [DataMember]
+        public double DisassemblyCarbon { get; set; } = 0;
+        [DataMember]
+        public double DisassemblyEnergy { get; set; } = 0;
+
+
+        [DataMember]
+        public double Life { get; set; } = 0;
+
+
+        public BaseConstruction() { }
+
+        public override string ToString() { return Name; }
+    }
+
+
+}
