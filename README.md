@@ -2,7 +2,7 @@
 
 The Archsim Library Data class definitions are now open source in order to facilitate data exchange with other energy modeling software.
 While some parts of the format may change significantly, others are more stable. The below description provides and overview.
-
+The file format that can be generated with this project is compatible with ```Archsim v 1.6``` and higher.
 ### Expected changes:
 Low level classes such as 
 ``` LibraryComponent, BaseMaterial, OpaqueMaterial, OpaqueConstruction, GlazingConstructionSimple, DaySchedule, WeekSchedule, YearSchedule, ScheduleArray ```
