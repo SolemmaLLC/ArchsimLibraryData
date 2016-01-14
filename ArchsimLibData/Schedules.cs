@@ -54,7 +54,7 @@ namespace ArchsimLib
     [DataContract(IsReference = true)]
     public class WeekSchedule : LibraryComponent
     {
-     
+
         [DataMember]
         public DaySchedule[] Days = new DaySchedule[7];
 
@@ -95,7 +95,7 @@ namespace ArchsimLib
             return changed;
         }
 
-       
+
 
     }
     [DataContract]
@@ -187,51 +187,9 @@ namespace ArchsimLib
         }
 
 
-       
-
-        //public double[] To8769ArrayOld() {
-
-        //    var arr = new double[8760];
-        //    int hrcount = 0;
-        //  //  int daycount = 0;
-
-        //    //  var hours = new List<double>();
-        //    for (int i = 0; i < this.WeekSchedules.Count; i++)
-        //    {
-        //        var StartDate = new DateTime(2006, this.MonthFrom[i], this.DayFrom[i]);
-        //        var EndDate = new DateTime(2006, this.MonthTill[i], this.DayTill[i]);
-
-        //        var weekIncrements = TimeHelpers.OneDayPerWeek(StartDate, EndDate);
-
-        //        foreach (DateTime weekStartDate in weekIncrements)
-        //        {
-
-        //            for (int day = 0; day <7; day++)
-        //            {
-        //                for (int hr = 0; hr < 24; hr++)
-        //                {
-
-        //                    if (hrcount > 8759) continue;
-
-        //                    arr[hrcount] = this.WeekSchedules[i].Days[day].Values[hr];
-
-        //                    hrcount++;
-        //                }
-        //             //   daycount++;
 
 
-        //            }
-
-        //        }
-        //    }
-
-
-
-        //    return arr;
-
-        //}
-
-        public double[] To8769Array()
+        public double[] To8760Array()
         {
 
             var arr = new double[8760];
@@ -276,14 +234,14 @@ namespace ArchsimLib
 
 
                     for (int hr = 0; hr < 24; hr++)
-                        {
+                    {
 
-                            if (hrcount > 8759) continue;
+                        if (hrcount > 8759) continue;
 
-                            arr[hrcount] = this.WeekSchedules[i].Days[dofwInt].Values[hr];
+                        arr[hrcount] = this.WeekSchedules[i].Days[dofwInt].Values[hr];
 
-                            hrcount++;
-                        }
+                        hrcount++;
+                    }
                 }
             }
 
@@ -312,7 +270,9 @@ namespace ArchsimLib
 
         public ScheduleArray() { }
 
-      
-
+        public double[] To8760Array()
+        {
+            return Values;
+        }
     }
 }
