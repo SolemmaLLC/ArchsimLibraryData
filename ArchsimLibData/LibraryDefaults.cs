@@ -91,21 +91,21 @@ namespace ArchsimLib
             };
             Library.OpaqueMaterials.Add(defaultMat);
 
-            GlazingMaterial defaultGMat = new GlazingMaterial(
-            "defaultGlazingMat",
-            "Uncoated",
-            0.9,
-            2500,
-            0.68,
-            0.09,
-            0.10,
-            0.81,
-            0.11,
-            0.12,
-            0.00,
-            0.84,
-            0.20
-            );
+            GlazingMaterial defaultGMat = new GlazingMaterial() {
+           Name = "defaultGlazingMat",
+                Type=  "Uncoated",
+                Conductivity = 0.9,
+                Density= 2500,
+                SolarTransmittance =0.68,
+                SolarReflectanceFront =0.09,
+                SolarReflectanceBack=0.10,
+                VisibleTransmittance=0.81,
+                VisibleReflectanceFront=0.11,
+                VisibleReflectanceBack=0.12,
+                IRTransmittance=0.00,
+                IREmissivityFront=0.84,
+                IREmissivityBack=0.20
+           };
             Library.GlazingMaterials.Add( defaultGMat);
 
 
@@ -127,7 +127,22 @@ namespace ArchsimLib
 
 
             //AIRWALL
-            GlazingMaterial AirWallMat = new GlazingMaterial("100TRANS", "uncoated", 5, 0.0001, 0.99, 0.005, 0.005, 0.99, 0.005, 0.005, 0.99, 0.005, 0.005);
+            GlazingMaterial AirWallMat = new GlazingMaterial()
+            {
+                Name = "100TRANS",
+                Type = "uncoated",
+                Conductivity = 5,
+                Density = 0.0001,
+                SolarTransmittance = 0.99,
+                SolarReflectanceFront = 0.005,
+                SolarReflectanceBack = 0.005,
+                VisibleTransmittance = 0.99,
+                VisibleReflectanceFront = 0.005,
+                VisibleReflectanceBack = 0.005,
+                IRTransmittance = 0.99,
+                IREmissivityFront = 0.005,
+                IREmissivityBack = 0.005
+            };
             Library.GlazingMaterials.Add(AirWallMat);
             Layer<WindowMaterialBase> airwallLayer = new Layer<WindowMaterialBase>(0.003, AirWallMat);
             GlazingConstruction airWall = new GlazingConstruction();
@@ -254,25 +269,26 @@ namespace ArchsimLib
             //List of premade basic glazing materials/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             double[] a3 = { 1 };
-            ArchsimLib.GlazingMaterial gm1 = new ArchsimLib.GlazingMaterial(
-            "Generic Clear Glass 6mm",
-            "Uncoated",
-            0.9,
-            2500,
-            15,
-            0.85,
-            0.0,
-            "",
-            0.68,
-            0.09,
-            0.10,
-            0.81,
-            0.11,
-            0.12,
-            0.00,
-            0.84,
-            0.20
-            );
+            GlazingMaterial gm1 = new GlazingMaterial()
+            {
+                Name = "Generic Clear Glass 6mm",
+                Type = "Uncoated",
+                Conductivity = 0.9,
+                Density = 2500,
+                EmbodiedEnergy = 15,
+                EmbodiedCarbon = 0.85,
+                Cost = 0.0,
+                Comment = "",
+                SolarTransmittance = 0.68,
+                SolarReflectanceFront = 0.09,
+                SolarReflectanceBack = 0.10,
+                VisibleTransmittance = 0.81,
+                VisibleReflectanceFront = 0.11,
+                VisibleReflectanceBack = 0.12,
+                IRTransmittance = 0.00,
+                IREmissivityFront = 0.84,
+                IREmissivityBack = 0.20
+            };
             Library.GlazingMaterials.Add( gm1);
 
 

@@ -16,6 +16,7 @@ namespace ArchsimLib
         /// Resistance {m2-K/w}
         /// </summary>
         [DataMember]
+        [Units("m2.K/w")]
         public double Resistance { get; set; } = 0.2079491;
         [DataMember]
         public string Name { get; set; } = "airGap";
@@ -31,6 +32,7 @@ namespace ArchsimLib
         /// </summary>
 
         [DataMember]
+        [Units("m2.K/w")]
         public double Resistance { get; set; } = 0.2079491;
         [DataMember]
         public string Name { get; set; } = "NOMASS";
@@ -73,12 +75,27 @@ namespace ArchsimLib
         [DataMember]
         [Units("J/kg.K")]
         public double SpecificHeat { get; set; } = 840;
+       
         [DataMember]
+        [Units("0-1")]
         public double ThermalEmittance { get; set; } = 0.9;
         [DataMember]
+        [Units("0-1")]
         public double SolarAbsorptance { get; set; } = 0.7;
         [DataMember]
+        [Units("0-1")]
         public double VisibleAbsorptance { get; set; } = 0.7;
+
+
+        /// <summary>
+        /// Dimensionless factor µ (DIN EN ISO 12572)
+        /// </summary>
+        [DataMember]
+        [Units("Dimensionless")]
+        public double MoistureDiffusionResistance { get; set; } = 50;
+
+
+
         [DataMember]
         public bool PhaseChange { get; set; } = false;
         [DataMember]
@@ -92,120 +109,7 @@ namespace ArchsimLib
 
         public OpaqueMaterial() { }
 
-    //    public OpaqueMaterial(
-    //        //string _Roughness,
-    //string _Name,
-    //string _Type,
-    //double _Conductivity,
-    //double _Density,
-    //double _SpecificHeat,
-    //double _ThermalEmittance,
-    //double _SolarAbsorptance,
-    //double _VisibleAbsorptance)
-    //    {
-    //        Name = _Name;
-    //        Type = _Type;
-    //        Conductivity = _Conductivity;
-    //        Density = _Density;
-    //        SpecificHeat = _SpecificHeat;
-    //        ThermalEmittance = _ThermalEmittance;
-    //        SolarAbsorptance = _SolarAbsorptance;
-    //        VisibleAbsorptance = _VisibleAbsorptance;
-    //    }
-
-        //public OpaqueMaterial(
-        //    //string _Roughness,
-        //  string _Name,
-        //  string _Type,
-        //  double _Conductivity,
-        //  double _Density,
-        //  double _SpecificHeat,
-        //  double _ThermalEmittance,
-        //  double _SolarAbsorptance,
-        //  double _VisibleAbsorptance,
-        //  double _EmbodiedEnergy,
-        //  double _EmbodiedCarbon,
-        //  double _Cost,
-        //  string _Commments)
-        //{
-        //    // Roughness = _Roughness;
-        //    Name = _Name;
-        //    Type = _Type;
-        //    Conductivity = _Conductivity;
-        //    Density = _Density;
-        //    SpecificHeat = _SpecificHeat;
-        //    ThermalEmittance = _ThermalEmittance;
-        //    SolarAbsorptance = _SolarAbsorptance;
-        //    VisibleAbsorptance = _VisibleAbsorptance;
-        //    EmbodiedEnergy = _EmbodiedEnergy;
-        //    EmbodiedCarbon = _EmbodiedCarbon;
-        //    Cost = _Cost;
-        //    Comment = _Commments;
-        //}
-
-        //public OpaqueMaterial(
-        //    //string _Roughness,
-        //    string _Name,
-        //    string _Type,
-        //    double _Conductivity,
-        //    double _Density,
-        //    double _SpecificHeat,
-        //    double _ThermalEmittance,
-        //    double _SolarAbsorptance,
-        //    double _VisibleAbsorptance,
-        //    double _EmbodiedEnergy,
-        //    double _EmbodiedCarbon, 
-        //    double _Cost,
-        //    int _Life,
-        //    string _Commments)
-        //{
-        //    // Roughness = _Roughness;
-        //    Name = _Name;
-        //    Type = _Type;
-        //    Conductivity = _Conductivity;
-        //    Density = _Density;
-        //    SpecificHeat = _SpecificHeat;
-        //    ThermalEmittance = _ThermalEmittance;
-        //    SolarAbsorptance = _SolarAbsorptance;
-        //    VisibleAbsorptance = _VisibleAbsorptance;
-        //    EmbodiedEnergy = _EmbodiedEnergy;
-        //    EmbodiedCarbon = _EmbodiedCarbon;
-        //    Cost = _Cost;
-        //    Life = _Life;
-        //    Comment = _Commments;
-        //}
-
-        //public void Update(
-        //    //string _Roughness,
-        //  string _Name,
-        //  string _Type,
-        //  double _Conductivity,
-        //  double _Density,
-        //  double _SpecificHeat,
-        //  double _ThermalEmittance,
-        //  double _SolarAbsorptance,
-        //  double _VisibleAbsorptance,
-        //  double _EmbodiedEnergy,
-        //  double _EmbodiedCarbon,
-        //  double _Cost,
-        //  int _Life,
-        //  string _Commments)
-        //{
-        //    // Roughness = _Roughness;
-        //    Name = _Name;
-        //    GasType = _Type;
-        //    Conductivity = _Conductivity;
-        //    Density = _Density;
-        //    SpecificHeat = _SpecificHeat;
-        //    ThermalEmittance = _ThermalEmittance;
-        //    SolarAbsorptance = _SolarAbsorptance;
-        //    VisibleAbsorptance = _VisibleAbsorptance;
-        //    EmbodiedEnergy = _EmbodiedEnergy;
-        //    EmbodiedCarbon = _EmbodiedCarbon;
-        //    Cost = _Cost;
-        //    Life = _Life;
-        //    Comment = _Commments;
-        //}
+    
         public bool Correct()
         {
             bool changed = false;
@@ -260,51 +164,61 @@ namespace ArchsimLib
         /// Solar transmittance at normal incidence
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double SolarTransmittance { get; set; } = 0.837;
         /// <summary>
         /// Solar reflectance at normal incidence: front side
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double SolarReflectanceFront { get; set; } = 0.075;
         /// <summary>
         /// Solar reflectance at normal incidence: back side
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double SolarReflectanceBack { get; set; } = 0.075;
         /// <summary>
         /// Visible transmittance at normal incidence
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double VisibleTransmittance { get; set; } = 0.898;
         /// <summary>
         /// Visible reflectance at normal incidence: front side
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double VisibleReflectanceFront { get; set; } = 0.081;
         /// <summary>
         /// Visible reflectance at normal incidence: back side
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double VisibleReflectanceBack { get; set; } = 0.081;
         /// <summary>
         /// IR transmittance at normal incidence
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double IRTransmittance { get; set; } = 0.0;
         /// <summary>
         /// IR emissivity: front side
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double IREmissivityFront { get; set; } = 0.84;
         /// <summary>
         /// IR emissivity: back side
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double IREmissivityBack { get; set; } = 0.84;
         /// <summary>
         /// Dirt Correction Factor for Solar and Visible Transmittance
         /// </summary>
         [DataMember]
+        [Units("0-1")]
         public double DirtFactor { get; set; } = 1;
 
         // public string SolarDiffusion = "No";
@@ -315,182 +229,7 @@ namespace ArchsimLib
 
 
         public GlazingMaterial() { }
-
-        public GlazingMaterial(
-    string _Name,
-    string _Type,
-    double _Conductivity,
-    double _Density,
-    double _SolarTransmittance,
-    double _SolarReflectanceFront,
-    double _SolarReflectanceBack,
-    double _VisibleTransmittance,
-    double _VisibleReflectanceFront,
-    double _VisibleReflectanceBack,
-    double _IRTransmittance,
-    double _IREmissivityFront,
-    double _IREmissivityBack
-    )
-        {
-            Name = _Name;
-            Type = _Type;
-            Conductivity = _Conductivity;
-            Density = _Density;
-            SolarTransmittance = _SolarTransmittance;
-            SolarReflectanceFront = _SolarReflectanceFront;
-            SolarReflectanceBack = _SolarReflectanceBack;
-            VisibleTransmittance = _VisibleTransmittance;
-            VisibleReflectanceFront = _VisibleReflectanceFront;
-            VisibleReflectanceBack = _VisibleReflectanceBack;
-            IRTransmittance = _IRTransmittance;
-            IREmissivityFront = _IREmissivityFront;
-            IREmissivityBack = _IREmissivityBack;
-
-        }
-
-        public GlazingMaterial(
-            string _Name,
-            string _Type,
-            double _Conductivity,
-            double _Density,
-            double _EmbodiedEnergy,
-            double _EmbodiedCarbon,
-            //double _EmbodiedEnergyUncert,
-            //double _SubstituionTimeStep,
-            //double[] _SubstituionRatePattern,
-            double _Cost,
-            string _Comments,
-            double _SolarTransmittance,
-            double _SolarReflectanceFront,
-            double _SolarReflectanceBack,
-            double _VisibleTransmittance,
-            double _VisibleReflectanceFront,
-            double _VisibleReflectanceBack,
-            double _IRTransmittance,
-            double _IREmissivityFront,
-            double _IREmissivityBack
-            )
-        {
-            Name = _Name;
-            Type = _Type;
-            Conductivity = _Conductivity;
-            Density = _Density;
-            EmbodiedEnergy = _EmbodiedEnergy;
-            EmbodiedCarbon = _EmbodiedCarbon;
-            //EmbodiedEnergyUncert = _EmbodiedEnergyUncert;
-            //SubstituionTimeStep = _SubstituionTimeStep;
-            //SubstituionRatePattern = _SubstituionRatePattern;
-            Cost = _Cost;
-            // DataSource = _DataSource;
-            Comment = _Comments;
-
-            SolarTransmittance = _SolarTransmittance;
-            SolarReflectanceFront = _SolarReflectanceFront;
-            SolarReflectanceBack = _SolarReflectanceBack;
-            VisibleTransmittance = _VisibleTransmittance;
-            VisibleReflectanceFront = _VisibleReflectanceFront;
-            VisibleReflectanceBack = _VisibleReflectanceBack;
-            IRTransmittance = _IRTransmittance;
-            IREmissivityFront = _IREmissivityFront;
-            IREmissivityBack = _IREmissivityBack;
-
-        }
-        public GlazingMaterial(
-            string _Name,
-            string _Type,
-            double _Conductivity,
-            double _Density,
-            double _EmbodiedEnergy,
-            double _EmbodiedCarbon,
-            int _Life,
-            //double _SubstituionTimeStep,
-            //double[] _SubstituionRatePattern,
-            double _Cost,
-            string _Comments,
-            double _SolarTransmittance,
-            double _SolarReflectanceFront,
-            double _SolarReflectanceBack,
-            double _VisibleTransmittance,
-            double _VisibleReflectanceFront,
-            double _VisibleReflectanceBack,
-            double _IRTransmittance,
-            double _IREmissivityFront,
-            double _IREmissivityBack
-            )
-        {
-            Name = _Name;
-            Type = _Type;
-            Conductivity = _Conductivity;
-            Density = _Density;
-            EmbodiedEnergy = _EmbodiedEnergy;
-            EmbodiedCarbon = _EmbodiedCarbon;
-            //EmbodiedEnergyUncert = _EmbodiedEnergyUncert;
-            //SubstituionTimeStep = _SubstituionTimeStep;
-            //SubstituionRatePattern = _SubstituionRatePattern;
-            Cost = _Cost;
-            Life = _Life;
-            // DataSource = _DataSource;
-            Comment = _Comments;
-
-            SolarTransmittance = _SolarTransmittance;
-            SolarReflectanceFront = _SolarReflectanceFront;
-            SolarReflectanceBack = _SolarReflectanceBack;
-            VisibleTransmittance = _VisibleTransmittance;
-            VisibleReflectanceFront = _VisibleReflectanceFront;
-            VisibleReflectanceBack = _VisibleReflectanceBack;
-            IRTransmittance = _IRTransmittance;
-            IREmissivityFront = _IREmissivityFront;
-            IREmissivityBack = _IREmissivityBack;
-
-        }
-        //public void Update(
-        //    string _Name,
-        //    string _Type,
-        //    double _Conductivity,
-        //    double _Density,
-        //    double _EmbodiedEnergy,
-        //    double _EmbodiedCarbon,
-        //    int _Life,
-        //    //double _SubstituionTimeStep,
-        //    //double[] _SubstituionRatePattern,
-        //    double _Cost,
-        //    string _Comments,
-        //    double _SolarTransmittance,
-        //    double _SolarReflectanceFront,
-        //    double _SolarReflectanceBack,
-        //    double _VisibleTransmittance,
-        //    double _VisibleReflectanceFront,
-        //    double _VisibleReflectanceBack,
-        //    double _IRTransmittance,
-        //    double _IREmissivityFront,
-        //    double _IREmissivityBack
-        //    )
-        //{
-        //    Name = _Name;
-        //    GasType = _Type;
-        //    Conductivity = _Conductivity;
-        //    Density = _Density;
-        //    EmbodiedEnergy = _EmbodiedEnergy;
-        //    EmbodiedCarbon = _EmbodiedCarbon;
-        //    //EmbodiedEnergyUncert = _EmbodiedEnergyUncert;
-        //    //SubstituionTimeStep = _SubstituionTimeStep;
-        //    //SubstituionRatePattern = _SubstituionRatePattern;
-        //    Cost = _Cost;
-        //    Life = _Life;
-        //    // DataSource = _DataSource;
-        //    Comment = _Comments;
-
-        //    SolarTransmittance = _SolarTransmittance;
-        //    SolarReflectanceFront = _SolarReflectanceFront;
-        //    SolarReflectanceBack = _SolarReflectanceBack;
-        //    VisibleTransmittance = _VisibleTransmittance;
-        //    VisibleReflectanceFront = _VisibleReflectanceFront;
-        //    VisibleReflectanceBack = _VisibleReflectanceBack;
-        //    IRTransmittance = _IRTransmittance;
-        //    IREmissivityFront = _IREmissivityFront;
-        //    IREmissivityBack = _IREmissivityBack;
-
-        //}
+    
         public bool Correct()
         {
             bool changed = false;
@@ -558,23 +297,11 @@ namespace ArchsimLib
         public GasMaterial()
         {
             Name = GasType.ToString();
-            //string[] _gases = { "AIR", "ARGON", "KRYPTON", "XENON", "SF6" };//, "Custom"
-            //gases = _gases;
         }
         public GasMaterial(GasTypes _Type)
         {
-
-           //string[] _gases = { "AIR", "ARGON", "KRYPTON", "XENON", "SF6" };//, "Custom"
-           // gases = _gases;
             GasType = _Type;
             Name = Name = GasType.ToString(); ;
-
-            //if (gases.Contains(_Type.ToUpper()))
-            //{
-            //    GasType = _Type.ToUpper();
-            //}
-            //else { GasType = gases[0]; }
-
         }
     }
 
@@ -598,9 +325,7 @@ namespace ArchsimLib
 
         [DataMember]
         public double EmbodiedEnergyStdDev { get; set; }
-        /// <summary>
-        /// Bla bla
-        /// </summary>
+
         [DataMember][Units("CO2e/Kg")]
         public double EmbodiedCarbon { get; set; } = 0;
 
@@ -608,11 +333,16 @@ namespace ArchsimLib
         public double EmbodiedCarbonStdDev { get; set; }
 
         [DataMember]
-         public double Cost { get; set; } = 0;
+        [Units("$/m3")]
+        public double Cost { get; set; } = 0;
 
-        [DataMember]
+        [DataMember][Units("yr")]
         public int Life { get; set; } = 1;
 
+
+
+
+        // -------------------------------------------------------obsolete
         //duplicate of life
         [DataMember]
         public double[] SubstitutionRatePattern { get; set; }
@@ -629,6 +359,10 @@ namespace ArchsimLib
 
         [DataMember]
         public double TransportEnergy { get; set; }
+        // -------------------------------------------------------obsolete
+
+
+
 
         public BaseMaterial() { }
 
