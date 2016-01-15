@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ArchsimLib
 {
-    enum ConstructionTypes  {
+    public enum ConstructionTypes  {
             Facade,
             Roof,
             GroundFloor,
@@ -14,6 +14,14 @@ namespace ArchsimLib
             ExteriorFloor,
             Partition
         };
+    public enum GlazingConstructionTypes
+    {
+        Other,
+        Single,
+        Double,
+        Triple,
+        Quadruple
+    };
 
 
     [DataContract]
@@ -22,6 +30,8 @@ namespace ArchsimLib
         [DataMember]
         public List<Layer<OpaqueMaterial>> Layers = new List<Layer<OpaqueMaterial>>();
 
+        [DataMember]
+        public ConstructionTypes Type = ConstructionTypes.Facade;
 
         public OpaqueConstruction() { }
 
@@ -58,7 +68,8 @@ namespace ArchsimLib
             return changed;
         }
 
-
+        [DataMember]
+        public GlazingConstructionTypes Type = GlazingConstructionTypes.Single;
 
     }
 
@@ -111,8 +122,7 @@ namespace ArchsimLib
     {
         //[DataMember]
         //public string Name = "";
-        [DataMember]
-        public string Type = "Default";
+
         //[DataMember]
         //public string DataSource = "";
         //[DataMember]

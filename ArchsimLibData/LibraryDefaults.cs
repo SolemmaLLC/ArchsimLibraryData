@@ -114,7 +114,7 @@ namespace ArchsimLib
             OpaqueConstruction defaultConstruction = new OpaqueConstruction();
             defaultConstruction.Layers.Add(defaultLay);
             defaultConstruction.Name = "defaultConstruction";
-            defaultConstruction.Type = "Facade";
+            defaultConstruction.Type = ConstructionTypes.Facade;// "Facade";
             Library.OpaqueConstructions.Add( defaultConstruction);
 
 
@@ -122,7 +122,7 @@ namespace ArchsimLib
             GlazingConstruction defaultGlazing = new GlazingConstruction();
             defaultGlazing.Layers.Add(defaultGLay);
             defaultGlazing.Name = "defaultGlazing";
-            defaultGlazing.Type = "Single";
+            defaultGlazing.Type = GlazingConstructionTypes.Single;// "Single";
             Library.GlazingConstructions.Add( defaultGlazing);
 
 
@@ -148,7 +148,7 @@ namespace ArchsimLib
             GlazingConstruction airWall = new GlazingConstruction();
             airWall.Layers.Add(airwallLayer);
             airWall.Name = "Airwall";
-            airWall.Type = "Other";
+            airWall.Type = GlazingConstructionTypes.Other;// "Other";
             Library.GlazingConstructions.Add( airWall);
 
 
@@ -311,7 +311,7 @@ namespace ArchsimLib
             oc1.Layers.Add(ol1);
             oc1.Layers.Add(ol2);
             oc1.Name = "Heavy Wall";
-            oc1.Type = "Facade";
+            oc1.Type = ConstructionTypes.Facade;// "Facade";
 
             Library.OpaqueConstructions.Add( oc1);
 
@@ -325,7 +325,7 @@ namespace ArchsimLib
             oc2.Layers.Add(ol1);
             oc2.Layers.Add(ol2);
             oc2.Name = "Heavy Roof";
-            oc2.Type = "Roof";
+            oc2.Type = ConstructionTypes.Roof;// "Roof";
 
             Library.OpaqueConstructions.Add(oc2);
 
@@ -337,7 +337,7 @@ namespace ArchsimLib
 
             oc3.Layers.Add(ol1);
             oc3.Name = "Heavy Floor";
-            oc3.Type = "Floor";
+            oc3.Type = ConstructionTypes.InteriorFloor;// "Floor";
 
             Library.OpaqueConstructions.Add( oc3);
 
@@ -355,7 +355,7 @@ namespace ArchsimLib
             gc1.Layers.Add(go2);
             gc1.Layers.Add(go1);
             gc1.Name = "DblClear Air 6+13+6";
-            gc1.Type = "Double";
+            gc1.Type = GlazingConstructionTypes.Double;// "Double";
 
             Library.GlazingConstructions.Add( gc1);
 

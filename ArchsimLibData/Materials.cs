@@ -39,10 +39,13 @@ namespace ArchsimLib
         [DataMember]
         public string Roughness { get; set; } = "Rough";
         [DataMember]
+        [Units("0-1")]
         public double ThermalAbsorptance { get; set; } = 0.9;
         [DataMember]
+        [Units("0-1")]
         public double SolarAbsorptance { get; set; } = 0.7;
         [DataMember]
+        [Units("0-1")]
         public double VisibleAbsorptance { get; set; } = 0.7;
 
         public OpaqueMaterialNoMass() { }
