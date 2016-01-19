@@ -74,8 +74,9 @@ namespace ArchsimLib
     }
 
     [DataContract]
-    public class GlazingConstructionSimple : BaseMaterial
+    public class GlazingConstructionSimple : BaseConstruction//BaseMaterial
     {
+
         [DataMember]
         public double SHGF = 0.837;
         /// <summary>
@@ -120,6 +121,10 @@ namespace ArchsimLib
     [DataContract]
     public class BaseConstruction : LibraryComponent
     {
+
+        [DataMember]
+        public virtual string Category { get; set; } = "Uncategorized";
+
         //[DataMember]
         //public string Name = "";
 

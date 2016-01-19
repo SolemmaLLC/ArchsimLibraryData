@@ -22,8 +22,7 @@ namespace ArchsimLib
     [DataContract]
     public abstract class LibraryComponent
    {
-       [DataMember, DefaultValue("Uncategorized")]
-       public virtual string Category { get; set; } = "Uncategorized";
+
 
         [DataMember, DefaultValue("No comments")]
         public string Comment { get; set; } = "No comments";
