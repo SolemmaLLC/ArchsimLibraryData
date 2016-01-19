@@ -6,12 +6,14 @@ using System.Text;
 using System.IO;
 using System.Reflection;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace ArchsimLib
 {
     /// <summary>
     /// Library that holds all materials, constructions and schedules during runtime.
-    /// </summary>     
+    /// </summary>  
+    [DataContract]
     public class Library
     {
 
@@ -492,29 +494,50 @@ namespace ArchsimLib
 
         }
 
+
+        [DataMember(Order = 1)]
         public string Version;
+        [DataMember(Order = 1)]
         public DateTime TimeStamp;
 
         //low level objects
+        [DataMember(Order = 1)]
         public IList<OpaqueMaterial> OpaqueMaterials;
+        [DataMember(Order = 1)]
         public IList<GlazingMaterial> GlazingMaterials;
+        [DataMember(Order = 1)]
         public IList<GasMaterial> GasMaterials;
-        public IList<OpaqueConstruction> OpaqueConstructions;
-        public IList<GlazingConstruction> GlazingConstructions;
+        [DataMember(Order = 1)]
         public IList<GlazingConstructionSimple> GlazingConstructionsSimple;
-        public IList<DaySchedule> DaySchedules;
-        public IList<WeekSchedule> WeekSchedules;
-        public IList<YearSchedule> YearSchedules;
-        public IList<ScheduleArray> ArraySchedules;
-        
-        //zone definitions
-        public IList<ZoneLoad> ZoneLoads;
-        public IList<ZoneVentilation> ZoneVentilations;
-        public IList<ZoneConstruction> ZoneConstructions;
-        public IList<ZoneConditioning> ZoneConditionings;
-        public IList<DomHotWater> DomHotWaters;
-        public IList<ZoneDefinition> ZoneDefinitions;
+        [DataMember(Order = 2)]
+        public IList<OpaqueConstruction> OpaqueConstructions;
+        [DataMember(Order = 2)]
+        public IList<GlazingConstruction> GlazingConstructions;
 
+        [DataMember(Order = 10)]
+        public IList<DaySchedule> DaySchedules;
+        [DataMember(Order = 11)]
+        public IList<WeekSchedule> WeekSchedules;
+        [DataMember(Order = 12)]
+        public IList<YearSchedule> YearSchedules;
+        [DataMember(Order = 13)]
+        public IList<ScheduleArray> ArraySchedules;
+
+        //zone definitions
+        [DataMember(Order = 20)]
+        public IList<ZoneLoad> ZoneLoads;
+        [DataMember(Order = 20)]
+        public IList<ZoneVentilation> ZoneVentilations;
+        [DataMember(Order = 20)]
+        public IList<ZoneConstruction> ZoneConstructions;
+        [DataMember(Order = 20)]
+        public IList<ZoneConditioning> ZoneConditionings;
+        [DataMember(Order = 20)]
+        public IList<DomHotWater> DomHotWaters;
+
+        [DataMember(Order = 30)]
+        public IList<ZoneDefinition> ZoneDefinitions;
+        [DataMember(Order = 30)]
         public IList<WindowSettings> WindowSettings;
 
 

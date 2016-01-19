@@ -44,26 +44,26 @@ namespace ArchsimLib
         //MAT
         //-----
         [DataMember]
-        public ZoneConstruction Materials = new ZoneConstruction();
+        public ZoneConstruction Materials { get; set; } = new ZoneConstruction();
 
         //LOADS
         //-----
         [DataMember]
-        public ZoneLoad Loads = new ZoneLoad();
+        public ZoneLoad Loads { get; set; } = new ZoneLoad();
 
         //IdealLoadsAirSystem
         //-------------------
         [DataMember]
-        public ZoneConditioning Conditioning = new ZoneConditioning();
+        public ZoneConditioning Conditioning { get; set; } = new ZoneConditioning();
 
         //DOM HOT WAT
         [DataMember]
-        public DomHotWater DomHotWater = new DomHotWater();
+        public DomHotWater DomHotWater { get; set; } = new DomHotWater();
 
         //AIRFLOW / VENT
         //--------------
         [DataMember]
-        public ZoneVentilation Ventilation = new ZoneVentilation();
+        public ZoneVentilation Ventilation { get; set; } = new ZoneVentilation();
 
 
         public ZoneDefinition()
@@ -72,8 +72,8 @@ namespace ArchsimLib
 
         public static ZoneDefinition Clone(ZoneDefinition zsc)
         {
-            string s = zsc.Serialize();
-            return ZoneDefinition.Deserialize<ZoneDefinition>(s);
+            string s = zsc.toJSON();
+            return ZoneDefinition.fromJSON(s);
         }
 
         public override string ToString() { return this.Serialize(); }
