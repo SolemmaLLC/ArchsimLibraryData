@@ -11,7 +11,7 @@ namespace ArchsimLib
 {
 
   [DataContract(IsReference = true)]
-    public class ZoneConditioning //: LibraryComponent
+    public class ZoneConditioning : LibraryComponent
     {
         [DataMember]
         public double CoolingCoeffOfPerf { get; set; } = 1;

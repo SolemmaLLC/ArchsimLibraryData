@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace ArchsimLib
 {
     [DataContract(IsReference = true)]
-    public class DomHotWater //: LibraryComponent
+    public class DomHotWater : LibraryComponent
     {
         [DataMember]
         public double WaterTemperatureInlet { get; set; } = 10;
@@ -19,7 +19,7 @@ namespace ArchsimLib
         [DataMember][Units("m3/h/m2")]
         public double FlowRatePerFloorArea { get; set; } = 0.03;
         [DataMember]
-        public bool IsOn = true;
+        public bool IsOn = false;
 
         public DomHotWater()
         {

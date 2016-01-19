@@ -9,17 +9,11 @@ using System.Diagnostics;
 namespace ArchsimLib
 {
     [DataContract(IsReference = true)]
-    public class ZoneConstruction //: LibraryComponent
+    public class ZoneConstruction : LibraryComponent
     {
         public ZoneConstruction() { }
-        //public static ZoneMaterials Deserialize(string xml)
-        //{
-        //    return (ZoneMaterials)SerializeDeserialize.Deserialize(xml, typeof(ZoneMaterials));
-        //}
-        //public string XMLify()
-        //{
-        //    return SerializeDeserialize.Serialize(this);
-        //}
+
+
         public override string ToString() { return Serialization.Serialize(this); }
         public bool isValid()
         {

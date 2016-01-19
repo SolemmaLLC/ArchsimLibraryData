@@ -14,6 +14,9 @@ namespace ArchsimLib
     /// </summary>     
     public class Library
     {
+
+        #region Add Low Level Objects
+
         public OpaqueConstruction Add(OpaqueConstruction obj)
         {
             if (obj == null) return null;
@@ -265,6 +268,103 @@ namespace ArchsimLib
             }
         }
 
+        #endregion
+
+        #region Add High Level Objects
+
+        public ZoneLoad Add(ZoneLoad obj)
+        {
+            if (obj == null) return null;
+
+            if (!ZoneLoads.Any(i => i.Name == obj.Name))
+            {
+                ZoneLoads.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = ZoneLoads.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
+
+        }
+
+        public ZoneVentilation Add(ZoneVentilation obj)
+        {
+            if (obj == null) return null;
+
+            if (!ZoneVentilations.Any(i => i.Name == obj.Name))
+            {
+                ZoneVentilations.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = ZoneVentilations.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
+
+        }
+
+
+        public ZoneConstruction Add(ZoneConstruction obj)
+        {
+            if (obj == null) return null;
+
+            if (!ZoneConstructions.Any(i => i.Name == obj.Name))
+            {
+                ZoneConstructions.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = ZoneConstructions.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
+
+        }
+
+        public ZoneConditioning Add(ZoneConditioning obj)
+        {
+            if (obj == null) return null;
+
+            if (!ZoneConditionings.Any(i => i.Name == obj.Name))
+            {
+                ZoneConditionings.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = ZoneConditionings.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
+
+        }
+
+
+        public DomHotWater Add(DomHotWater obj)
+        {
+            if (obj == null) return null;
+
+            if (!DomHotWaters.Any(i => i.Name == obj.Name))
+            {
+                DomHotWaters.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = DomHotWaters.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
+
+        }
+
+
         public ZoneDefinition Add(ZoneDefinition obj) {
             if (obj == null) return null;
 
@@ -281,10 +381,12 @@ namespace ArchsimLib
             }
 
         }
-
+        #endregion
 
         public T getElementByName<T>(string name)
         {
+            // materials and constructions
+
             if (typeof(T) == typeof(OpaqueConstruction))
             {
                 return (T)Convert.ChangeType(OpaqueConstructions.Single(o => o.Name == name), typeof(T));
@@ -309,6 +411,57 @@ namespace ArchsimLib
             {
                 return (T)Convert.ChangeType(GlazingConstructionsSimple.Single(o => o.Name == name), typeof(T));
             }
+
+            // schedules
+
+            else if (typeof(T) == typeof(DaySchedule))
+            {
+                return (T)Convert.ChangeType(DaySchedules.Single(o => o.Name == name), typeof(T));
+            }
+            else if (typeof(T) == typeof(WeekSchedule))
+            {
+                return (T)Convert.ChangeType(WeekSchedules.Single(o => o.Name == name), typeof(T));
+            }
+            else if (typeof(T) == typeof(YearSchedule))
+            {
+                return (T)Convert.ChangeType(YearSchedules.Single(o => o.Name == name), typeof(T));
+            }
+
+            else if (typeof(T) == typeof(ScheduleArray))
+            {
+                return (T)Convert.ChangeType(ArraySchedules.Single(o => o.Name == name), typeof(T));
+            }
+
+            // zone def
+
+            else if (typeof(T) == typeof(ZoneLoad))
+            {
+                return (T)Convert.ChangeType(ZoneLoads.Single(o => o.Name == name), typeof(T));
+            }
+            else if (typeof(T) == typeof(ZoneVentilation))
+            {
+                return (T)Convert.ChangeType(ZoneVentilations.Single(o => o.Name == name), typeof(T));
+            }
+            else if (typeof(T) == typeof(ZoneConstruction))
+            {
+                return (T)Convert.ChangeType(ZoneConstructions.Single(o => o.Name == name), typeof(T));
+            }
+            else if (typeof(T) == typeof(ZoneConditioning))
+            {
+                return (T)Convert.ChangeType(ZoneConditionings.Single(o => o.Name == name), typeof(T));
+            }
+            else if (typeof(T) == typeof(DomHotWater))
+            {
+                return (T)Convert.ChangeType(DomHotWaters.Single(o => o.Name == name), typeof(T));
+            }
+            else if (typeof(T) == typeof(ZoneDefinition))
+            {
+                return (T)Convert.ChangeType(ZoneDefinitions.Single(o => o.Name == name), typeof(T));
+            }
+       
+
+            // dont know what this is???
+
             else return (T)Convert.ChangeType(null, typeof(T));
 
         }
@@ -498,6 +651,13 @@ namespace ArchsimLib
                 WeekSchedules.Clear();
                 YearSchedules.Clear();
                 ArraySchedules.Clear();
+
+                ZoneLoads.Clear();
+                ZoneVentilations.Clear();
+                ZoneConstructions.Clear();
+                ZoneConditionings.Clear();
+                DomHotWaters.Clear();
+                ZoneDefinitions.Clear();
             }
             catch { }
         }

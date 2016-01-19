@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace ArchsimLib
 {
      [DataContract(IsReference = true)]
-    public class ZoneVentilation //: LibraryComponent
+    public class ZoneVentilation : LibraryComponent
     {
         [DataMember]
         public double InfiltrationAch { get; set; } = 0.1;

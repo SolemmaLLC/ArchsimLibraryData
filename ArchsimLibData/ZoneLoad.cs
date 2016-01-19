@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace ArchsimLib
 {
   [DataContract(IsReference = true)]
-    public class ZoneLoad//:LibraryComponent
+    public class ZoneLoad :LibraryComponent
     {
         [DataMember]
         public DimmingItem DimmingType { get; set; } = DimmingItem.Continuous; //"Continuous";
