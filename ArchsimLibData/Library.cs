@@ -315,6 +315,8 @@ namespace ArchsimLib
 
         public string Version;
         public DateTime TimeStamp;
+
+        //low level objects
         public IList<OpaqueMaterial> OpaqueMaterials;
         public IList<GlazingMaterial> GlazingMaterials;
         public IList<GasMaterial> GasMaterials;
@@ -325,13 +327,14 @@ namespace ArchsimLib
         public IList<WeekSchedule> WeekSchedules;
         public IList<YearSchedule> YearSchedules;
         public IList<ScheduleArray> ArraySchedules;
-        public IList<ZoneDefinition> ZoneDefinitions = new List<ZoneDefinition>();
+        
+        //zone definitions
         public IList<ZoneLoad> ZoneLoads;
         public IList<ZoneVentilation> ZoneVentilations;
         public IList<ZoneConstruction> ZoneConstructions;
         public IList<ZoneConditioning> ZoneConditionings;
         public IList<DomHotWater> DomHotWaters;
-    
+        public IList<ZoneDefinition> ZoneDefinitions;
 
 
 
@@ -339,10 +342,11 @@ namespace ArchsimLib
         public Library()
         {
             Version = Utilities.AssemblyVersion;
-            GasMaterials = new List<GasMaterial>();
             TimeStamp = DateTime.Now;
+
             OpaqueMaterials = new List<OpaqueMaterial>();
             GlazingMaterials = new List<GlazingMaterial>();
+            GasMaterials = new List<GasMaterial>();
             OpaqueConstructions = new List<OpaqueConstruction>();
             GlazingConstructions = new List<GlazingConstruction>();
             GlazingConstructionsSimple = new List<GlazingConstructionSimple>();
@@ -350,7 +354,14 @@ namespace ArchsimLib
             WeekSchedules = new List<WeekSchedule>();
             YearSchedules = new List<YearSchedule>();
             ArraySchedules = new List<ScheduleArray>();
-        }
+
+            ZoneLoads = new List<ZoneLoad>();
+            ZoneVentilations = new List<ZoneVentilation>();
+            ZoneConstructions = new List<ZoneConstruction>();
+            ZoneConditionings = new List<ZoneConditioning>();
+            DomHotWaters = new List<DomHotWater>();
+            ZoneDefinitions = new List<ZoneDefinition>();
+    }
 
   
         public static Library fromJSON(string json)
@@ -407,6 +418,12 @@ namespace ArchsimLib
             YearSchedules = ImportedLibrary.YearSchedules;
             ArraySchedules = ImportedLibrary.ArraySchedules;
 
+
+            ZoneLoads = ImportedLibrary.ZoneLoads;
+            ZoneVentilations = ImportedLibrary.ZoneVentilations;
+            ZoneConstructions = ImportedLibrary.ZoneConstructions;
+            ZoneConditionings = ImportedLibrary.ZoneConditionings;
+            DomHotWaters = ImportedLibrary.DomHotWaters;
             ZoneDefinitions = ImportedLibrary.ZoneDefinitions;
 
         }
