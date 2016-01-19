@@ -365,7 +365,8 @@ namespace ArchsimLib
         }
 
 
-        public ZoneDefinition Add(ZoneDefinition obj) {
+        public ZoneDefinition Add(ZoneDefinition obj)
+        {
             if (obj == null) return null;
 
             if (!ZoneDefinitions.Any(i => i.Name == obj.Name))
@@ -379,8 +380,29 @@ namespace ArchsimLib
                 CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
                 return oc;
             }
+        }
+
+
+
+
+        public WindowSettings Add(WindowSettings obj)
+        {
+            if (obj == null) return null;
+
+            if (!WindowSettings.Any(i => i.Name == obj.Name))
+            {
+                WindowSettings.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = WindowSettings.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
 
         }
+
         #endregion
 
         public T getElementByName<T>(string name)
@@ -458,7 +480,11 @@ namespace ArchsimLib
             {
                 return (T)Convert.ChangeType(ZoneDefinitions.Single(o => o.Name == name), typeof(T));
             }
-       
+
+            else if (typeof(T) == typeof(WindowSettings))
+            {
+                return (T)Convert.ChangeType(WindowSettings.Single(o => o.Name == name), typeof(T));
+            }
 
             // dont know what this is???
 
@@ -489,7 +515,7 @@ namespace ArchsimLib
         public IList<DomHotWater> DomHotWaters;
         public IList<ZoneDefinition> ZoneDefinitions;
 
-
+        public IList<WindowSettings> WindowSettings;
 
 
         public Library()
@@ -514,6 +540,8 @@ namespace ArchsimLib
             ZoneConditionings = new List<ZoneConditioning>();
             DomHotWaters = new List<DomHotWater>();
             ZoneDefinitions = new List<ZoneDefinition>();
+
+            WindowSettings = new List<WindowSettings>();
     }
 
   
@@ -582,6 +610,8 @@ namespace ArchsimLib
 
 
             ZoneDefinitions = ImportedLibrary.ZoneDefinitions;
+
+            WindowSettings = ImportedLibrary.WindowSettings;
 
         }
 
@@ -662,6 +692,8 @@ namespace ArchsimLib
                 ZoneConditionings.Clear();
                 DomHotWaters.Clear();
                 ZoneDefinitions.Clear();
+
+                WindowSettings.Clear();
             }
             catch { }
         }

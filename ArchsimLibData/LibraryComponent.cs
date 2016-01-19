@@ -30,8 +30,8 @@ namespace ArchsimLib
         [DataMember, DefaultValue("No data source")]
         public string DataSource { get; set; } = "No data source";
 
-        [DataMember]
-        public string Name = "No name";
+        [DataMember, DefaultValue("No name")]
+        public string Name { get; set; } = "No name";
 
 
         [OnDeserializing]

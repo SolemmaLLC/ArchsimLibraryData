@@ -78,15 +78,15 @@ namespace ArchsimLib
     {
 
         [DataMember]
-        public double SHGF = 0.837;
+        public double SHGF { get; set; } = 0.837;
         /// <summary>
         /// W/m2-k
         /// </summary>
         [DataMember]
-        public double UVAL = 0.075;
+        public double UVAL { get; set; } = 0.075;
 
         [DataMember]
-        public double VisibleTransmittance = 0.898;
+        public double VisibleTransmittance { get; set; } = 0.898;
 
         public GlazingConstructionSimple() { }
         public GlazingConstructionSimple(string name, string category,string comment, double tvis, double uval, double shgf ) {
