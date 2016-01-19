@@ -560,6 +560,8 @@ namespace ArchsimLib
         public void Import(Library ImportedLibrary)
         {
             TimeStamp = ImportedLibrary.TimeStamp;
+            Version = ImportedLibrary.Version;
+
             OpaqueMaterials = ImportedLibrary.OpaqueMaterials;
             GlazingMaterials = ImportedLibrary.GlazingMaterials;
             GasMaterials = ImportedLibrary.GasMaterials;
@@ -577,6 +579,8 @@ namespace ArchsimLib
             ZoneConstructions = ImportedLibrary.ZoneConstructions;
             ZoneConditionings = ImportedLibrary.ZoneConditionings;
             DomHotWaters = ImportedLibrary.DomHotWaters;
+
+
             ZoneDefinitions = ImportedLibrary.ZoneDefinitions;
 
         }
