@@ -22,15 +22,9 @@ namespace ArchsimLib
         public OpaqueConstruction Add(OpaqueConstruction obj)
         {
             if (obj == null) return null;
-
+            if (OpaqueConstructions == null) OpaqueConstructions = new List<OpaqueConstruction>();
             if (!OpaqueConstructions.Any(i => i.Name == obj.Name))
             {
-
-                //try
-                //{
-                //    foreach (var o in obj.Layers.Select(a => a.Material)) this.Add(o);
-                //}
-                //catch (Exception ex) { }
 
                 OpaqueConstructions.Add(obj);
 
@@ -40,15 +34,6 @@ namespace ArchsimLib
             {
                 var oc = OpaqueConstructions.Single(o => o.Name == obj.Name);
 
-                //try
-                //{
-                //    if (oc != null)
-                //    {
-                //        foreach (var o in obj.Layers.Select(a => a.Material)) this.Add(o);
-                //    }
-                //}
-                //catch (Exception ex) { }
-
                 CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
                 
                 return oc;
@@ -57,39 +42,17 @@ namespace ArchsimLib
         public GlazingConstruction Add(GlazingConstruction obj)
         {
             if (obj == null) return null;
-
+            if (GlazingConstructions == null) GlazingConstructions = new List<GlazingConstruction>();
             if (!GlazingConstructions.Any(i => i.Name == obj.Name))
             {
-
-                //try
-                //{
-
-                //    foreach (var o in obj.Layers.Select(a => a.GlassMaterial)) this.Add(o);
-                //}
-                //catch (Exception ex) { }
-
                 GlazingConstructions.Add(obj);
-
-              
-
                 return obj;
             }
             else
             {
                 var oc = GlazingConstructions.Single(o => o.Name == obj.Name);
 
-                //try
-                //{
-                //    if (oc != null)
-                //    {
-                //        foreach (var o in obj.Layers.Select(a => a.GlassMaterial)) this.Add(o);
-                //    }
-                //}
-                //catch (Exception ex) { }
-
                 CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
-
-                //foreach (var l in obj.Layers.Select(o => o.GlassMaterial)) Add(l);
 
                 return oc;
             }
@@ -97,7 +60,7 @@ namespace ArchsimLib
         public OpaqueMaterial Add(OpaqueMaterial obj)
         {
             if (obj == null) return null;
-
+            if (OpaqueMaterials == null) OpaqueMaterials = new List<OpaqueMaterial>();
             if (!OpaqueMaterials.Any(i => i.Name == obj.Name))
             {
                 OpaqueMaterials.Add(obj);
@@ -113,7 +76,7 @@ namespace ArchsimLib
         public GlazingMaterial Add(GlazingMaterial obj)
         {
             if (obj == null) return null;
-
+            if (GlazingMaterials == null) GlazingMaterials = new List<GlazingMaterial>();
             if (!GlazingMaterials.Any(i => i.Name == obj.Name))
             {
                 GlazingMaterials.Add(obj);
@@ -130,7 +93,7 @@ namespace ArchsimLib
         {
 
             if (obj == null) return null;
-
+            if (GlazingConstructionsSimple == null) GlazingConstructionsSimple = new List<GlazingConstructionSimple>();
             if (!GlazingConstructionsSimple.Any(i => i.Name == obj.Name))
             {
                 GlazingConstructionsSimple.Add(obj);
@@ -147,7 +110,7 @@ namespace ArchsimLib
         public GasMaterial Add(GasMaterial obj)
         {
             if (obj == null) return null;
-
+            if (GasMaterials == null) GasMaterials = new List<GasMaterial>();
             if (!GasMaterials.Any(i => i.Name == obj.Name))
             {
                 GasMaterials.Add(obj);
@@ -163,7 +126,7 @@ namespace ArchsimLib
         public DaySchedule Add(DaySchedule obj)
         {
             if (obj == null) return null;
-
+            if (DaySchedules == null) DaySchedules = new List<DaySchedule>();
             if (!DaySchedules.Any(i => i.Name == obj.Name))
             {
                 DaySchedules.Add(obj);
@@ -179,84 +142,39 @@ namespace ArchsimLib
         public WeekSchedule Add(WeekSchedule obj)
         {
             if (obj == null) return null;
-
+            if (WeekSchedules == null) WeekSchedules = new List<WeekSchedule>();
             if (!WeekSchedules.Any(i => i.Name == obj.Name))
             {
-                //try
-                //{
-                //    foreach (var o in obj.Days.Select(a => a)) this.Add(o);
-                //}
-                //catch (Exception ex) { }
-
                 WeekSchedules.Add(obj);
-
-                //foreach (var dsched in obj.Days) Add(dsched);
-
                 return obj;
             }
             else
             {
                 var oc = WeekSchedules.Single(o => o.Name == obj.Name);
-
-                //try
-                //{
-                //    if (oc != null)
-                //    {
-                //        foreach (var o in obj.Days.Select(a => a)) this.Add(o);
-                //    }
-                //}
-                //catch (Exception ex) { }
-
                 CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
-
-                //foreach (var dsched in obj.Days) Add(dsched);
-
                 return oc;
             }
         }
         public YearSchedule Add(YearSchedule obj)
         {
             if (obj == null) return null;
-
+            if (YearSchedules == null) YearSchedules = new List<YearSchedule>();
             if (!YearSchedules.Any(i => i.Name == obj.Name))
             {
-                //try
-                //{
-                //    foreach (var o in obj.WeekSchedules.Select(a => a)) this.Add(o);
-                //}
-                //catch (Exception ex) { }
-
-
                 YearSchedules.Add(obj);
-
-                 //foreach (var ws in obj.WeekSchedules) Add(ws);
-
                 return obj;
             }
             else
             {
                 var oc = YearSchedules.Single(o => o.Name == obj.Name);
-               
-                //try
-                //{
-                //    if (oc != null)
-                //    {
-                //        foreach (var o in obj.WeekSchedules.Select(a => a)) this.Add(o);
-                //    }
-                //}
-                //catch (Exception ex) { }
-
                 CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
-
-                //foreach (var ws in obj.WeekSchedules) Add(ws);
-
                 return oc;
             }
         }
         public ScheduleArray Add(ScheduleArray obj)
         {
             if (obj == null) return null;
-
+            if (ArraySchedules == null) ArraySchedules = new List<ScheduleArray>();
             if (!ArraySchedules.Any(i => i.Name == obj.Name))
             {
                 ArraySchedules.Add(obj);
@@ -277,7 +195,7 @@ namespace ArchsimLib
         public ZoneLoad Add(ZoneLoad obj)
         {
             if (obj == null) return null;
-
+            if (ZoneLoads == null) ZoneLoads = new List<ZoneLoad>();
             if (!ZoneLoads.Any(i => i.Name == obj.Name))
             {
                 ZoneLoads.Add(obj);
@@ -295,7 +213,7 @@ namespace ArchsimLib
         public ZoneVentilation Add(ZoneVentilation obj)
         {
             if (obj == null) return null;
-
+            if (ZoneVentilations == null) ZoneVentilations = new List<ZoneVentilation>();
             if (!ZoneVentilations.Any(i => i.Name == obj.Name))
             {
                 ZoneVentilations.Add(obj);
@@ -314,7 +232,7 @@ namespace ArchsimLib
         public ZoneConstruction Add(ZoneConstruction obj)
         {
             if (obj == null) return null;
-
+            if (ZoneConstructions == null) ZoneConstructions = new List<ZoneConstruction>();
             if (!ZoneConstructions.Any(i => i.Name == obj.Name))
             {
                 ZoneConstructions.Add(obj);
@@ -332,7 +250,7 @@ namespace ArchsimLib
         public ZoneConditioning Add(ZoneConditioning obj)
         {
             if (obj == null) return null;
-
+            if (ZoneConditionings == null) ZoneConditionings = new List<ZoneConditioning>();
             if (!ZoneConditionings.Any(i => i.Name == obj.Name))
             {
                 ZoneConditionings.Add(obj);
@@ -351,7 +269,7 @@ namespace ArchsimLib
         public DomHotWater Add(DomHotWater obj)
         {
             if (obj == null) return null;
-
+            if (DomHotWaters == null) DomHotWaters = new List<DomHotWater>();
             if (!DomHotWaters.Any(i => i.Name == obj.Name))
             {
                 DomHotWaters.Add(obj);
@@ -370,7 +288,7 @@ namespace ArchsimLib
         public ZoneDefinition Add(ZoneDefinition obj)
         {
             if (obj == null) return null;
-
+            if (ZoneDefinitions == null) ZoneDefinitions = new List<ZoneDefinition>();
             if (!ZoneDefinitions.Any(i => i.Name == obj.Name))
             {
                 ZoneDefinitions.Add(obj);
