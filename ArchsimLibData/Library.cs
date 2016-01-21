@@ -60,7 +60,7 @@ namespace ArchsimLib
         public OpaqueMaterial Add(OpaqueMaterial obj)
         {
             if (obj == null) return null;
-            if (OpaqueMaterials == null) OpaqueMaterials = new List<OpaqueMaterial>();
+            if (OpaqueMaterials == null) OpaqueMaterials = new List<OpaqueMaterial >();
             if (!OpaqueMaterials.Any(i => i.Name == obj.Name))
             {
                 OpaqueMaterials.Add(obj);
