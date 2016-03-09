@@ -345,24 +345,24 @@ namespace ArchsimLib
 
 
 
-        // -------------------------------------------------------obsolete
-        //duplicate of life
-        [DataMember]
-        public double[] SubstitutionRatePattern { get; set; }
-        //duplicate of life
-        [DataMember]
-        public double SubstitutionTimestep { get; set; }
+        //// -------------------------------------------------------obsolete
+        ////duplicate of life
+        //[DataMember]
+        //public double[] SubstitutionRatePattern { get; set; }
+        ////duplicate of life
+        //[DataMember]
+        //public double SubstitutionTimestep { get; set; }
 
 
-        [DataMember]
-        public double TransportCarbon { get; set; }
+        //[DataMember]
+        //public double TransportCarbon { get; set; }
 
-        [DataMember]
-        public double TransportDistance { get; set; }
+        //[DataMember]
+        //public double TransportDistance { get; set; }
 
-        [DataMember]
-        public double TransportEnergy { get; set; }
-        // -------------------------------------------------------obsolete
+        //[DataMember]
+        //public double TransportEnergy { get; set; }
+        //// -------------------------------------------------------obsolete
 
 
 
