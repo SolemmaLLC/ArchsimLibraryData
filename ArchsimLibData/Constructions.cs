@@ -125,27 +125,44 @@ namespace ArchsimLib
         [DataMember]
         public virtual string Category { get; set; } = "Uncategorized";
 
-        //[DataMember]
-        //public string Name = "";
-
-        //[DataMember]
-        //public string DataSource = "";
-        //[DataMember]
-        //public string Comment = "";
-        [DataMember]
-        public double AssemblyEnergy { get; set; } = 0;
-        [DataMember]
-        public double AssemblyCarbon { get; set; } = 0;
-        [DataMember]
-        public double AssemblyCost { get; set; } = 0;
-        [DataMember]
-        public double DisassemblyCarbon { get; set; } = 0;
-        [DataMember]
-        public double DisassemblyEnergy { get; set; } = 0;
-
 
         [DataMember]
-        public double Life { get; set; } = 0;
+        [Units("MJ/Kg")]
+        public double EmbodiedEnergy { get; set; } = 0;
+
+        [DataMember]
+        public double EmbodiedEnergyStdDev { get; set; }
+
+        [DataMember]
+        [Units("CO2e/Kg")]
+        public double EmbodiedCarbon { get; set; } = 0;
+
+        [DataMember]
+        public double EmbodiedCarbonStdDev { get; set; }
+
+        [DataMember]
+        [Units("$/m3")]
+        public double Cost { get; set; } = 0;
+
+        [DataMember]
+        [Units("yr")]
+        public int Life { get; set; } = 1;
+
+
+        //[DataMember]
+        //public double AssemblyEnergy { get; set; } = 0;
+        //[DataMember]
+        //public double AssemblyCarbon { get; set; } = 0;
+        //[DataMember]
+        //public double AssemblyCost { get; set; } = 0;
+        //[DataMember]
+        //public double DisassemblyCarbon { get; set; } = 0;
+        //[DataMember]
+        //public double DisassemblyEnergy { get; set; } = 0;
+
+
+        //[DataMember]
+        //public double Life { get; set; } = 0;
 
 
         public BaseConstruction() { }
