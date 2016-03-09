@@ -127,21 +127,21 @@ namespace ArchsimLib
 
 
         [DataMember]
-        [Units("MJ/Kg")]
+        [Units("MJ/m2")]
         public double EmbodiedEnergy { get; set; } = 0;
 
         [DataMember]
         public double EmbodiedEnergyStdDev { get; set; }
 
         [DataMember]
-        [Units("CO2e/Kg")]
+        [Units("CO2e/m2")]
         public double EmbodiedCarbon { get; set; } = 0;
 
         [DataMember]
         public double EmbodiedCarbonStdDev { get; set; }
 
         [DataMember]
-        [Units("$/m3")]
+        [Units("$/m2")]
         public double Cost { get; set; } = 0;
 
         [DataMember]
