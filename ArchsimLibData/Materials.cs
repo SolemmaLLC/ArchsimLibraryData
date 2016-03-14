@@ -329,7 +329,7 @@ namespace ArchsimLib
         [DataMember]
         public double EmbodiedEnergyStdDev { get; set; }
 
-        [DataMember][Units("CO2e/Kg")]
+        [DataMember][Units("kgCO2eq/Kg")]
         public double EmbodiedCarbon { get; set; } = 0;
 
         [DataMember]
