@@ -30,6 +30,9 @@ namespace ArchsimLib
         [DataMember, DefaultValue("No data source")]
         public string DataSource { get; set; } = "No data source";
 
+        [DataMember, DefaultValue("No Category")]
+        public string Category { get; set; } = "No Category";
+
         [DataMember, DefaultValue("No name")]
         public string Name { get; set; } = "No name";
 

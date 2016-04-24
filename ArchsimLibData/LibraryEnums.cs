@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArchsimLib
 {
+    public enum InfiltrationModel { Constant, Wind };
     public enum ShadingType { ExteriorShade, InteriorShade };
     public enum DimmingItem { Off, Stepped, Continuous };
     public enum HeatRecoveryItem { None, Sensible, Enthalpy };

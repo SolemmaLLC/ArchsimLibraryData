@@ -224,6 +224,9 @@ namespace ArchsimLib
         [Units("0-1")]
         public double DirtFactor { get; set; } = 1;
 
+
+        public string Type { get; set; } = "Glass";
+
         // public string SolarDiffusion = "No";
 
         // public int youngsModulus = 72000000000;

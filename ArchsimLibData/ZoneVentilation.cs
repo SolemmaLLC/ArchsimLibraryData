@@ -11,15 +11,21 @@ namespace ArchsimLib
     public class ZoneVentilation : LibraryComponent
     {
         [DataMember]
-        public double InfiltrationAch { get; set; } = 0.1;
-        [DataMember]
-        public double ScheduledVentilationAch { get; set; } = 0.6;
-        [DataMember]
         public bool NatVentIsOn { get; set; } = false;
         [DataMember]
         public bool SchedVentIsOn { get; set; } = false;
         [DataMember]
-        public bool InfiltrationIsOn { get; set; } = true;
+        public bool InfiltrationIsOn { get; set; } = false;
+
+
+        [DataMember]
+        public InfiltrationModel InfiltrationModel = InfiltrationModel.Constant;
+        [DataMember]
+        public double InfiltrationAch { get; set; } = 0.1;
+        [DataMember]
+        public double ScheduledVentilationAch { get; set; } = 0.6;
+
+
         [DataMember]
         public string ScheduledVentilationSchedule { get; set; } = "AllOn";
         [DataMember]

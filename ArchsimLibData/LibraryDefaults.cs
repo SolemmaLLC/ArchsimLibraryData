@@ -325,7 +325,8 @@ namespace ArchsimLib
             Library.OpaqueMaterials.Add(new OpaqueMaterial() { Name = @"Vacuum insulation panel Vacupor  NT-B2-S", Type = @"Insulation", Conductivity = 0.007, Density = 190, SpecificHeat = 1050, ThermalEmittance = 0.9, SolarAbsorptance = 0.6, VisibleAbsorptance = 0.6, EmbodiedEnergy = 45, EmbodiedCarbon = 1.86, Cost = 0, Comment = @"[lambda  rho c: U-Wert.net] [LCA, ICE General Insulation]" });
             Library.OpaqueMaterials.Add(new OpaqueMaterial() { Name = @"Stainless Steel", Type = @"Metal", Conductivity = 45, Density = 7800, SpecificHeat = 480, ThermalEmittance = 0.1, SolarAbsorptance = 0.4, VisibleAbsorptance = 0.4, EmbodiedEnergy = 56.7, EmbodiedCarbon = 6.15, Cost = 0, Comment = @"[lambda  rho c: U-Wert.net] [ LCA ICE, Stainless Steel]" });
             Library.OpaqueMaterials.Add(new OpaqueMaterial() { Name = @"Steel", Type = @"Metal", Conductivity = 45, Density = 7800, SpecificHeat = 480, ThermalEmittance = 0.1, SolarAbsorptance = 0.4, VisibleAbsorptance = 0.4, EmbodiedEnergy = 20.1, EmbodiedCarbon = 1.46, Cost = 0, Comment = @"[lambda  rho c: U-Wert.net] [ LCA ICE, General Steel ]" });
-            Library.OpaqueMaterials.Add(new OpaqueMaterial() { Name = @"Rammed Earth", Type = @"Mansonry", Conductivity = 0.75, Density = 1730, SpecificHeat = 880, ThermalEmittance = 0.9, SolarAbsorptance = 0.6, VisibleAbsorptance = 0.6, EmbodiedEnergy = 0, EmbodiedCarbon = 0, Cost = 0, Comment = @" [lambda  rho c: U-Wert.net] [LCA, ICE Mud] [LCA, ICE, Single Clay Brick]" });
+            Library.OpaqueMaterials.Add(new OpaqueMaterial() { Name = @"Rammed Earth", Type = @"Masonry", Conductivity = 0.75, Density = 1730, SpecificHeat = 880, ThermalEmittance = 0.9, SolarAbsorptance = 0.6, VisibleAbsorptance = 0.6, EmbodiedEnergy = 0, EmbodiedCarbon = 0, Cost = 0, Comment = @" [lambda  rho c: U-Wert.net] [LCA, ICE Mud] [LCA, ICE, Single Clay Brick]" });
+
 
 
 
@@ -425,7 +426,7 @@ namespace ArchsimLib
             gc1.Layers.Add(go1);
             gc1.Layers.Add(go2);
             gc1.Layers.Add(go1);
-            gc1.Name = "DblClear Air 6+13+6";
+            gc1.Name = "DblClear Air 6_13_6";
             gc1.Type = GlazingConstructionTypes.Double;// "Double";
 
             Library.GlazingConstructions.Add( gc1);
@@ -437,277 +438,47 @@ namespace ArchsimLib
 
             //--------------------------------------------------------------------------------schedules
 
-            double[] occBedroomArr = { 1, 1, 1, 1, 1, 1, 0.8, 0.6, 0.4, 0.4, 0.4, 0.6, 0.8, 0.6, 0.4, 0.4, 0.6, 0.8, 0.8, 0.8, 0.8, 1, 1, 1 };
-            DaySchedule occBedroom = new DaySchedule("occBedroom", "Fraction", occBedroomArr.ToList());
-            occBedroom.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occBedroom);
-            DaySchedule[] occBedroomWeekArr = { occBedroom, occBedroom, occBedroom, occBedroom, occBedroom, occBedroom, occBedroom };
-            WeekSchedule occBedroomWeek = new WeekSchedule("occBedroom", occBedroomWeekArr, "Fraction");
-            occBedroomWeek.DataSource = occBedroom.DataSource;
-            Library.WeekSchedules.Add(occBedroomWeek);
-            WeekSchedule[] occBedroomYrArr = { occBedroomWeek };
-            YearSchedule occBedroomYr = new YearSchedule("occBedroom", "Fraction", occBedroomYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            occBedroomYr.DataSource = occBedroom.DataSource;
-            Library.YearSchedules.Add(occBedroomYr);
 
-            double[] equipBedroomArr = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.5, 1, 0.5 , 0.5, 0.5, 1, 1, 0.5, 0.5, 0.5, 1, 1, 1, 1, 0.5, 0.5, 0.5, 0.1 };
-            DaySchedule equipBedroom = new DaySchedule("equipBedroom", "Fraction", equipBedroomArr.ToList());
-            equipBedroom.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipBedroom);
-            DaySchedule[] equipBedroomWeekArr = { equipBedroom, equipBedroom, equipBedroom, equipBedroom, equipBedroom, equipBedroom, equipBedroom };
-            WeekSchedule equipBedroomWeek = new WeekSchedule("equipBedroom", equipBedroomWeekArr, "Fraction");
-            equipBedroomWeek.DataSource = equipBedroom.DataSource;
-            Library.WeekSchedules.Add(equipBedroomWeek);
-            WeekSchedule[] equipBedroomYrArr = { equipBedroomWeek };
-            YearSchedule equipBedroomYr = new YearSchedule("equipBedroom", "Fraction", equipBedroomYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            equipBedroomYr.DataSource = equipBedroom.DataSource;
-            Library.YearSchedules.Add(equipBedroomYr);
+            QuickScheduleAdd("occBedroom", new double[] { 1, 1, 1, 1, 1, 1, 0.8, 0.6, 0.4, 0.4, 0.4, 0.6, 0.8, 0.6, 0.4, 0.4, 0.6, 0.8, 0.8, 0.8, 0.8, 1, 1, 1 },  "Residential" , "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("equipBedroom", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.5, 1, 0.5, 0.5, 0.5, 1, 1, 0.5, 0.5, 0.5, 1, 1, 1, 1, 0.5, 0.5, 0.5, 0.1 }, "Residential" , "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("lightsBedroom", new double[] { 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0 }, "Residential", "based on SIA Merkblatt 2024 Occ Schedule", ref Library);
 
 
+            QuickScheduleAdd("occKitchen", new double[] { 0, 0, 0, 0, 0, 0, 0.4, 0.8, 0.4, 0, 0, 0.4, 0.8, 0.4, 0, 0, 0.4, 1, 0.6, 0.4, 0, 0, 0, 0 }, "Residential" , "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("equipmentKitchen", new double[] { 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.8, 0.4, 0.2, 0.2, 0.4, 1, 0.4, 0.2, 0.2, 0.4, 1, 0.4, 0.2, 0.2, 0.2, 0.2, 0.2 }, "Residential",  "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("lightsKitchen", new double[] { 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0 }, "Residential", "based on SIA Merkblatt 2024 Occ Schedule", ref Library);
 
 
+            QuickScheduleAdd("occOffice", new double[] { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.4, 0.6, 0.8, 0.8, 0.4, 0.6, 0.8, 0.8, 0.4, 0.2, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, "Office","SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("equipmentOffice", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.4, 0.6, 0.8, 0.8, 0.4, 0.6, 0.8, 0.8, 0.4, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 }, new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 } , "Office", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("lightsOffice", new double[] { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, "Office", "based on SIA Merkblatt 2024 Occ Schedule", ref Library);
 
 
-            double[] occKitchenArr = { 0, 0, 0, 0, 0, 0, 0.4, 0.8, 0.4, 0, 0, 0.4, 0.8, 0.4, 0, 0, 0.4, 1, 0.6, 0.4, 0, 0, 0, 0 };
-            DaySchedule occKitchen = new DaySchedule("occKitchen", "Fraction", occKitchenArr.ToList());
-            occKitchen.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occKitchen);
-            DaySchedule[] occKitchenWeekArr = { occKitchen, occKitchen, occKitchen, occKitchen, occKitchen, occKitchen, occKitchen };
-            WeekSchedule occKitchenWeek = new WeekSchedule("occKitchen", occKitchenWeekArr, "Fraction");
-            occKitchenWeek.DataSource = occKitchen.DataSource;
-            Library.WeekSchedules.Add(occKitchenWeek);
-            WeekSchedule[] occKitchenYrArr = { occKitchenWeek };
-            YearSchedule occKitchenYr = new YearSchedule("occKitchen", "Fraction", occKitchenYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            occKitchenYr.DataSource = occKitchen.DataSource;
-            Library.YearSchedules.Add(occKitchenYr);
-
-            double[] equipmentKitchenArr = { 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.8, 0.4, 0.2, 0.2, 0.4, 1, 0.4, 0.2, 0.2, 0.4, 1, 0.4, 0.2, 0.2, 0.2, 0.2, 0.2 };
-            DaySchedule equipmentKitchen = new DaySchedule("equipmentKitchen", "Fraction", equipmentKitchenArr.ToList());
-            equipmentKitchen.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentKitchen);
-            DaySchedule[] equipmentKitchenWeekArr = { equipmentKitchen, equipmentKitchen, equipmentKitchen, equipmentKitchen, equipmentKitchen, equipmentKitchen, equipmentKitchen };
-            WeekSchedule equipmentKitchenWeek = new WeekSchedule("equipmentKitchen", equipmentKitchenWeekArr, "Fraction");
-            equipmentKitchenWeek.DataSource = equipmentKitchen.DataSource;
-            Library.WeekSchedules.Add(equipmentKitchenWeek);
-            WeekSchedule[] equipmentKitchenYrArr = { equipmentKitchenWeek };
-            YearSchedule equipmentKitchenYr = new YearSchedule("equipmentKitchen", "Fraction", equipmentKitchenYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            equipmentKitchenYr.DataSource = equipmentKitchen.DataSource;
-            Library.YearSchedules.Add(equipmentKitchenYr);
+            QuickScheduleAdd("occMeetingRoom", new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.6, 1, 0.4, 0, 0, 0.6, 1, 0.4, 0, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, "Office",  "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("equipmentMeetingRoom", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.4, 0.6, 0.8, 0.8, 0.4, 0.6, 0.8, 0.8, 0.4, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 }, new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 }, "Office", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("lightsMeetingRoom", new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, "Office", "based on SIA Merkblatt 2024 Occ Schedule", ref Library);
 
 
+            QuickScheduleAdd("occLibrary", new double[] { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.6, 1, 1, 0.2, 0.2, 1, 1, 0.6, 0.2, 0, 0, 0, 0, 0, 0, 0 }, "Education", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("equipmentLibrary", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.6, 1, 1, 0.2, 0.2, 1, 1, 0.6, 0.4, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 }, "Education", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("lightsLibrary", new double[] { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 }, "Education", "based on SIA Merkblatt 2024 Occ Schedule", ref Library);
 
 
+            QuickScheduleAdd("occLectureHall", new double[] { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.6, 1, 1, 0.2, 0.2, 1, 1, 0.6, 0.2, 0, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, "Education", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("equipmentLectureHall", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.6, 1, 1, 0.2, 0.2, 1, 1, 0.6, 0.4, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 }, new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 }, "Education", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("lightsLectureHall", new double[] { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 }, new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, "Education", "based on SIA Merkblatt 2024 Occ Schedule", ref Library);
 
 
-
-            double[] occOfficeArr = { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.4, 0.6, 0.8, 0.8, 0.4, 0.6, 0.8, 0.8, 0.4, 0.2, 0, 0, 0, 0, 0, 0 };
-            DaySchedule occOffice = new DaySchedule("occOffice", "Fraction", occOfficeArr.ToList());
-            occOffice.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occOffice);
-            double[] occOfficeArrWE = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            DaySchedule occOfficeWE = new DaySchedule("occOffice", "Fraction", occOfficeArr.ToList());
-            occOfficeWE.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occOfficeWE);
-            DaySchedule[] occOfficeWeekArr = { occOffice, occOffice, occOffice, occOffice, occOffice, occOfficeWE, occOfficeWE };
-            WeekSchedule occOfficeWeek = new WeekSchedule("occOffice", occOfficeWeekArr, "Fraction");
-            occOfficeWeek.DataSource = occOffice.DataSource;
-            Library.WeekSchedules.Add(occOfficeWeek);
-            WeekSchedule[] occOfficeYrArr = { occOfficeWeek };
-            YearSchedule occOfficeYr = new YearSchedule("occOffice", "Fraction", occOfficeYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            occOfficeYr.DataSource = occOffice.DataSource;
-            Library.YearSchedules.Add(occOfficeYr);
-
-            double[] equipmentOfficeArr = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.4, 0.6, 0.8, 0.8, 0.4, 0.6, 0.8, 0.8, 0.4, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentOffice = new DaySchedule("equipmentOffice", "Fraction", equipmentOfficeArr.ToList());
-            equipmentOffice.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentOffice);
-            double[] equipmentOfficeArrWE = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentOfficeWE = new DaySchedule("equipmentOffice", "Fraction", equipmentOfficeArr.ToList());
-            equipmentOfficeWE.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentOfficeWE);
-            DaySchedule[] equipmentOfficeWeekArr = { equipmentOffice, equipmentOffice, equipmentOffice, equipmentOffice, equipmentOffice, equipmentOfficeWE, equipmentOfficeWE };
-            WeekSchedule equipmentOfficeWeek = new WeekSchedule("equipmentOffice", equipmentOfficeWeekArr, "Fraction");
-            equipmentOfficeWeek.DataSource = equipmentOffice.DataSource;
-            Library.WeekSchedules.Add(equipmentOfficeWeek);
-            WeekSchedule[] equipmentOfficeYrArr = { equipmentOfficeWeek };
-            YearSchedule equipmentOfficeYr = new YearSchedule("equipmentOffice", "Fraction", equipmentOfficeYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            equipmentOfficeYr.DataSource = equipmentOffice.DataSource;
-            Library.YearSchedules.Add(equipmentOfficeYr);
+            QuickScheduleAdd("occSuperMarket", new double[] { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.4, 0.4, 0.4, 0.6, 0.6, 0.6, 0.4, 0.4, 0.6, 0.8, 0.6, 0, 0, 0, 0, 0 }, "Commercial", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("equipmentSuperMarket", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1 }, "Commercial", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("lightsSuperMarket", new double[] { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 }, "Commercial", "based on SIA Merkblatt 2024 Occ Schedule", ref Library);
 
 
+            QuickScheduleAdd("occShopping", new double[] { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.4, 0.4, 0.4, 0.6, 0.6, 0.6, 0.4, 0.4, 0.6, 0.8, 0.6, 0, 0, 0, 0, 0 }, "Commercial", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("equipmentShopping", new double[] { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1 }, "Commercial", "SIA Merkblatt 2024", ref Library);
+            QuickScheduleAdd("lightsShopping", new double[] { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0 }, "Commercial", "based on SIA Merkblatt 2024 Occ Schedule", ref Library);
 
 
-
-            double[] occMeetingRoomArr = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.6, 1, 0.4, 0, 0, 0.6, 1, 0.4, 0, 0, 0, 0, 0, 0, 0 };
-            DaySchedule occMeetingRoom = new DaySchedule("occMeetingRoom", "Fraction", occMeetingRoomArr.ToList());
-            occMeetingRoom.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occMeetingRoom);
-            double[] occMeetingRoomArrWE = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            DaySchedule occMeetingRoomWE = new DaySchedule("occMeetingRoom", "Fraction", occMeetingRoomArr.ToList());
-            occMeetingRoomWE.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occMeetingRoomWE);
-            DaySchedule[] occMeetingRoomWeekArr = { occMeetingRoom, occMeetingRoom, occMeetingRoom, occMeetingRoom, occMeetingRoom, occMeetingRoomWE, occMeetingRoomWE };
-            WeekSchedule occMeetingRoomWeek = new WeekSchedule("occMeetingRoom", occMeetingRoomWeekArr, "Fraction");
-            occMeetingRoomWeek.DataSource = occMeetingRoom.DataSource;
-            Library.WeekSchedules.Add(occMeetingRoomWeek);
-            WeekSchedule[] occMeetingRoomYrArr = { occMeetingRoomWeek };
-            YearSchedule occMeetingRoomYr = new YearSchedule("occMeetingRoom", "Fraction", occMeetingRoomYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            occMeetingRoomYr.DataSource = occMeetingRoom.DataSource;
-            Library.YearSchedules.Add(occMeetingRoomYr);
-
-
-            double[] equipmentMeetingRoomArr = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.6, 1, 0.4, 0.1, 0.1, 0.6, 1, 0.4, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentMeetingRoom = new DaySchedule("equipmentMeetingRoom", "Fraction", equipmentMeetingRoomArr.ToList());
-            equipmentMeetingRoom.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentMeetingRoom);
-            double[] equipmentMeetingRoomArrWE = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentMeetingRoomWE = new DaySchedule("equipmentMeetingRoom", "Fraction", equipmentMeetingRoomArr.ToList());
-            equipmentMeetingRoomWE.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentMeetingRoomWE);
-            DaySchedule[] equipmentMeetingRoomWeekArr = { equipmentMeetingRoom, equipmentMeetingRoom, equipmentMeetingRoom, equipmentMeetingRoom, equipmentMeetingRoom, equipmentMeetingRoomWE, equipmentMeetingRoomWE };
-            WeekSchedule equipmentMeetingRoomWeek = new WeekSchedule("equipmentMeetingRoom", equipmentMeetingRoomWeekArr, "Fraction");
-            equipmentMeetingRoomWeek.DataSource = equipmentMeetingRoom.DataSource;
-            Library.WeekSchedules.Add(equipmentMeetingRoomWeek);
-            WeekSchedule[] equipmentMeetingRoomYrArr = { equipmentMeetingRoomWeek };
-            YearSchedule equipmentMeetingRoomYr = new YearSchedule("equipmentMeetingRoom", "Fraction", equipmentMeetingRoomYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            equipmentMeetingRoomYr.DataSource = equipmentMeetingRoom.DataSource;
-            Library.YearSchedules.Add(equipmentMeetingRoomYr);
-
-
-
-
-
-
-
-            double[] occLibraryArr = { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.6, 1, 1, 0.2, 0.2, 1, 1, 0.6, 0.2, 0, 0, 0, 0, 0, 0, 0 };
-            DaySchedule occLibrary = new DaySchedule("occLibrary", "Fraction", occLibraryArr.ToList());
-            occLibrary.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occLibrary);
-            DaySchedule[] occLibraryWeekArr = { occLibrary, occLibrary, occLibrary, occLibrary, occLibrary, occLibrary, occLibrary };
-            WeekSchedule occLibraryWeek = new WeekSchedule("occLibrary", occLibraryWeekArr, "Fraction");
-            occLibraryWeek.DataSource = occLibrary.DataSource;
-            Library.WeekSchedules.Add(occLibraryWeek);
-            WeekSchedule[] occLibraryYrArr = { occLibraryWeek };
-            YearSchedule occLibraryYr = new YearSchedule("occLibrary", "Fraction", occLibraryYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            occLibraryYr.DataSource = occLibrary.DataSource;
-            Library.YearSchedules.Add(occLibraryYr);
-
-            double[] equipmentLibraryArr = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.6, 1, 1, 0.2, 0.2, 1, 1, 0.6, 0.4, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentLibrary = new DaySchedule("equipmentLibrary", "Fraction", equipmentLibraryArr.ToList());
-            equipmentLibrary.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentLibrary);
-            DaySchedule[] equipmentLibraryWeekArr = { equipmentLibrary, equipmentLibrary, equipmentLibrary, equipmentLibrary, equipmentLibrary, equipmentLibrary, equipmentLibrary };
-            WeekSchedule equipmentLibraryWeek = new WeekSchedule("equipmentLibrary", equipmentLibraryWeekArr, "Fraction");
-            equipmentLibraryWeek.DataSource = equipmentLibrary.DataSource;
-            Library.WeekSchedules.Add(equipmentLibraryWeek);
-            WeekSchedule[] equipmentLibraryYrArr = { equipmentLibraryWeek };
-            YearSchedule equipmentLibraryYr = new YearSchedule("equipmentLibrary", "Fraction", equipmentLibraryYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            equipmentLibraryYr.DataSource = equipmentLibrary.DataSource;
-            Library.YearSchedules.Add(equipmentLibraryYr);
-
-
-
-
-
-
-            double[] occLectureHallArr = { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.6, 1, 1, 0.2, 0.2, 1, 1, 0.6, 0.2, 0, 0, 0, 0, 0, 0, 0 };
-            DaySchedule occLectureHall = new DaySchedule("occLectureHall", "Fraction", occLectureHallArr.ToList());
-            occLectureHall.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occLectureHall);
-            double[] occLectureHallArrWE = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            DaySchedule occLectureHallWE = new DaySchedule("occLectureHall", "Fraction", occLectureHallArr.ToList());
-            occLectureHallWE.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occLectureHallWE);
-            DaySchedule[] occLectureHallWeekArr = { occLectureHall, occLectureHall, occLectureHall, occLectureHall, occLectureHall, occLectureHallWE, occLectureHallWE };
-            WeekSchedule occLectureHallWeek = new WeekSchedule("occLectureHall", occLectureHallWeekArr, "Fraction");
-            occLectureHallWeek.DataSource = occLectureHall.DataSource;
-            Library.WeekSchedules.Add(occLectureHallWeek);
-            WeekSchedule[] occLectureHallYrArr = { occLectureHallWeek };
-            YearSchedule occLectureHallYr = new YearSchedule("occLectureHall", "Fraction", occLectureHallYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            occLectureHallYr.DataSource = occLectureHall.DataSource;
-            Library.YearSchedules.Add(occLectureHallYr);
-
-            double[] equipmentLectureHallArr = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.2, 0.6, 1, 1, 0.2, 0.2, 1, 1, 0.6, 0.4, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentLectureHall = new DaySchedule("equipmentLectureHall", "Fraction", equipmentLectureHallArr.ToList());
-            equipmentLectureHall.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentLectureHall);
-            double[] equipmentLectureHallArrWE = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentLectureHallWE = new DaySchedule("equipmentLectureHall", "Fraction", equipmentLectureHallArr.ToList());
-            equipmentLectureHallWE.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentLectureHallWE);
-            DaySchedule[] equipmentLectureHallWeekArr = { equipmentLectureHall, equipmentLectureHall, equipmentLectureHall, equipmentLectureHall, equipmentLectureHall, equipmentLectureHallWE, equipmentLectureHallWE };
-            WeekSchedule equipmentLectureHallWeek = new WeekSchedule("equipmentLectureHall", equipmentLectureHallWeekArr, "Fraction");
-            equipmentLectureHallWeek.DataSource = equipmentLectureHall.DataSource;
-            Library.WeekSchedules.Add(equipmentLectureHallWeek);
-            WeekSchedule[] equipmentLectureHallYrArr = { equipmentLectureHallWeek };
-            YearSchedule equipmentLectureHallYr = new YearSchedule("equipmentLectureHall", "Fraction", equipmentLectureHallYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            equipmentLectureHallYr.DataSource = equipmentLectureHall.DataSource;
-            Library.YearSchedules.Add(equipmentLectureHallYr);
-
-
-
-
-
-
-
-
-
-            double[] occSuperMarketArr = { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.4, 0.4, 0.4, 0.6, 0.6, 0.6, 0.4, 0.4, 0.6, 0.8, 0.6, 0, 0, 0, 0, 0 };
-            DaySchedule occSuperMarket = new DaySchedule("occSuperMarket", "Fraction", occSuperMarketArr.ToList());
-            occSuperMarket.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occSuperMarket);
-            DaySchedule[] occSuperMarketWeekArr = { occSuperMarket, occSuperMarket, occSuperMarket, occSuperMarket, occSuperMarket, occSuperMarket, occSuperMarket };
-            WeekSchedule occSuperMarketWeek = new WeekSchedule("occSuperMarket", occSuperMarketWeekArr, "Fraction");
-            occSuperMarketWeek.DataSource = occSuperMarket.DataSource;
-            Library.WeekSchedules.Add(occSuperMarketWeek);
-            WeekSchedule[] occSuperMarketYrArr = { occSuperMarketWeek };
-            YearSchedule occSuperMarketYr = new YearSchedule("occSuperMarket", "Fraction", occSuperMarketYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            occSuperMarketYr.DataSource = occSuperMarket.DataSource;
-            Library.YearSchedules.Add(occSuperMarketYr);
-
-            double[] equipmentSuperMarketArr = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentSuperMarket = new DaySchedule("equipmentSuperMarket", "Fraction", equipmentSuperMarketArr.ToList());
-            equipmentSuperMarket.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentSuperMarket);
-            DaySchedule[] equipmentSuperMarketWeekArr = { equipmentSuperMarket, equipmentSuperMarket, equipmentSuperMarket, equipmentSuperMarket, equipmentSuperMarket, equipmentSuperMarket, equipmentSuperMarket };
-            WeekSchedule equipmentSuperMarketWeek = new WeekSchedule("equipmentSuperMarket", equipmentSuperMarketWeekArr, "Fraction");
-            equipmentSuperMarketWeek.DataSource = equipmentSuperMarket.DataSource;
-            Library.WeekSchedules.Add(equipmentSuperMarketWeek);
-            WeekSchedule[] equipmentSuperMarketYrArr = { equipmentSuperMarketWeek };
-            YearSchedule equipmentSuperMarketYr = new YearSchedule("equipmentSuperMarket", "Fraction", equipmentSuperMarketYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            equipmentSuperMarketYr.DataSource = equipmentSuperMarket.DataSource;
-            Library.YearSchedules.Add(equipmentSuperMarketYr);
-
-
-
-
-
-
-            double[] occShoppingArr = { 0, 0, 0, 0, 0, 0, 0, 0.2, 0.4, 0.4, 0.4, 0.6, 0.6, 0.6, 0.4, 0.4, 0.6, 0.8, 0.6, 0, 0, 0, 0, 0 };
-            DaySchedule occShopping = new DaySchedule("occShopping", "Fraction", occShoppingArr.ToList());
-            occShopping.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(occShopping);
-            DaySchedule[] occShoppingWeekArr = { occShopping, occShopping, occShopping, occShopping, occShopping, occShopping, occShopping };
-            WeekSchedule occShoppingWeek = new WeekSchedule("occShopping", occShoppingWeekArr, "Fraction");
-            occShoppingWeek.DataSource = occShopping.DataSource;
-            Library.WeekSchedules.Add(occShoppingWeek);
-            WeekSchedule[] occShoppingYrArr = { occShoppingWeek };
-            YearSchedule occShoppingYr = new YearSchedule("occShopping", "Fraction", occShoppingYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            occShoppingYr.DataSource = occShopping.DataSource;
-            Library.YearSchedules.Add(occShoppingYr);
-
-            double[] equipmentShoppingArr = { 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.1, 0.1, 0.1, 0.1, 0.1 };
-            DaySchedule equipmentShopping = new DaySchedule("equipmentShopping", "Fraction", equipmentShoppingArr.ToList());
-            equipmentShopping.DataSource = "SIA Merkblatt 2024";
-            Library.DaySchedules.Add(equipmentShopping);
-            DaySchedule[] equipmentShoppingWeekArr = { equipmentShopping, equipmentShopping, equipmentShopping, equipmentShopping, equipmentShopping, equipmentShopping, equipmentShopping };
-            WeekSchedule equipmentShoppingWeek = new WeekSchedule("equipmentShopping", equipmentShoppingWeekArr, "Fraction");
-            equipmentShoppingWeek.DataSource = equipmentShopping.DataSource;
-            Library.WeekSchedules.Add(equipmentShoppingWeek);
-            WeekSchedule[] equipmentShoppingYrArr = { equipmentShoppingWeek };
-            YearSchedule equipmentShoppingYr = new YearSchedule("equipmentShopping", "Fraction", equipmentShoppingYrArr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            equipmentShoppingYr.DataSource = equipmentShopping.DataSource;
-            Library.YearSchedules.Add(equipmentShoppingYr);
 
 
 
@@ -715,14 +486,20 @@ namespace ArchsimLib
 
 
 
+            Library.ZoneLoads.Add(new ZoneLoad() { Name = "BedroomLoads", PeopleDensity = 1.0 / 40.0, IlluminanceTarget = 200, LightingPowerDensity = 9.5, EquipmentPowerDensity = 2, OccupancySchedule = "occBedroom", EquipmentAvailibilitySchedule = "equipBedroom", LightsAvailibilitySchedule = "lightsBedroom", Category = "Residential" ,DataSource = "SIA Merkblatt 2024" });
+            Library.ZoneLoads.Add(new ZoneLoad() { Name = "KitchenLoads", PeopleDensity = 1.0 / 5.0, IlluminanceTarget = 500, LightingPowerDensity = 17, EquipmentPowerDensity = 40, OccupancySchedule = "occKitchen", EquipmentAvailibilitySchedule = "equipKitchen", LightsAvailibilitySchedule = "lightsKitchen", Category = "Residential" ,DataSource = "SIA Merkblatt 2024" });
+            Library.ZoneLoads.Add(new ZoneLoad() { Name = "SingleOfficeLoads", PeopleDensity = 1.0 / 14.0, IlluminanceTarget = 500, LightingPowerDensity = 16, EquipmentPowerDensity = 7, OccupancySchedule = "occOffice", EquipmentAvailibilitySchedule = "equipOffice", LightsAvailibilitySchedule = "lightsOffice", Category = "Office", DataSource = "SIA Merkblatt 2024" });
+            Library.ZoneLoads.Add(new ZoneLoad() { Name = "MeetingRoomLoads", PeopleDensity = 1.0 / 3.0, IlluminanceTarget = 500, LightingPowerDensity = 16, EquipmentPowerDensity = 2, OccupancySchedule = "occMeetingRoom", EquipmentAvailibilitySchedule = "equipMeetingRoom", LightsAvailibilitySchedule = "lightsMeetingRoom", Category = "Office", DataSource = "SIA Merkblatt 2024" });
 
-            //double[] ones241 = {  0, 0, 0, 0.5, 0.8, 1, 1, 1, 1, 1, 1, 1, 1, 0.8, 0.5, 0, 0, 0, 0, 0, 0, 0,1,1 };
-            //DaySchedule AllOnDay1 = new DaySchedule("Profile", "Fraction", ones241.ToList());
-            //Library.DaySchedules.Add(AllOnDay1.Name, AllOnDay1);
+            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "BedroomHeatingCoolingMechVent", HeatingSetpoint = 19, CoolingSetpoint = 26,  MechVentIsOn = true, MinFreshAirPerson = 2.5, MinFreshAirArea = 0.3, Category = "Residential" });
+            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "KitchenHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.9, MinFreshAirArea = 0.9, Category = "Residential" });
+            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "OfficeHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 2.5, MinFreshAirArea = 0.3, Category = "Office" });
+            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "MeetingRoomHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.8, MinFreshAirArea = 0.3, Category = "Office" });
+            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "LectureHallHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.8, MinFreshAirArea = 0.3, Category = "Education" });
 
-            //double[] ones242 = { 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22 };
-            //DaySchedule AllOnDay2 = new DaySchedule("SetPoint", "Temperature", ones242.ToList());
-            //Library.DaySchedules.Add(AllOnDay2.Name, AllOnDay2);
+            Library.ZoneVentilations.Add(new ZoneVentilation() { Name = "PoorAirTightness", InfiltrationIsOn = true,  InfiltrationAch = 1.2, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
+            Library.ZoneVentilations.Add(new ZoneVentilation() { Name = "ModerateAirTightness", InfiltrationIsOn = true, InfiltrationAch = 0.5, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
+            Library.ZoneVentilations.Add(new ZoneVentilation() { Name = "GoodAirTightness", InfiltrationIsOn = true, InfiltrationAch = 0.15, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
 
 
 
@@ -814,9 +591,13 @@ namespace ArchsimLib
             #endregion
 
 
-            #region ZoneLoadTemplates
+            #region ZoneDefTemplates
 
 
+            
+
+
+            Library.ZoneDefinitions.Add(new ZoneDefinition());
 
 
 
@@ -834,5 +615,62 @@ namespace ArchsimLib
 
             return Library;
         }
+
+
+        private static void QuickScheduleAdd(string Name ,double[] dayArray, string category, string dataSource ,ref Library Library) {
+
+
+            int[] MonthFrom = { 1 };
+            int[] DayFrom = { 1 };
+            int[] MonthTo = { 12 };
+            int[] DayTo = { 31 };
+
+            DaySchedule someDaySchedule = new DaySchedule(Name, "Fraction", dayArray.ToList());
+            someDaySchedule.DataSource = dataSource;
+            someDaySchedule.Category = category;
+            Library.DaySchedules.Add(someDaySchedule);
+            DaySchedule[] daySchedulesArray = { someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule };
+            WeekSchedule someWeekSchedule = new WeekSchedule(Name, daySchedulesArray, "Fraction");
+            someWeekSchedule.DataSource = dataSource;
+            someWeekSchedule.Category = category;
+            Library.WeekSchedules.Add(someWeekSchedule);
+            WeekSchedule[] weekSchedulesArray = { someWeekSchedule };
+            YearSchedule someYearSchedule = new YearSchedule(Name, "Fraction", weekSchedulesArray.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
+            someYearSchedule.DataSource = dataSource;
+            someYearSchedule.Category = category;
+            Library.YearSchedules.Add(someYearSchedule);
+
+        }
+
+        private static void QuickScheduleAdd(string Name, double[] dayArray, double[] weArray, string category, string dataSource, ref Library Library)
+        {
+
+
+            int[] MonthFrom = { 1 };
+            int[] DayFrom = { 1 };
+            int[] MonthTo = { 12 };
+            int[] DayTo = { 31 };
+
+            DaySchedule someDaySchedule = new DaySchedule(Name, "Fraction", dayArray.ToList());
+            someDaySchedule.DataSource = dataSource;
+            someDaySchedule.Category = category;
+            Library.DaySchedules.Add(someDaySchedule);
+            DaySchedule weSchedule = new DaySchedule(Name+"WeekEnd", "Fraction", dayArray.ToList());
+            weSchedule.DataSource = dataSource;
+            weSchedule.Category = category;
+            Library.DaySchedules.Add(someDaySchedule);
+            DaySchedule[] daySchedulesArray = { someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, weSchedule, weSchedule };
+            WeekSchedule someWeekSchedule = new WeekSchedule(Name, daySchedulesArray, "Fraction");
+            someWeekSchedule.DataSource = dataSource;
+            someWeekSchedule.Category = category;
+            Library.WeekSchedules.Add(someWeekSchedule);
+            WeekSchedule[] weekSchedulesArray = { someWeekSchedule };
+            YearSchedule someYearSchedule = new YearSchedule(Name, "Fraction", weekSchedulesArray.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
+            someYearSchedule.DataSource = dataSource;
+            someYearSchedule.Category = category;
+            Library.YearSchedules.Add(someYearSchedule);
+
+        }
+
     }
 }

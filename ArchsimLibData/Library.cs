@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using Rhino;
 
 namespace ArchsimLib
 {
@@ -329,9 +330,11 @@ namespace ArchsimLib
         {
             // materials and constructions
 
+                try
+                {
             if (typeof(T) == typeof(OpaqueConstruction))
             {
-                return (T)Convert.ChangeType(OpaqueConstructions.Single(o => o.Name == name), typeof(T));
+                    return (T)Convert.ChangeType(OpaqueConstructions.Single(o => o.Name == name), typeof(T));
             }
             else if (typeof(T) == typeof(GlazingConstruction))
             {
@@ -410,6 +413,12 @@ namespace ArchsimLib
 
             else return (T)Convert.ChangeType(null, typeof(T));
 
+            }
+            catch (Exception ex)
+            {
+                RhinoApp.WriteLine("Could not find " + name +": "+ ex.Message);
+                return default(T);
+            }
         }
 
 

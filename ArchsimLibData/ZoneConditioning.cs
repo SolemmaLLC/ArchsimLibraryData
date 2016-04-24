@@ -38,6 +38,12 @@ namespace ArchsimLib
         [DataMember]
         public bool CoolIsOn { get; set; } = true;
         [DataMember]
+        public bool MechVentIsOn { get; set; } = false;
+        [DataMember]
+        public bool HumidistatOnOff { get; set; } = false;
+
+
+        [DataMember]
         [JsonConverter(typeof(StringEnumConverter))]
         public IdealSystemLimit HeatingLimitType { get; set; } = IdealSystemLimit.NoLimit;// "NoLimit";
         [DataMember]
@@ -59,14 +65,15 @@ namespace ArchsimLib
         public string HeatingSchedule { get; set; } = "AllOn";
         [DataMember]
         public string CoolingSchedule { get; set; } = "AllOn";
-        [DataMember]
-        public bool MechVentIsOn { get; set; } = true;
+    
+
+
         [DataMember]
         public string MechVentSchedule { get; set; } = "AllOn";
-        [DataMember][Units("m3/s/p")]
-        public double MinFreshAirPerson { get; set; } = 0.001;
-        [DataMember][Units("m3/s/m2")]
-        public double MinFreshAirArea { get; set; } = 0.001;
+        [DataMember][Units("L/s/p")]
+        public double MinFreshAirPerson { get; set; } = 2.5;
+        [DataMember][Units("L/s/m2")]
+        public double MinFreshAirArea { get; set; } = 0.3;
         [DataMember]
         [JsonConverter(typeof(StringEnumConverter))]
         public EconomizerItem EconomizerType { get; set; } = EconomizerItem.NoEconomizer;//"NoEconomizer";
@@ -77,7 +84,16 @@ namespace ArchsimLib
         public double HeatRecoveryEfficiencySensible { get; set; } = 0.7;
         [DataMember]
         public double HeatRecoveryEfficiencyLatent { get; set; } = 0.65;
-     
+
+
+
+        [DataMember]
+        [Units("RH%")]
+        public double MinHumidity { get; set; } = 20; 
+        [DataMember]
+        [Units("RH%")]
+        public double MaxHumidity { get; set; } = 80;
+
         public ZoneConditioning()
         {
         }

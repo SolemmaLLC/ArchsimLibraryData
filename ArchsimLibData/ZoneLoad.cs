@@ -9,10 +9,12 @@ namespace ArchsimLib
   [DataContract(IsReference = true)]
     public class ZoneLoad :LibraryComponent
     {
-        [DataMember]
-        public DimmingItem DimmingType { get; set; } = DimmingItem.Continuous; //"Continuous";
+
         [DataMember][Units("p/m2")]
         public double PeopleDensity { get; set; } = 0.2;
+        [DataMember]
+        [Units("met")]
+        public double MetabolicRate { get; set; } = 1.2;
         [DataMember]
         [Units("W/m2")]
         public double EquipmentPowerDensity { get; set; } = 12;
@@ -28,6 +30,12 @@ namespace ArchsimLib
         public string EquipmentAvailibilitySchedule { get; set; } = "AllOn";
         [DataMember]
         public string LightsAvailibilitySchedule { get; set; } = "AllOn";
+
+
+        [DataMember]
+        public DimmingItem DimmingType { get; set; } = DimmingItem.Continuous; //"Continuous";
+
+
         [DataMember]
         public bool PeopleIsOn { get; set; } = true;
         [DataMember]
