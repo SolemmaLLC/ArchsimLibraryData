@@ -323,9 +323,6 @@ namespace ArchsimLib
 
     public abstract class BaseMaterial  : LibraryComponent
     {
-        [DataMember]
-        public string Type { get; set; } = "Default";
-
         [DataMember][Units("MJ/Kg")]
         public double EmbodiedEnergy { get; set; } = 0;
 

@@ -56,9 +56,9 @@
     <Compile Include="Schedules.cs" />
     <Compile Include="WindowSettings.cs" />
     <Compile Include="ZoneConditioning.cs" />
+    <Compile Include="ZoneDefinition.cs" />
     <Compile Include="ZoneLoad.cs" />
     <Compile Include="ZoneMaterials.cs" />
-    <Compile Include="ZoneSettings.cs" />
     <Compile Include="ZoneVentilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\HelperFunctions.cs" />

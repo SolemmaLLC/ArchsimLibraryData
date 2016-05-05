@@ -48,7 +48,29 @@ namespace ArchsimLib
             return changed;
         }
 
-       
+        public static OpaqueConstruction QuickConstruction(string name, ConstructionTypes type, string[] layers, double[] thickness, string category, string source,  ref Library Library)
+        {
+
+            OpaqueConstruction oc = new OpaqueConstruction();
+            for (int i = 0; i < layers.Length; i++)
+            {
+
+                var mat = Library.OpaqueMaterials.Single(o => o.Name == layers[i]);
+                Layer<OpaqueMaterial> layer = new Layer<OpaqueMaterial>(thickness[i], mat);
+                oc.Layers.Add(layer);
+
+            }
+
+            oc.Name = name;
+            oc.Type = type;
+            oc.Category = category;
+            oc.DataSource = source;
+
+
+            Library.OpaqueConstructions.Add(oc);
+            return oc;
+
+        }
     }
     [DataContract]
     public class GlazingConstruction : BaseConstruction

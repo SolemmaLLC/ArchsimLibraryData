@@ -14,31 +14,13 @@ namespace ArchsimLib
     [DataContract(IsReference = true)]
     public class ZoneDefinition : LibraryComponent
     {
-        [DataMember, DefaultValue(InConvAlgo.TARP),JsonConverter(typeof(StringEnumConverter))]
-        public InConvAlgo SurfaceConvectionModelInside { get; set; } = InConvAlgo.TARP;
 
-        [DataMember, DefaultValue(OutConvAlgo.DOE2),JsonConverter(typeof(StringEnumConverter))]
-        public OutConvAlgo SurfaceConvectionModelOutside { get; set; } = OutConvAlgo.DOE2;
 
         [DataMember, DefaultValue(1.0)]
         public double ZoneMultiplier { get; set; } = 1.0;
 
-        [DataMember, DefaultValue(1)]
-        public int ZonePriority { get; set; } = 1;
-
-        [DataMember, DefaultValue(1)]
-        public double DaylightMeshResolution { get; set; } = 1.0;
-
-        [DataMember, DefaultValue(0.8)]
-        public double DaylightWorkplaneHeight { get; set; } = 0.8;
 
 
-        // use this istead of PartritionRatio
-        [DataMember, DefaultValue("defaultConstruction")]
-        public string InternalMassConstruction { get; set; } = "defaultConstruction";    
-        // use this istead of PartritionRatio
-        [DataMember, DefaultValue(0)]
-        public double InternalMassExposedAreaPerArea { get; set; } = 0;
 
 
         //MAT
