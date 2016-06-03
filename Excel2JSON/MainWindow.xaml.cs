@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Excel;
+using System.Diagnostics;
 
 namespace Excel2JSON
 {
@@ -32,7 +33,7 @@ namespace Excel2JSON
 
 
 
-            foreach (var worksheet in Workbook.Worksheets(@"C: \Users\Timur\Dropbox(Personal)\_CSHARP_PROJECTS\ArchsimLibraryData\160603_ExcelLibraryEditor.xlsx"))
+            foreach (var worksheet in Workbook.Worksheets(@"C:\temp\160603_ExcelLibraryEditor.xlsx"))
             {
 
                 foreach (var row in worksheet.Rows)
@@ -44,7 +45,7 @@ namespace Excel2JSON
 
 
 
-
+                        Debug.WriteLine(cell.Text +" "+ cell.Amount);
 
 
 
