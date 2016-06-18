@@ -3,7 +3,7 @@
 namespace Excel
 {
     /// <summary>
-    /// (c) 2014 Vienna, Dietmar Schoder
+    /// 
     /// 
     /// Code Project Open License (CPOL) 1.02
     /// 
