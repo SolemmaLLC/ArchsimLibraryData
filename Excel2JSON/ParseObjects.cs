@@ -17,7 +17,7 @@ namespace Excel2JSON
 
 
 
-        internal static List<T> ObjectsNew<T>(XSSFSheet sh)
+        internal static List<T> Objects<T>(XSSFSheet sh)
         {
             if (sh == null) return null;
 
@@ -38,7 +38,7 @@ namespace Excel2JSON
                 StringBuilder sbCSharp;
                 StringBuilder sbJSON;
 
-                ParseClassNew(row, header, out sbJSON, out sbCSharp);
+                ParseObject(row, header, out sbJSON, out sbCSharp);
 
 
 
@@ -51,7 +51,7 @@ namespace Excel2JSON
                 }
                 catch
                 {
-                    Debug.WriteLine(sbJSON + "  is not valid");
+                    Debug.WriteLine(sh.SheetName + " Row " + i + " "+ sbJSON + "  is not valid");
                 }
 
 
@@ -65,7 +65,7 @@ namespace Excel2JSON
 
 
 
-        private static void ParseClassNew(IRow row, IRow header, out StringBuilder sbJSON, out StringBuilder sbCSharp)
+        private static void ParseObject(IRow row, IRow header, out StringBuilder sbJSON, out StringBuilder sbCSharp)
         {
             sbCSharp = new StringBuilder();
             sbJSON = new StringBuilder();
@@ -106,7 +106,7 @@ namespace Excel2JSON
                     sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.BooleanCellValue.ToString());
                     sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.BooleanCellValue.ToString());
                 }
-           
+
 
 
 
@@ -115,8 +115,8 @@ namespace Excel2JSON
                 {
                     bool truefalse;
 
-                      // is it a boolean?
-                 if (bool.TryParse(cell.StringCellValue, out truefalse))
+                    // is it a boolean?
+                    if (bool.TryParse(cell.StringCellValue, out truefalse))
                     {
                         sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.StringCellValue.Trim());
                         sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.StringCellValue.Trim());
@@ -150,8 +150,8 @@ namespace Excel2JSON
             sbCSharp.Append(" }");
             sbJSON.Append(" }");
 
-          //  Debug.WriteLine(sbCSharp.ToString());
-          //  Debug.WriteLine(sbJSON.ToString());
+            //  Debug.WriteLine(sbCSharp.ToString());
+            //  Debug.WriteLine(sbJSON.ToString());
         }
 
 
@@ -177,16 +177,16 @@ namespace Excel2JSON
                 var row = sh.GetRow(i);
                 i++;
 
-              
+
                 try
                 {
                     OpaqueConstruction mat;
                     mat = ParseConstruction(row, header, ref lib);
                     Objects.Add(mat);
                 }
-                catch
+                catch(Exception e)
                 {
-                    Debug.WriteLine("Row " + i + "  is not valid");
+                    Debug.WriteLine(sh.SheetName + " Row " + i + "  is not valid " + e.Message);
                 }
 
             }
@@ -194,75 +194,92 @@ namespace Excel2JSON
             return Objects;
         }
 
-        private static OpaqueConstruction ParseConstruction(IRow row, IRow header, ref Library lib) 
+        private static OpaqueConstruction ParseConstruction(IRow row, IRow header, ref Library lib)
         {
-            //sbCSharp = new StringBuilder();
-            //sbJSON = new StringBuilder();
-            //sbCSharp.Append("{ ");
-            //sbJSON.Append("{ ");
 
 
             string name = "";
-            string comment ="";
-            string source="";
+            //string comment = "";
+            string source = "";
             string category = "";
-                ConstructionTypes type = ConstructionTypes.Facade;
+            ConstructionTypes type = ConstructionTypes.Facade;
 
-                List<string> cnames = new List<string>();
-                List<double> cthick = new List<double>();
+            List<string> cnames = new List<string>();
+            List<double> cthick = new List<double>();
 
             for (int j = 0; j < row.Cells.Count; j++)
             {
                 var cell = row.GetCell(j);
                 var head = header.GetCell(j);
-                
+                string headVal ="";
+                    
+                 if(head!=null) headVal   = head.StringCellValue.Trim().ToLower();
 
-                if (cell == null || head == null) continue;
 
-
-     
-
-                if (j < 4)
+                if (cell != null)
                 {
-                    if (head.StringCellValue.Trim().ToLower() == "name")
+
+                    
+                    if (headVal == "name")
                     {
-                            name = cell.StringCellValue.Trim();
+                        name = cell.StringCellValue.Trim();
                     }
-                    else if (head.StringCellValue.Trim().ToLower() == "comment")
-                    {
-                        comment = cell.StringCellValue.Trim();
-                    }
-                    else if (head.StringCellValue.Trim().ToLower() == "source")
+                    //else if (headVal == "comment")
+                    //{
+                    //    comment = cell.StringCellValue.Trim();
+                    //}
+                    else if (headVal == "source")
                     {
                         source = cell.StringCellValue.Trim();
                     }
-                    else if (head.StringCellValue.Trim().ToLower() == "category")
+                    else if (headVal == "category")
                     {
                         category = cell.StringCellValue.Trim();
                     }
-                    else if (head.StringCellValue.Trim().ToLower() == "type")
+                    else if (headVal == "type")
                     {
                         ConstructionTypes ct = ConstructionTypes.Facade;
                         if (ConstructionTypes.TryParse(cell.StringCellValue, out ct))
                         {
                             type = ct;
                         }
-                        //else type = ConstructionTypes.Facade;
                     }
 
-                }
-
-                else
-                {
-
-                    if (cell.CellType == CellType.Numeric || cell.CellType == CellType.Formula)
+                    else
                     {
-                        cthick.Add(cell.NumericCellValue);
-                    }
 
-                    else if (cell.CellType == CellType.String)
-                    {
-                        cnames.Add(cell.StringCellValue.Trim());
+                        if (cell.CellType == CellType.Numeric)
+                        {
+                        
+                            cthick.Add(cell.NumericCellValue);
+                        }
+
+                        else if (cell.CellType == CellType.String)
+                        {
+                            cnames.Add(cell.StringCellValue.Trim());
+                        }
+
+                        if ( cell.CellType == CellType.Formula)
+                        {
+
+                            try
+                            {
+                                cthick.Add(cell.NumericCellValue);
+                            }
+                            catch
+                            {
+                                
+                            }
+                            try
+                            {
+                                cnames.Add(cell.StringCellValue.Trim());
+                            }
+                            catch
+                            {
+                               
+                            }
+                        }
+
                     }
                 }
 
@@ -273,145 +290,10 @@ namespace Excel2JSON
 
             return c;
 
-            //sbCSharp.Append(" }");
-            //sbJSON.Append(" }");
-
-            //  Debug.WriteLine(sbCSharp.ToString());
-            //  Debug.WriteLine(sbJSON.ToString());
         }
 
 
 
 
-
-        //internal static List<T> Objects<T>(worksheet worksheet)
-        //{
-        //    List<T> Objects = new List<T>();
-
-        //    var header = worksheet.Rows[0];
-
-        //    for (int i = 0; i < worksheet.Rows.Length; i++)
-        //    {
-
-        //        if (i == 0)
-        //        {
-        //            continue;
-        //        }
-
-        //        var row = worksheet.Rows[i];
-
-        //        StringBuilder sbCSharp;
-        //        StringBuilder sbJSON;
-
-        //        ParseClass(row, header, out sbJSON, out sbCSharp);
-
-        //        T mat;
-        //        try
-        //        {
-        //            mat = Serialization.Deserialize<T>(sbJSON.ToString());
-        //            Objects.Add(mat);
-        //        }
-        //        catch
-        //        {
-        //            Debug.WriteLine(sbJSON + "  is not valid");
-        //        }
-
-        //    }
-        //    return Objects;
-        //}
-
-        //private static void ParseClass(Row row, Row header, out StringBuilder sbJSON, out StringBuilder sbCSharp)
-        //{
-        //    sbCSharp = new StringBuilder();
-        //    sbJSON = new StringBuilder();
-        //    sbCSharp.Append("{ ");
-        //    sbJSON.Append("{ ");
-
-        //    for (int j = 0; j < row.Cells.Length; j++)
-        //    {
-        //        var cell = row.Cells[j];
-        //        var head = header.Cells[j];
-        //        if (cell == null || head == null) continue;
-
-        //        bool truefalse;
-        //        double number;
-
-        //        // is it a number?
-        //        if (double.TryParse(cell.Text, out number))
-        //        {
-        //            sbCSharp.Append(header.Cells[j].Text.Trim() + " = " + number);
-        //            sbJSON.Append("\"" + header.Cells[j].Text.Trim() + "\"" + " : " + number);
-        //        }
-        //        // is it a boolean?
-        //        else if (bool.TryParse(cell.Text, out truefalse))
-        //        {
-        //            sbCSharp.Append(header.Cells[j].Text.Trim() + " = " + cell.Text.Trim());
-        //            sbJSON.Append("\"" + header.Cells[j].Text.Trim() + "\"" + " : " + cell.Text.Trim());
-        //        }
-        //        // or is it a string?
-        //        else
-        //        {
-        //            string txt = "";
-        //            if (!String.IsNullOrWhiteSpace(cell.Text))
-        //            {
-        //                txt = cell.Text.Trim();
-        //            }
-        //            sbCSharp.Append(header.Cells[j].Text.Trim() + " = \"" + txt + "\"");
-        //            sbJSON.Append("\"" + header.Cells[j].Text.Trim() + "\"" + " : \"" + txt + "\"");
-        //        }
-        //        if (j != row.Cells.Length - 1)
-        //        {
-        //            sbCSharp.Append(", ");
-        //            sbJSON.Append(", ");
-        //        }
-        //    }
-        //    sbCSharp.Append(" }");
-        //    sbJSON.Append(" }");
-
-        //    Debug.WriteLine(sbCSharp.ToString());
-        //    Debug.WriteLine(sbJSON.ToString());
-        //}
-
-
-        //private static void ParseClass_Old(Row row, Row header, out StringBuilder sbJSON, out StringBuilder sbCSharp)
-        //{
-        //    sbCSharp = new StringBuilder();
-        //    sbJSON = new StringBuilder();
-        //    sbCSharp.Append("{ ");
-        //    sbJSON.Append("{ ");
-
-        //    for (int j = 0; j < row.Cells.Length; j++)
-        //    {
-        //        var cell = row.Cells[j];
-        //        var head = header.Cells[j];
-        //        if (cell == null || head == null) continue;
-
-        //        if (cell.IsAmount)
-        //        {
-        //            sbCSharp.Append(header.Cells[j].Text.Trim() + " = " + cell.Amount);
-        //            sbJSON.Append("\"" + header.Cells[j].Text.Trim() + "\"" + " : " + cell.Amount);
-        //        }
-        //        else
-        //        {
-        //            string txt = "";
-        //            if (!String.IsNullOrWhiteSpace(cell.Text))
-        //            {
-        //                txt = cell.Text.Trim();
-        //            }
-        //            sbCSharp.Append(header.Cells[j].Text.Trim() + " = \"" + txt + "\"");
-        //            sbJSON.Append("\"" + header.Cells[j].Text.Trim() + "\"" + " : \"" + txt + "\"");
-        //        }
-        //        if (j != row.Cells.Length - 1)
-        //        {
-        //            sbCSharp.Append(", ");
-        //            sbJSON.Append(", ");
-        //        }
-        //    }
-        //    sbCSharp.Append(" }");
-        //    sbJSON.Append(" }");
-
-        //    Debug.WriteLine(sbCSharp.ToString());
-        //    Debug.WriteLine(sbJSON.ToString());
-        //}
     }
 }
