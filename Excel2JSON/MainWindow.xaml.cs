@@ -116,7 +116,7 @@ namespace Excel2JSON
             {
                 Debug.WriteLine("Worksheet " + wb.GetSheetAt(k).SheetName);
             }
-
+             
             Library lib = new Library();
 
 
@@ -136,6 +136,11 @@ namespace Excel2JSON
             lib.ZoneVentilations = Parse.ObjectsNew<ZoneVentilation>((XSSFSheet)wb.GetSheet("ZoneVentilation"));
             lib.ZoneConstructions = Parse.ObjectsNew<ZoneConstruction>((XSSFSheet)wb.GetSheet("ZoneConstruction"));
             lib.DomHotWaters = Parse.ObjectsNew<DomHotWater>((XSSFSheet)wb.GetSheet("DomHotWater"));
+
+
+
+            lib.OpaqueConstructions = Parse.Constructions((XSSFSheet) wb.GetSheet("Construction"), ref lib);
+
 
             return lib;
 
