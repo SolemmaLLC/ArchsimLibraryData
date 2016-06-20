@@ -24,26 +24,26 @@ namespace ArchsimLib
                     {
                         string serializedData = File.ReadAllText(Utilities.AssemblyDirectory + @"\" + DefaultLibrary.FileName);
                         Library = Library.fromJSON(serializedData);
-                        // RhinoApp.WriteLine("Loading defualt library from " + Utilities.AssemblyDirectory + @"\" + DefaultLibrary.FileName);
+                        Debug.WriteLine("Loading defualt library from " + Utilities.AssemblyDirectory + @"\" + DefaultLibrary.FileName);
                     }
 
             }
             catch (Exception ex) {
-              //  Rhino.RhinoApp.WriteLine("Default library loading error " + ex.Message);
+             Debug.WriteLine("Default library loading error " + ex.Message);
             }
 
 
             try {
                     if(Library == null)
                     {
-                      //  RhinoApp.WriteLine("No default library found at " + Utilities.AssemblyDirectory + @"\" + DefaultLibrary.FileName + " Resetting default library.");
+                      Debug.WriteLine("No default library found at " + Utilities.AssemblyDirectory + @"\" + DefaultLibrary.FileName + " Resetting default library.");
                         Library = LibraryDefaults.getHardCodedDefaultLib();
                         writeDefaultLibrary(Library);
                     }
             
             }
             catch (Exception ex) {
-                //RhinoApp.WriteLine("Default library resetting error " + ex.Message);
+                Debug.WriteLine("Default library resetting error " + ex.Message);
             }
 
 
@@ -66,7 +66,7 @@ namespace ArchsimLib
             {
                     string newLib = Library.toJSON();
                     File.WriteAllText(rootPath + @"\" + DefaultLibrary.FileName, newLib);
-                    //Rhino.RhinoApp.WriteLine("Library written to " + rootPath  + @"\" + DefaultLibrary.FileName);
+                Debug.WriteLine("Library written to " + rootPath  + @"\" + DefaultLibrary.FileName);
             }
             catch { Debug.WriteLine("Library writing error"); }
         }

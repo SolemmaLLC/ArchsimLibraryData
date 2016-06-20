@@ -13,27 +13,33 @@ using System.Diagnostics;
 namespace ArchsimLib
 {
 
-    public static class DefaultLibrary {
+    public static class DefaultLibrary
+    {
         public readonly static string FileName = "ArchsimDefaultLibrary.json";
     }
 
 
-    public static class ArchsimVersion{
-    
- public  const string ProductVersion = "1.6.0.2";
+    public static class ArchsimVersion
+    {
+
+        public const string ProductVersion = "4.0.2.8";
     }
+
+
     public static class Utilities
     {
 
-        static public string AssemblyVersion {
+        static public string AssemblyVersion
+        {
 
-            get {
+            get
+            {
                 Assembly assembly = Assembly.GetExecutingAssembly();
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
                 return fvi.FileVersion;
             }
-        
-        
+
+
         }
 
 
@@ -70,11 +76,37 @@ namespace ArchsimLib
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Debug.WriteLine("createDir: "+ex.Message);
+                Debug.WriteLine("createDir: " + ex.Message);
             }
         }
 
+
+
+
+        public static bool IsJson(string input)
+        {
+            input = input.Trim();
+            return input.StartsWith("{") && input.EndsWith("}")
+                   || input.StartsWith("[") && input.EndsWith("]");
+        }
+        /// <summary> determines whether a string is formatted as a full file or directory path
+        /// </summary>
+        /// <param name="test_string">string to test</param>
+        /// <returns>true or false</returns>
+        public static bool StringIsPath(string test_string)
+        {
+            try
+            {
+                if (string.Equals(test_string, Path.GetFullPath(test_string), StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            catch { }
+
+            return false;
+        }
     }
 }

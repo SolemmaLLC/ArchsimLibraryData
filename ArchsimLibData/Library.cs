@@ -7,7 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.Serialization;
-using Rhino;
+
 
 namespace ArchsimLib
 {
@@ -416,7 +416,7 @@ namespace ArchsimLib
             }
             catch (Exception ex)
             {
-                RhinoApp.WriteLine("Could not find " + name +": "+ ex.Message);
+                Debug.WriteLine("Could not find " + name +": "+ ex.Message);
                 return default(T);
             }
         }
