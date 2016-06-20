@@ -117,7 +117,7 @@ namespace ArchsimLib
         {
             bool changed = false;
 
-            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
 
             if (this.VisibleAbsorptance < 0.001) { this.VisibleAbsorptance = 0.001; changed = true; }
@@ -240,7 +240,7 @@ namespace ArchsimLib
         {
             bool changed = false;
 
-            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
 
 

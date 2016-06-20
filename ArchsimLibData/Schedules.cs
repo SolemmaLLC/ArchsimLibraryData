@@ -30,11 +30,11 @@ namespace ArchsimLib
             Type = _Type;
             Values = _Vals;
         }
-        internal bool Correct()
+        public bool Correct()
         {
             bool changed = false;
 
-            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
             if (this.Type == "Fraction")
             {
@@ -78,17 +78,17 @@ namespace ArchsimLib
             Days = _Days;
             Type = _Type;
         }
-        internal bool Correct()
+        public bool Correct()
         {
             bool changed = false;
 
-            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
 
             // clean up all refereced names
             for (int i = 0; i < Days.Length; i++)
             {
-                string cleanref = HelperFunctions.RemoveSpecialCharacters(Days[i].Name);
+                string cleanref = Formating.RemoveSpecialCharactersNotStrict(Days[i].Name);
                 if (Days[i].Name != cleanref) { Days[i].Name = cleanref; changed = true; }
             }
 
@@ -167,18 +167,18 @@ namespace ArchsimLib
         }
 
 
-        internal bool Correct()
+        public bool Correct()
         {
             bool changed = false;
 
-            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
 
 
             // clean up all refereced names
             for (int i = 0; i < WeekSchedules.Count; i++)
             {
-                string cleanref = HelperFunctions.RemoveSpecialCharacters(WeekSchedules[i].Name);
+                string cleanref = Formating.RemoveSpecialCharactersNotStrict(WeekSchedules[i].Name);
                 if (WeekSchedules[i].Name != cleanref) { WeekSchedules[i].Name = cleanref; changed = true; }
             }
 

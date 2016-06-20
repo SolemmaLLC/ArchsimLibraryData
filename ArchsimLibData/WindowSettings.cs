@@ -63,7 +63,7 @@ namespace ArchsimLib
         [DataMember]
         public bool ShadingSystemIsOn { get; set; } = true;
         [DataMember]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public ShadingType ShadingSystemType { get; set; } = ShadingType.ExteriorShade;//"ExteriorShade";
         [DataMember]
         public string ZoneMixingAvailibilitySchedule { get; set; } = "AllOn";

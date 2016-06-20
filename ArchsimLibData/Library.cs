@@ -7,6 +7,7 @@ using System.IO;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.Serialization;
+using Rhino;
 
 namespace ArchsimLib
 {
@@ -415,7 +416,7 @@ namespace ArchsimLib
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Could not find " + name +": "+ ex.Message);
+                RhinoApp.WriteLine("Could not find " + name +": "+ ex.Message);
                 return default(T);
             }
         }
@@ -661,7 +662,7 @@ namespace ArchsimLib
                 {
 
                     // find strange names
-                    string cleanName = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                    string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                     if (op.Name != cleanName)
                     {
                         errorReport += op.Name + " --> " + cleanName + " invalid characters have been removed" + "\r\n";
@@ -690,7 +691,7 @@ namespace ArchsimLib
                 {
 
                     // find strange names
-                    string cleanName = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                    string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                     if (op.Name != cleanName)
                     {
                         errorReport += op.Name + " --> " + cleanName + " invalid characters have been removed" + "\r\n";
@@ -715,11 +716,11 @@ namespace ArchsimLib
 
             foreach (OpaqueConstruction op in this.OpaqueConstructions)
             {
-                string cleanName = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                 if (cleanName != op.Name)
                 {
 
-                    //op.Name = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                    //op.Name = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                     errorReport += "Construction  " + op.Name + " name contained invalid characters and has been auto corrected to " + cleanName + "\r\n";
                     op.Name = cleanName;
                 }
@@ -727,7 +728,7 @@ namespace ArchsimLib
                 foreach (var ol in op.Layers)
                 {
 
-                    ol.Material.Name = HelperFunctions.RemoveSpecialCharacters(ol.Material.Name);// fix as in materials
+                    ol.Material.Name = Formating.RemoveSpecialCharactersNotStrict(ol.Material.Name);// fix as in materials
                     if (ol.Correct())
                     {
                         errorReport += "Layer in  " + op.Name + " contained invalid thickness \r\n";
@@ -741,11 +742,11 @@ namespace ArchsimLib
 
             foreach (GlazingConstruction op in this.GlazingConstructions)
             {
-                string cleanName = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                 if (cleanName != op.Name)
                 {
 
-                    //op.Name = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                    //op.Name = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                     errorReport += "Construction  " + op.Name + " name contained invalid characters and has been auto corrected to " + cleanName + "\r\n";
                     op.Name = cleanName;
                 }
@@ -753,7 +754,7 @@ namespace ArchsimLib
                 foreach (var ol in op.Layers)
                 {
 
-                    ol.SetMaterialName(HelperFunctions.RemoveSpecialCharacters(ol.GetMaterialName()));// fix as in materials
+                    ol.SetMaterialName(Formating.RemoveSpecialCharactersNotStrict(ol.GetMaterialName()));// fix as in materials
                     if (ol.Correct())
                     {
                         errorReport += "Layer in  " + op.Name + " contained invalid thickness \r\n";
@@ -771,7 +772,7 @@ namespace ArchsimLib
 
 
                     // find strange names
-                    string cleanName = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                    string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                     if (op.Name != cleanName)
                     {
 
@@ -800,7 +801,7 @@ namespace ArchsimLib
                 {
 
                     // find strange names
-                    string cleanName = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                    string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                     if (op.Name != cleanName)
                     {
                         errorReport += op.Name + " --> " + cleanName + " invalid characters have been removed" + "\r\n";
@@ -828,7 +829,7 @@ namespace ArchsimLib
                 {
 
                     // find strange names
-                    string cleanName = HelperFunctions.RemoveSpecialCharacters(op.Name);
+                    string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
                     if (op.Name != cleanName)
                     {
 

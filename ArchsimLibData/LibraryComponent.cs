@@ -55,5 +55,11 @@ namespace ArchsimLib
             return Serialization.Deserialize<T>(context);
         }
 
+
+        public override string ToString()
+        {
+            return  Name;
+        }
+
     }
 }

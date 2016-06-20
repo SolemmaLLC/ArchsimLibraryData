@@ -44,10 +44,10 @@ namespace ArchsimLib
 
 
         [DataMember]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public IdealSystemLimit HeatingLimitType { get; set; } = IdealSystemLimit.NoLimit;// "NoLimit";
         [DataMember]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public IdealSystemLimit CoolingLimitType { get; set; } = IdealSystemLimit.NoLimit;// "NoLimit";
         [DataMember]
         [Units("W/m2")]
@@ -75,10 +75,10 @@ namespace ArchsimLib
         [DataMember][Units("L/s/m2")]
         public double MinFreshAirArea { get; set; } = 0.3;
         [DataMember]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public EconomizerItem EconomizerType { get; set; } = EconomizerItem.NoEconomizer;//"NoEconomizer";
         [DataMember]
-        [JsonConverter(typeof(StringEnumConverter))]
+        //[JsonConverter(typeof(StringEnumConverter))]
         public HeatRecoveryItem HeatRecoveryType { get; set; } = HeatRecoveryItem.None;// "None";
         [DataMember]
         public double HeatRecoveryEfficiencySensible { get; set; } = 0.7;

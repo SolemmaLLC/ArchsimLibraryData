@@ -64,11 +64,11 @@ namespace ArchsimLib
 
 
 
-        [DataMember, DefaultValue(InConvAlgo.TARP), JsonConverter(typeof(StringEnumConverter))]
-        public InConvAlgo SurfaceConvectionModelInside { get; set; } = InConvAlgo.TARP;
+		[DataMember, DefaultValue(InConvAlgo.TARP)] //, JsonConverter(typeof(StringEnumConverter)),   //---- enum converter removed due to:  http://stackoverflow.com/questions/37776866/json-net-8-0-error-creating-stringenumconverter-on-mono-4-5-mac
+		public InConvAlgo SurfaceConvectionModelInside { get; set; } = InConvAlgo.TARP;
 
-        [DataMember, DefaultValue(OutConvAlgo.DOE2), JsonConverter(typeof(StringEnumConverter))]
-        public OutConvAlgo SurfaceConvectionModelOutside { get; set; } = OutConvAlgo.DOE2;
+        [DataMember, DefaultValue(OutConvAlgo.DOE2)] //, JsonConverter(typeof(StringEnumConverter))
+		public OutConvAlgo SurfaceConvectionModelOutside { get; set; } = OutConvAlgo.DOE2;
 
 
 

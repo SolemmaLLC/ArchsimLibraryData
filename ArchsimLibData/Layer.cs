@@ -47,6 +47,11 @@ namespace ArchsimLib
             if (mat != null)  mat.Name = name;
         }
 
+
+        public override string ToString()
+        {
+            return "Material: " +Material.ToString() + " Thickness: " + Math.Round(Thickness,2) ;
+        }
     }
 
 

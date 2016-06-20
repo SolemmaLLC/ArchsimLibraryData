@@ -40,7 +40,7 @@ namespace ArchsimLib
         {
             bool changed = false;
 
-            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
 
             foreach (Layer<OpaqueMaterial> l in Layers) { if (l.Correct()) { changed = true; } }
@@ -82,7 +82,7 @@ namespace ArchsimLib
         {
             bool changed = false;
 
-            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
 
             foreach (var l in Layers) { if (l.Correct()) { changed = true; } }
@@ -126,7 +126,7 @@ namespace ArchsimLib
         {
             bool changed = false;
 
-            string cleanName = HelperFunctions.RemoveSpecialCharacters(this.Name);
+            string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
 
             if (this.SHGF < 0.0) { this.SHGF = 0.0; changed = true; }
