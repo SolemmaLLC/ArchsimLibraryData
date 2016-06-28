@@ -26,7 +26,7 @@ namespace Excel2JSON
 
             var header = sh.GetRow(0);
 
-            for (int i = 1; i < sh.LastRowNum+1; i++)
+            for (int i = 1; i < sh.LastRowNum + 1; i++)
             {
                 var row = sh.GetRow(i);
                 if (row == null) continue;
@@ -49,7 +49,7 @@ namespace Excel2JSON
                 catch
                 {
                     Debug.WriteLine(sh.SheetName + " Row " + i + " " + sbJSON + "  is not valid");
-                } 
+                }
             }
 
             return Objects;
@@ -164,7 +164,7 @@ namespace Excel2JSON
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine("ERROR: "+ sh.SheetName + " Row " + i + "  is not valid " + e.Message);
+                    Debug.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
                     Logger.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
                 }
 
@@ -337,7 +337,7 @@ namespace Excel2JSON
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine("ERROR: "  + lookup + "  does not exsist in Library " + e.Message);
+                        Debug.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
                         Logger.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
                     }
                 }
@@ -447,8 +447,8 @@ namespace Excel2JSON
                     YearSchedule mat;
                     mat = ParseSchedule(row, header, ref lib);
                     if (mat != null) { Objects.Add(mat); }
-                
-                  
+
+
                 }
                 catch (Exception e)
                 {
@@ -469,7 +469,7 @@ namespace Excel2JSON
             //string comment = "";
             string source = "";
             string category = "";
-         
+
             List<double> values = new List<double>();
 
 
@@ -480,7 +480,8 @@ namespace Excel2JSON
                 var head = header.GetCell(j);
                 string headVal = "";
 
-                if (head != null) {
+                if (head != null)
+                {
 
                     if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
                 }
@@ -504,7 +505,7 @@ namespace Excel2JSON
                 {
                     category = cell.StringCellValue.Trim();
                 }
-               
+
 
                 else
                 {
@@ -520,7 +521,7 @@ namespace Excel2JSON
                         {
                             values.Add(cell.NumericCellValue);
                         }
-                      
+
                     }
                 }
 
@@ -530,10 +531,74 @@ namespace Excel2JSON
             var second = values.Skip(24).Take(24);
 
 
-            var sched =YearSchedule.QuickSchedule(name, first.ToArray(), second.ToArray(), category, source, ref lib);
+            var sched = YearSchedule.QuickSchedule(name, first.ToArray(), second.ToArray(), category, source, ref lib);
 
             return sched;
 
         }
+
+        internal static List<ScheduleArray> ArraySchedule(XSSFSheet sh, ref Library lib)
+        {
+            if (sh == null) return null;
+
+            List<ScheduleArray> Objects = new List<ScheduleArray>();
+
+
+            var header = sh.GetRow(0);
+            for (int j = 0; j < header.Cells.Count; j++)
+            {
+                var head = header.GetCell(j);
+                string headVal = "";
+
+                if (head != null)
+                {
+
+                    if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
+                }
+
+
+                var sched = new ScheduleArray();
+                sched.Values = new double[8760];
+                sched.Name = headVal;
+                Objects.Add(sched);
+            }
+
+
+            for (int i = 1; i < sh.LastRowNum + 1; i++)
+            {
+                var row = sh.GetRow(i);
+                if (row == null) continue;
+
+                for (int j = 0; j < row.Cells.Count; j++)
+                {
+                    var cell = row.GetCell(j);
+
+                    if (cell == null) continue;
+
+
+
+                    if (cell.CellType == CellType.Numeric)
+                    {
+                        Objects[j].Values[i-1] = cell.NumericCellValue;
+                    }
+
+                    else if (cell.CellType == CellType.Formula)
+                    {
+                        if (cell.CachedFormulaResultType == CellType.Numeric)
+                        {
+                            Objects[j].Values[i-1] = cell.NumericCellValue;
+                        }
+                    }
+
+
+                }
+
+
+
+            }
+
+            return Objects;
+        }
+
     }
 }
