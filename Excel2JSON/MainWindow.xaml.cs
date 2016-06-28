@@ -21,7 +21,7 @@ using NPOI.XSSF.UserModel;
 
 namespace Excel2JSON
 {
-    /// <summary>
+   /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
@@ -58,6 +58,11 @@ namespace Excel2JSON
             string JsonName = System.IO.Path.GetFileNameWithoutExtension(file) + ".json" ;
             string JsonFile = System.IO.Path.Combine(JsonPath, JsonName);
 
+
+            Logger.WriteLine("Finished... writing JSON library to "+ JsonFile);
+
+            loggerBox.Text = Logger.log.ToString();
+
            File.WriteAllText(JsonFile, lib.toJSON());
 
         }
@@ -73,10 +78,11 @@ namespace Excel2JSON
                 wb = new XSSFWorkbook(fs);
             }
 
-
+            //Logger.WriteLine("Worksheets in file:");
             for (int k = 0; k < wb.Count; k++)
             {
-                Debug.WriteLine("Worksheet " + wb.GetSheetAt(k).SheetName);
+             //   Debug.WriteLine("Worksheet " + wb.GetSheetAt(k).SheetName);
+              //  Logger.WriteLine("Worksheet " + wb.GetSheetAt(k).SheetName);
             }
              
             Library lib = new Library();
@@ -88,7 +94,10 @@ namespace Excel2JSON
             {
                 var hash = new HashSet<string>();
                 var duplicates = lib.OpaqueMaterials.Where(x => !hash.Add(x.Name));
-                foreach (var d in duplicates) { Debug.WriteLine("WARNING: Duplicate name " +d.Name);  }
+                foreach (var d in duplicates) {
+                    Debug.WriteLine("WARNING: Duplicate name " +d.Name);
+                    Logger.WriteLine("WARNING: Duplicate name " + d.Name);
+                }
 
                  hash = new HashSet<string>();
                 lib.OpaqueMaterials = lib.OpaqueMaterials.Where(x => hash.Add(x.Name)).ToList();

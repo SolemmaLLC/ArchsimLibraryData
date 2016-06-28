@@ -66,7 +66,8 @@ namespace ArchsimLib
                     else
                     {
 
-                        Debug.WriteLine("Could not find " + layers[i]);
+                        Debug.WriteLine("ERROR: " + "Could not find " + layers[i]);
+                        Logger.WriteLine("ERROR: " + "Could not find " + layers[i]);
                         return null;
 
                     }

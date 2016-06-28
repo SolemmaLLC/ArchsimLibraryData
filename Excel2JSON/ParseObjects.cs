@@ -178,7 +178,8 @@ namespace Excel2JSON
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(sh.SheetName + " Row " + i + "  is not valid " + e.Message);
+                    Debug.WriteLine("ERROR: "+ sh.SheetName + " Row " + i + "  is not valid " + e.Message);
+                    Logger.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
                 }
 
             }
@@ -302,7 +303,8 @@ namespace Excel2JSON
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(sh.SheetName + " Row " + i + "  is not valid " + e.Message);
+                    Debug.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
+                    Logger.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
                 }
 
             }
@@ -349,7 +351,8 @@ namespace Excel2JSON
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                        Debug.WriteLine("ERROR: "  + lookup + "  does not exsist in Library " + e.Message);
+                        Logger.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
                     }
                 }
                 else if (headVal == "zoneconditioning")
@@ -365,7 +368,8 @@ namespace Excel2JSON
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                        Debug.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
+                        Logger.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
                     }
                 }
                 else if (headVal == "ventilation")
@@ -381,7 +385,8 @@ namespace Excel2JSON
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                        Debug.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
+                        Logger.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
                     }
                 }
                 else if (headVal == "domhotwater")
@@ -397,7 +402,8 @@ namespace Excel2JSON
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                        Debug.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
+                        Logger.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
                     }
                 }
                 else if (headVal == "zoneconstruction")
@@ -413,7 +419,8 @@ namespace Excel2JSON
                     }
                     catch (Exception e)
                     {
-                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                        Debug.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
+                        Logger.WriteLine("ERROR: " + lookup + "  does not exsist in Library " + e.Message);
                     }
                 }
 

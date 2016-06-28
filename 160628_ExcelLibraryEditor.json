@@ -1,6 +1,6 @@
 {
   "Version": "4.0.2.8",
-  "TimeStamp": "2016-06-28T19:19:22.6488798+02:00",
+  "TimeStamp": "2016-06-28T20:28:31.9677503+02:00",
   "OpaqueMaterials": [
     {
       "$id": "1",
@@ -1804,31 +1804,6 @@
     },
     {
       "$id": "73",
-      "Conductivity": 0.035,
-      "Density": 32.0,
-      "Roughness": "Rough",
-      "SpecificHeat": 840.0,
-      "ThermalEmittance": 0.9,
-      "SolarAbsorptance": 0.6,
-      "VisibleAbsorptance": 0.6,
-      "MoistureDiffusionResistance": 50.0,
-      "PhaseChange": false,
-      "PhaseChangeProperties": "",
-      "VariableConductivity": false,
-      "VariableConductivityProperties": "",
-      "EmbodiedEnergy": 0.0,
-      "EmbodiedEnergyStdDev": 0.0,
-      "EmbodiedCarbon": 0.0,
-      "EmbodiedCarbonStdDev": 0.0,
-      "Cost": 0.0,
-      "Life": 1,
-      "Comment": "Roxul CavityRock and Comfort Batt Averaged",
-      "DataSource": "No data source",
-      "Category": "Insulation",
-      "Name": "Mineral Wool"
-    },
-    {
-      "$id": "74",
       "Conductivity": 0.13,
       "Density": 800.0,
       "Roughness": "Rough",
@@ -1853,7 +1828,7 @@
       "Name": "Gypsum Fiberglass-Faced Sheathing"
     },
     {
-      "$id": "75",
+      "$id": "74",
       "Conductivity": 0.13,
       "Density": 800.0,
       "Roughness": "Rough",
@@ -1878,7 +1853,7 @@
       "Name": "Gypsum Plaster"
     },
     {
-      "$id": "76",
+      "$id": "75",
       "Conductivity": 0.025,
       "Density": 24.0,
       "Roughness": "Rough",
@@ -1903,7 +1878,7 @@
       "Name": "Polyisocyanurate"
     },
     {
-      "$id": "77",
+      "$id": "76",
       "Conductivity": 0.16,
       "Density": 1120.0,
       "Roughness": "Rough",
@@ -1928,7 +1903,7 @@
       "Name": "Roof Membrane"
     },
     {
-      "$id": "78",
+      "$id": "77",
       "Conductivity": 0.029,
       "Density": 30.0,
       "Roughness": "Rough",
@@ -2106,6 +2081,336 @@
       "Name": "300mmConcrete 80mmInsulation 80mmScreed"
     },
     {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.04
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.705_Climate1"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.0631
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.479_Climate2_NonRes"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.07
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.435_Climate3_NonRes"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.086
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.365_Climate4_NonRes"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.086
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.365_Climate4-7_Res"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.101
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.315_Climate5"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.116
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.277_Climate6-7_NonRes"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.116
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.277_Climate6_Res"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.136
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.240_Climate7_Res"
+    },
+    {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "66"
+          },
+          "Thickness": 0.155
+        },
+        {
+          "Material": {
+            "$ref": "73"
+          },
+          "Thickness": 0.013
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Based on maximum assembly U-Factor (SI units) from ASHRAE 90.1 2013 Ch. 5 Building Envelope Requirements, Steel Framed.",
+      "Name": "Wall_U-0.212_Climate8"
+    },
+    {
       "Layers": [],
       "Type": 0,
       "Category": "",
@@ -2155,7 +2460,7 @@
   "ArraySchedules": [],
   "ZoneLoads": [
     {
-      "$id": "79",
+      "$id": "78",
       "PeopleDensity": 0.025,
       "MetabolicRate": 1.2,
       "EquipmentPowerDensity": 2.0,
@@ -2174,7 +2479,7 @@
       "Name": "BedroomLoads"
     },
     {
-      "$id": "80",
+      "$id": "79",
       "PeopleDensity": 0.2,
       "MetabolicRate": 1.2,
       "EquipmentPowerDensity": 40.0,
@@ -2193,7 +2498,7 @@
       "Name": "KitchenLoads"
     },
     {
-      "$id": "81",
+      "$id": "80",
       "PeopleDensity": 0.0714285714285714,
       "MetabolicRate": 1.2,
       "EquipmentPowerDensity": 7.0,
@@ -2214,7 +2519,7 @@
   ],
   "ZoneVentilations": [
     {
-      "$id": "82",
+      "$id": "81",
       "InfiltrationModel": 1,
       "NatVentIsOn": false,
       "SchedVentIsOn": false,
@@ -2237,7 +2542,7 @@
       "Name": "PoorAirTightness"
     },
     {
-      "$id": "83",
+      "$id": "82",
       "InfiltrationModel": 1,
       "NatVentIsOn": false,
       "SchedVentIsOn": false,
@@ -2263,7 +2568,7 @@
   "ZoneConstructions": [],
   "ZoneConditionings": [
     {
-      "$id": "84",
+      "$id": "83",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 19.0,
@@ -2295,7 +2600,7 @@
       "Name": "BedroomHeatingCoolingMechVent"
     },
     {
-      "$id": "85",
+      "$id": "84",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 20.0,
@@ -2327,7 +2632,7 @@
       "Name": "KitchenHeatingCoolingMechVent"
     },
     {
-      "$id": "86",
+      "$id": "85",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 20.0,
@@ -2359,7 +2664,7 @@
       "Name": "OfficeHeatingCoolingMechVent"
     },
     {
-      "$id": "87",
+      "$id": "86",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 20.0,
@@ -2391,7 +2696,7 @@
       "Name": "MeetingRoomHeatingCoolingMechVent"
     },
     {
-      "$id": "88",
+      "$id": "87",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 20.0,

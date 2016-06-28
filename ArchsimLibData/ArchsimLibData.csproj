@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Constructions.cs" />
     <Compile Include="DomHotWater.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="Utilities\Formating.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Library.cs" />
