@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -54,10 +55,25 @@ namespace ArchsimLib
             OpaqueConstruction oc = new OpaqueConstruction();
             for (int i = 0; i < layers.Length; i++)
             {
+                try
+                {
+                    if (Library.OpaqueMaterials.Any(x => x.Name == layers[i]))
+                    {
+                        var mat = Library.OpaqueMaterials.First(o => o.Name == layers[i]);
+                        Layer<OpaqueMaterial> layer = new Layer<OpaqueMaterial>(thickness[i], mat);
+                        oc.Layers.Add(layer);
+                    }
+                    else
+                    {
 
-                var mat = Library.OpaqueMaterials.Single(o => o.Name == layers[i]);
-                Layer<OpaqueMaterial> layer = new Layer<OpaqueMaterial>(thickness[i], mat);
-                oc.Layers.Add(layer);
+                        Debug.WriteLine("Could not find " + layers[i]);
+                        return null;
+
+                    }
+                }
+                catch(Exception e) {
+                    Debug.WriteLine( e.Message);
+                }
 
             }
 

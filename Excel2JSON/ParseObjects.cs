@@ -28,12 +28,14 @@ namespace Excel2JSON
 
 
 
-            int i = 1; // skip first row
-            while (sh.GetRow(i) != null)
+            //int i = 1; // skip first row
+            for (int i = 1; i < sh.LastRowNum; i++)
+            //while (sh.GetRow(i) != null)
             {
-
                 var row = sh.GetRow(i);
-                i++;
+                if (row == null) continue;
+
+                //i++;
 
                 StringBuilder sbCSharp;
                 StringBuilder sbJSON;
@@ -51,20 +53,12 @@ namespace Excel2JSON
                 }
                 catch
                 {
-                    Debug.WriteLine(sh.SheetName + " Row " + i + " "+ sbJSON + "  is not valid");
-                }
-
-
-
-
-
+                    Debug.WriteLine(sh.SheetName + " Row " + i + " " + sbJSON + "  is not valid");
+                } 
             }
 
             return Objects;
         }
-
-
-
         private static void ParseObject(IRow row, IRow header, out StringBuilder sbJSON, out StringBuilder sbCSharp)
         {
             sbCSharp = new StringBuilder();
@@ -82,7 +76,7 @@ namespace Excel2JSON
 
                 if (cell == null || head == null) continue;
 
-
+                if (cell.CellType == CellType.Blank) continue;
 
 
                 if (cell.CellType == CellType.Numeric)
@@ -127,7 +121,7 @@ namespace Excel2JSON
                         string txt = "";
                         if (!String.IsNullOrWhiteSpace(cell.StringCellValue))
                         {
-                            txt = cell.StringCellValue.Trim();
+                            txt = Formating.RemoveSpecialCharactersLeaveSpaces(cell.StringCellValue.Trim());
                         }
                         sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = \"" + txt + "\"");
                         sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : \"" + txt + "\"");
@@ -165,26 +159,24 @@ namespace Excel2JSON
 
             List<OpaqueConstruction> Objects = new List<OpaqueConstruction>();
 
-
             var header = sh.GetRow(0);
 
-
-
-            int i = 1; // skip first row
-            while (sh.GetRow(i) != null)
+            //int i = 1; // skip first row
+            for (int i = 1; i < sh.LastRowNum; i++)
+            //while (sh.GetRow(i) != null)
             {
-
                 var row = sh.GetRow(i);
-                i++;
+                if (row == null) continue;
 
+                //i++;
 
                 try
                 {
                     OpaqueConstruction mat;
                     mat = ParseConstruction(row, header, ref lib);
-                    Objects.Add(mat);
+                    if (mat != null) { Objects.Add(mat); }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Debug.WriteLine(sh.SheetName + " Row " + i + "  is not valid " + e.Message);
                 }
@@ -207,79 +199,67 @@ namespace Excel2JSON
             List<string> cnames = new List<string>();
             List<double> cthick = new List<double>();
 
+
+
             for (int j = 0; j < row.Cells.Count; j++)
             {
                 var cell = row.GetCell(j);
                 var head = header.GetCell(j);
-                string headVal ="";
-                    
-                 if(head!=null) headVal   = head.StringCellValue.Trim().ToLower();
+                string headVal = "";
+
+                if (head != null) headVal = head.StringCellValue.Trim().ToLower();
 
 
-                if (cell != null)
+
+                if (cell == null) continue;
+
+                if (cell.CellType == CellType.Blank) continue;
+
+
+                if (headVal == "name")
+                {
+                    name = cell.StringCellValue.Trim();
+                }
+                else if (headVal == "source")
+                {
+                    source = cell.StringCellValue.Trim();
+                }
+                else if (headVal == "category")
+                {
+                    category = cell.StringCellValue.Trim();
+                }
+                else if (headVal == "type")
+                {
+                    ConstructionTypes ct = ConstructionTypes.Facade;
+                    if (ConstructionTypes.TryParse(cell.StringCellValue, out ct))
+                    {
+                        type = ct;
+                    }
+                }
+
+                else
                 {
 
-                    
-                    if (headVal == "name")
+                    if (cell.CellType == CellType.Numeric)
                     {
-                        name = cell.StringCellValue.Trim();
-                    }
-                    //else if (headVal == "comment")
-                    //{
-                    //    comment = cell.StringCellValue.Trim();
-                    //}
-                    else if (headVal == "source")
-                    {
-                        source = cell.StringCellValue.Trim();
-                    }
-                    else if (headVal == "category")
-                    {
-                        category = cell.StringCellValue.Trim();
-                    }
-                    else if (headVal == "type")
-                    {
-                        ConstructionTypes ct = ConstructionTypes.Facade;
-                        if (ConstructionTypes.TryParse(cell.StringCellValue, out ct))
-                        {
-                            type = ct;
-                        }
+                        cthick.Add(cell.NumericCellValue);
                     }
 
-                    else
+                    else if (cell.CellType == CellType.String)
                     {
+                        cnames.Add(Formating.RemoveSpecialCharactersLeaveSpaces(cell.StringCellValue.Trim()));
+                    }
 
-                        if (cell.CellType == CellType.Numeric)
+                    else if (cell.CellType == CellType.Formula)
+                    {
+                        if (cell.CachedFormulaResultType == CellType.Numeric)
                         {
-                        
                             cthick.Add(cell.NumericCellValue);
                         }
-
-                        else if (cell.CellType == CellType.String)
+                        else if (cell.CachedFormulaResultType == CellType.String)
                         {
-                            cnames.Add(cell.StringCellValue.Trim());
+                            cnames.Add(Formating.RemoveSpecialCharactersLeaveSpaces(cell.StringCellValue.Trim()));
                         }
-
-                        if ( cell.CellType == CellType.Formula)
-                        {
-
-                            try
-                            {
-                                cthick.Add(cell.NumericCellValue);
-                            }
-                            catch
-                            {
-                                
-                            }
-                            try
-                            {
-                                cnames.Add(cell.StringCellValue.Trim());
-                            }
-                            catch
-                            {
-                               
-                            }
-                        }
-
                     }
                 }
 
@@ -293,7 +273,163 @@ namespace Excel2JSON
         }
 
 
+        internal static List<ZoneDefinition> Zone(XSSFSheet sh, ref Library lib)
+        {
+            if (sh == null) return null;
+
+            List<ZoneDefinition> Objects = new List<ZoneDefinition>();
 
 
+            var header = sh.GetRow(0);
+
+
+
+            //int i = 1; // skip first row
+            for (int i = 1; i < sh.LastRowNum; i++)
+            //while (sh.GetRow(i) != null)
+            {
+                var row = sh.GetRow(i);
+                if (row == null) continue;
+
+                //i++;
+
+
+                try
+                {
+                    ZoneDefinition mat;
+                    mat = ParseZone(row, header, ref lib);
+                    Objects.Add(mat);
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(sh.SheetName + " Row " + i + "  is not valid " + e.Message);
+                }
+
+            }
+
+            return Objects;
+        }
+        private static ZoneDefinition ParseZone(IRow row, IRow header, ref Library lib)
+        {
+
+
+            string name = "";
+            var c = new ZoneDefinition();
+
+            for (int j = 0; j < row.Cells.Count; j++)
+            {
+
+                var cell = row.GetCell(j);
+                var head = header.GetCell(j);
+                string headVal = "";
+
+                if (head != null) headVal = head.StringCellValue.Trim().ToLower();
+
+
+                if (cell == null) continue;
+
+                if (cell.CellType == CellType.Blank) continue;
+
+
+                if (headVal == "name")
+                {
+                    name = cell.StringCellValue.Trim();
+                    c.Name = name;
+                }
+                else if (headVal == "zoneload")
+                {
+                    string lookup = cell.StringCellValue.Trim();
+                    try
+                    {
+                        var setting = lib.ZoneLoads.First(x => x.Name == lookup);
+                        if (setting != null)
+                        {
+                            c.Loads = setting;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                    }
+                }
+                else if (headVal == "zoneconditioning")
+                {
+                    string lookup = cell.StringCellValue.Trim();
+                    try
+                    {
+                        var setting = lib.ZoneConditionings.First(x => x.Name == lookup);
+                        if (setting != null)
+                        {
+                            c.Conditioning = setting;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                    }
+                }
+                else if (headVal == "ventilation")
+                {
+                    string lookup = cell.StringCellValue.Trim();
+                    try
+                    {
+                        var setting = lib.ZoneVentilations.First(x => x.Name == lookup);
+                        if (setting != null)
+                        {
+                            c.Ventilation = setting;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                    }
+                }
+                else if (headVal == "domhotwater")
+                {
+                    string lookup = cell.StringCellValue.Trim();
+                    try
+                    {
+                        var setting = lib.DomHotWaters.First(x => x.Name == lookup);
+                        if (setting != null)
+                        {
+                            c.DomHotWater = setting;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                    }
+                }
+                else if (headVal == "zoneconstruction")
+                {
+                    string lookup = cell.StringCellValue.Trim();
+                    try
+                    {
+                        var setting = lib.ZoneConstructions.First(x => x.Name == lookup);
+                        if (setting != null)
+                        {
+                            c.Materials = setting;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(lookup + "  does not exsist in Library " + e.Message);
+                    }
+                }
+
+
+
+
+
+            }
+
+
+
+
+
+
+            return c;
+
+        }
     }
 }

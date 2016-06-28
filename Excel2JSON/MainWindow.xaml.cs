@@ -82,16 +82,18 @@ namespace Excel2JSON
             Library lib = new Library();
 
 
-            //var OpaqueMaterial = Parse.Objects<OpaqueMaterial>((XSSFSheet) wb.GetSheet("OpaqueMaterial"));
-            //var GlazingConstructionSimple =Parse.Objects<GlazingConstructionSimple>((XSSFSheet) wb.GetSheet("GlazingConstructionSimple"));
-            //var ZoneLoad = Parse.Objects<ZoneLoad>((XSSFSheet) wb.GetSheet("ZoneLoad"));
-            //var ZoneConditioning = Parse.Objects<ZoneConditioning>((XSSFSheet) wb.GetSheet("ZoneConditioning"));
-            //var ZoneVentilation = Parse.Objects<ZoneVentilation>((XSSFSheet) wb.GetSheet("ZoneVentilation"));
-            //var ZoneConstruction = Parse.Objects<ZoneConstruction>((XSSFSheet) wb.GetSheet("ZoneConstruction"));
-            //var DomHotWater = Parse.Objects<DomHotWater>((XSSFSheet) wb.GetSheet("DomHotWater"));
+            lib.OpaqueMaterials = Parse.Objects<OpaqueMaterial>((XSSFSheet)wb.GetSheet("Material"));
+        
+            if (lib.OpaqueMaterials.GroupBy(x => x.Name).Any(g => g.Count() > 1))
+            {
+                var hash = new HashSet<string>();
+                var duplicates = lib.OpaqueMaterials.Where(x => !hash.Add(x.Name));
+                foreach (var d in duplicates) { Debug.WriteLine("WARNING: Duplicate name " +d.Name);  }
 
+                 hash = new HashSet<string>();
+                lib.OpaqueMaterials = lib.OpaqueMaterials.Where(x => hash.Add(x.Name)).ToList();
+            }
 
-            lib.OpaqueMaterials = Parse.Objects<OpaqueMaterial>((XSSFSheet)wb.GetSheet("OpaqueMaterial"));
             lib.GlazingConstructionsSimple = Parse.Objects<GlazingConstructionSimple>((XSSFSheet)wb.GetSheet("GlazingConstructionSimple"));
             lib.ZoneLoads = Parse.Objects<ZoneLoad>((XSSFSheet)wb.GetSheet("ZoneLoad"));
             lib.ZoneConditionings = Parse.Objects<ZoneConditioning>((XSSFSheet)wb.GetSheet("ZoneConditioning"));
@@ -99,9 +101,12 @@ namespace Excel2JSON
             lib.ZoneConstructions = Parse.Objects<ZoneConstruction>((XSSFSheet)wb.GetSheet("ZoneConstruction"));
             lib.DomHotWaters = Parse.Objects<DomHotWater>((XSSFSheet)wb.GetSheet("DomHotWater"));
 
-
+            
 
             lib.OpaqueConstructions = Parse.Constructions((XSSFSheet) wb.GetSheet("Construction"), ref lib);
+
+
+            lib.ZoneDefinitions = Parse.Zone((XSSFSheet)wb.GetSheet("Zone"), ref lib);
 
 
             return lib;
