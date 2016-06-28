@@ -1,6 +1,6 @@
 {
   "Version": "4.0.2.8",
-  "TimeStamp": "2016-06-28T20:28:31.9677503+02:00",
+  "TimeStamp": "2016-06-28T21:28:05.1439342+02:00",
   "OpaqueMaterials": [
     {
       "$id": "1",
@@ -1926,6 +1926,31 @@
       "DataSource": "No data source",
       "Category": "Insulation",
       "Name": "Extruded Polystyrene"
+    },
+    {
+      "$id": "78",
+      "Conductivity": 0.042,
+      "Density": 42.5,
+      "Roughness": "Rough",
+      "SpecificHeat": 1380.0,
+      "ThermalEmittance": 0.9,
+      "SolarAbsorptance": 0.6,
+      "VisibleAbsorptance": 0.6,
+      "MoistureDiffusionResistance": 50.0,
+      "PhaseChange": false,
+      "PhaseChangeProperties": "",
+      "VariableConductivity": false,
+      "VariableConductivityProperties": "",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comment",
+      "DataSource": "No data source",
+      "Category": "Insulation",
+      "Name": "Cellulose"
     }
   ],
   "GlazingMaterials": [],
@@ -1990,6 +2015,21 @@
       "Comment": "Low emissivity coating on layer e3",
       "DataSource": "No data source",
       "Name": "DoublePaneLoEe3"
+    },
+    {
+      "SHGF": 0.764,
+      "UVAL": 0.785,
+      "VisibleTransmittance": 0.898,
+      "Category": "Triple pane",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "Low emissivity coating on layer e2 and e5",
+      "DataSource": "No data source",
+      "Name": "TriplePaneLoE"
     }
   ],
   "OpaqueConstructions": [
@@ -2411,6 +2451,45 @@
       "Name": "Wall_U-0.212_Climate8"
     },
     {
+      "Layers": [
+        {
+          "Material": {
+            "$ref": "33"
+          },
+          "Thickness": 0.08
+        },
+        {
+          "Material": {
+            "$ref": "78"
+          },
+          "Thickness": 0.24
+        },
+        {
+          "Material": {
+            "$ref": "6"
+          },
+          "Thickness": 0.02
+        },
+        {
+          "Material": {
+            "$ref": "74"
+          },
+          "Thickness": 0.013
+        }
+      ],
+      "Type": 0,
+      "Category": "Facade",
+      "EmbodiedEnergy": 0.0,
+      "EmbodiedEnergyStdDev": 0.0,
+      "EmbodiedCarbon": 0.0,
+      "EmbodiedCarbonStdDev": 0.0,
+      "Cost": 0.0,
+      "Life": 1,
+      "Comment": "No comments",
+      "DataSource": "Ecocor (jlconline.com, foursevenfive.com)",
+      "Name": "Wall_U-0.13_Superinsulated_I-Joist_Res"
+    },
+    {
       "Layers": [],
       "Type": 0,
       "Category": "",
@@ -2454,13 +2533,3112 @@
     }
   ],
   "GlazingConstructions": [],
-  "DaySchedules": [],
-  "WeekSchedules": [],
-  "YearSchedules": [],
+  "DaySchedules": [
+    {
+      "$id": "79",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        0.8,
+        0.4,
+        0.6,
+        0.8,
+        0.8,
+        0.4,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "occOffice"
+    },
+    {
+      "$ref": "79"
+    },
+    {
+      "$id": "80",
+      "Type": "Fraction",
+      "Values": [
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        0.8,
+        0.4,
+        0.6,
+        0.8,
+        0.8,
+        0.4,
+        0.2,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "equipOffice"
+    },
+    {
+      "$ref": "80"
+    },
+    {
+      "$id": "81",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "lightsOffice"
+    },
+    {
+      "$ref": "81"
+    },
+    {
+      "$id": "82",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.6,
+        1.0,
+        0.4,
+        0.0,
+        0.0,
+        0.6,
+        1.0,
+        0.4,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "occMeetingRoom"
+    },
+    {
+      "$ref": "82"
+    },
+    {
+      "$id": "83",
+      "Type": "Fraction",
+      "Values": [
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.2,
+        0.4,
+        0.6,
+        0.8,
+        0.8,
+        0.4,
+        0.6,
+        0.8,
+        0.8,
+        0.4,
+        0.2,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "equipMeetingRoom"
+    },
+    {
+      "$ref": "83"
+    },
+    {
+      "$id": "84",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "lightsMeetingRoom"
+    },
+    {
+      "$ref": "84"
+    },
+    {
+      "$id": "85",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.6,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        0.6,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "occLectureHall"
+    },
+    {
+      "$ref": "85"
+    },
+    {
+      "$id": "86",
+      "Type": "Fraction",
+      "Values": [
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.2,
+        0.6,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        0.6,
+        0.4,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "equipLectureHall"
+    },
+    {
+      "$ref": "86"
+    },
+    {
+      "$id": "87",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "lightsLectureHall"
+    },
+    {
+      "$ref": "87"
+    },
+    {
+      "$id": "88",
+      "Type": "Fraction",
+      "Values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.8,
+        0.6,
+        0.4,
+        0.4,
+        0.4,
+        0.6,
+        0.8,
+        0.6,
+        0.4,
+        0.4,
+        0.6,
+        0.8,
+        0.8,
+        0.8,
+        0.8,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "occBedroom"
+    },
+    {
+      "$ref": "88"
+    },
+    {
+      "$id": "89",
+      "Type": "Fraction",
+      "Values": [
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.5,
+        1.0,
+        0.5,
+        0.5,
+        0.5,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        0.5,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.5,
+        0.5,
+        0.5,
+        0.1
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "equipBedroom"
+    },
+    {
+      "$ref": "89"
+    },
+    {
+      "$id": "90",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "lightsBedroom"
+    },
+    {
+      "$ref": "90"
+    },
+    {
+      "$id": "91",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.4,
+        0.8,
+        0.4,
+        0.0,
+        0.0,
+        0.4,
+        0.8,
+        0.4,
+        0.0,
+        0.0,
+        0.4,
+        1.0,
+        0.6,
+        0.4,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "occKitchen"
+    },
+    {
+      "$ref": "91"
+    },
+    {
+      "$id": "92",
+      "Type": "Fraction",
+      "Values": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.4,
+        0.8,
+        0.4,
+        0.2,
+        0.2,
+        0.4,
+        1.0,
+        0.4,
+        0.2,
+        0.2,
+        0.4,
+        1.0,
+        0.4,
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "equipKitchen"
+    },
+    {
+      "$ref": "92"
+    },
+    {
+      "$id": "93",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "lightsKitchen"
+    },
+    {
+      "$ref": "93"
+    },
+    {
+      "$id": "94",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.6,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        0.6,
+        0.2,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "occLibrary"
+    },
+    {
+      "$ref": "94"
+    },
+    {
+      "$id": "95",
+      "Type": "Fraction",
+      "Values": [
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.2,
+        0.6,
+        1.0,
+        1.0,
+        0.2,
+        0.2,
+        1.0,
+        1.0,
+        0.6,
+        0.4,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "equipLibrary"
+    },
+    {
+      "$ref": "95"
+    },
+    {
+      "$id": "96",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "lightsLibrary"
+    },
+    {
+      "$ref": "96"
+    },
+    {
+      "$id": "97",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.4,
+        0.4,
+        0.4,
+        0.6,
+        0.6,
+        0.6,
+        0.4,
+        0.4,
+        0.6,
+        0.8,
+        0.6,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "occSuperMarket"
+    },
+    {
+      "$ref": "97"
+    },
+    {
+      "$id": "98",
+      "Type": "Fraction",
+      "Values": [
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "equipSuperMarket"
+    },
+    {
+      "$ref": "98"
+    },
+    {
+      "$id": "99",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "lightsSuperMarket"
+    },
+    {
+      "$ref": "99"
+    },
+    {
+      "$id": "100",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.2,
+        0.4,
+        0.4,
+        0.4,
+        0.6,
+        0.6,
+        0.6,
+        0.4,
+        0.4,
+        0.6,
+        0.8,
+        0.6,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "occShopping"
+    },
+    {
+      "$ref": "100"
+    },
+    {
+      "$id": "101",
+      "Type": "Fraction",
+      "Values": [
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.1,
+        0.1,
+        0.1,
+        0.1,
+        0.1
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "equipShopping"
+    },
+    {
+      "$ref": "101"
+    },
+    {
+      "$id": "102",
+      "Type": "Fraction",
+      "Values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "lightsShopping"
+    },
+    {
+      "$ref": "102"
+    }
+  ],
+  "WeekSchedules": [
+    {
+      "$id": "103",
+      "Days": [
+        {
+          "$ref": "79"
+        },
+        {
+          "$ref": "79"
+        },
+        {
+          "$ref": "79"
+        },
+        {
+          "$ref": "79"
+        },
+        {
+          "$ref": "79"
+        },
+        {
+          "$id": "104",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            0.8,
+            0.4,
+            0.6,
+            0.8,
+            0.8,
+            0.4,
+            0.2,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Office",
+          "Name": "occOfficeWeekEnd"
+        },
+        {
+          "$ref": "104"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "occOffice"
+    },
+    {
+      "$id": "105",
+      "Days": [
+        {
+          "$ref": "80"
+        },
+        {
+          "$ref": "80"
+        },
+        {
+          "$ref": "80"
+        },
+        {
+          "$ref": "80"
+        },
+        {
+          "$ref": "80"
+        },
+        {
+          "$id": "106",
+          "Type": "Fraction",
+          "Values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            0.8,
+            0.4,
+            0.6,
+            0.8,
+            0.8,
+            0.4,
+            0.2,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Office",
+          "Name": "equipOfficeWeekEnd"
+        },
+        {
+          "$ref": "106"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "equipOffice"
+    },
+    {
+      "$id": "107",
+      "Days": [
+        {
+          "$ref": "81"
+        },
+        {
+          "$ref": "81"
+        },
+        {
+          "$ref": "81"
+        },
+        {
+          "$ref": "81"
+        },
+        {
+          "$ref": "81"
+        },
+        {
+          "$id": "108",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Office",
+          "Name": "lightsOfficeWeekEnd"
+        },
+        {
+          "$ref": "108"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "lightsOffice"
+    },
+    {
+      "$id": "109",
+      "Days": [
+        {
+          "$ref": "82"
+        },
+        {
+          "$ref": "82"
+        },
+        {
+          "$ref": "82"
+        },
+        {
+          "$ref": "82"
+        },
+        {
+          "$ref": "82"
+        },
+        {
+          "$id": "110",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6,
+            1.0,
+            0.4,
+            0.0,
+            0.0,
+            0.6,
+            1.0,
+            0.4,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Office",
+          "Name": "occMeetingRoomWeekEnd"
+        },
+        {
+          "$ref": "110"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "occMeetingRoom"
+    },
+    {
+      "$id": "111",
+      "Days": [
+        {
+          "$ref": "83"
+        },
+        {
+          "$ref": "83"
+        },
+        {
+          "$ref": "83"
+        },
+        {
+          "$ref": "83"
+        },
+        {
+          "$ref": "83"
+        },
+        {
+          "$id": "112",
+          "Type": "Fraction",
+          "Values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.2,
+            0.4,
+            0.6,
+            0.8,
+            0.8,
+            0.4,
+            0.6,
+            0.8,
+            0.8,
+            0.4,
+            0.2,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Office",
+          "Name": "equipMeetingRoomWeekEnd"
+        },
+        {
+          "$ref": "112"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "equipMeetingRoom"
+    },
+    {
+      "$id": "113",
+      "Days": [
+        {
+          "$ref": "84"
+        },
+        {
+          "$ref": "84"
+        },
+        {
+          "$ref": "84"
+        },
+        {
+          "$ref": "84"
+        },
+        {
+          "$ref": "84"
+        },
+        {
+          "$id": "114",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Office",
+          "Name": "lightsMeetingRoomWeekEnd"
+        },
+        {
+          "$ref": "114"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "lightsMeetingRoom"
+    },
+    {
+      "$id": "115",
+      "Days": [
+        {
+          "$ref": "85"
+        },
+        {
+          "$ref": "85"
+        },
+        {
+          "$ref": "85"
+        },
+        {
+          "$ref": "85"
+        },
+        {
+          "$ref": "85"
+        },
+        {
+          "$id": "116",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.2,
+            0.6,
+            1.0,
+            1.0,
+            0.2,
+            0.2,
+            1.0,
+            1.0,
+            0.6,
+            0.2,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Education",
+          "Name": "occLectureHallWeekEnd"
+        },
+        {
+          "$ref": "116"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "occLectureHall"
+    },
+    {
+      "$id": "117",
+      "Days": [
+        {
+          "$ref": "86"
+        },
+        {
+          "$ref": "86"
+        },
+        {
+          "$ref": "86"
+        },
+        {
+          "$ref": "86"
+        },
+        {
+          "$ref": "86"
+        },
+        {
+          "$id": "118",
+          "Type": "Fraction",
+          "Values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.2,
+            0.6,
+            1.0,
+            1.0,
+            0.2,
+            0.2,
+            1.0,
+            1.0,
+            0.6,
+            0.4,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Education",
+          "Name": "equipLectureHallWeekEnd"
+        },
+        {
+          "$ref": "118"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "equipLectureHall"
+    },
+    {
+      "$id": "119",
+      "Days": [
+        {
+          "$ref": "87"
+        },
+        {
+          "$ref": "87"
+        },
+        {
+          "$ref": "87"
+        },
+        {
+          "$ref": "87"
+        },
+        {
+          "$ref": "87"
+        },
+        {
+          "$id": "120",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Education",
+          "Name": "lightsLectureHallWeekEnd"
+        },
+        {
+          "$ref": "120"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "lightsLectureHall"
+    },
+    {
+      "$id": "121",
+      "Days": [
+        {
+          "$ref": "88"
+        },
+        {
+          "$ref": "88"
+        },
+        {
+          "$ref": "88"
+        },
+        {
+          "$ref": "88"
+        },
+        {
+          "$ref": "88"
+        },
+        {
+          "$id": "122",
+          "Type": "Fraction",
+          "Values": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.8,
+            0.6,
+            0.4,
+            0.4,
+            0.4,
+            0.6,
+            0.8,
+            0.6,
+            0.4,
+            0.4,
+            0.6,
+            0.8,
+            0.8,
+            0.8,
+            0.8,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Residential",
+          "Name": "occBedroomWeekEnd"
+        },
+        {
+          "$ref": "122"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "occBedroom"
+    },
+    {
+      "$id": "123",
+      "Days": [
+        {
+          "$ref": "89"
+        },
+        {
+          "$ref": "89"
+        },
+        {
+          "$ref": "89"
+        },
+        {
+          "$ref": "89"
+        },
+        {
+          "$ref": "89"
+        },
+        {
+          "$id": "124",
+          "Type": "Fraction",
+          "Values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.5,
+            1.0,
+            0.5,
+            0.5,
+            0.5,
+            1.0,
+            1.0,
+            0.5,
+            0.5,
+            0.5,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.5,
+            0.5,
+            0.5,
+            0.1
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Residential",
+          "Name": "equipBedroomWeekEnd"
+        },
+        {
+          "$ref": "124"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "equipBedroom"
+    },
+    {
+      "$id": "125",
+      "Days": [
+        {
+          "$ref": "90"
+        },
+        {
+          "$ref": "90"
+        },
+        {
+          "$ref": "90"
+        },
+        {
+          "$ref": "90"
+        },
+        {
+          "$ref": "90"
+        },
+        {
+          "$id": "126",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Residential",
+          "Name": "lightsBedroomWeekEnd"
+        },
+        {
+          "$ref": "126"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "lightsBedroom"
+    },
+    {
+      "$id": "127",
+      "Days": [
+        {
+          "$ref": "91"
+        },
+        {
+          "$ref": "91"
+        },
+        {
+          "$ref": "91"
+        },
+        {
+          "$ref": "91"
+        },
+        {
+          "$ref": "91"
+        },
+        {
+          "$id": "128",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.4,
+            0.8,
+            0.4,
+            0.0,
+            0.0,
+            0.4,
+            0.8,
+            0.4,
+            0.0,
+            0.0,
+            0.4,
+            1.0,
+            0.6,
+            0.4,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Residential",
+          "Name": "occKitchenWeekEnd"
+        },
+        {
+          "$ref": "128"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "occKitchen"
+    },
+    {
+      "$id": "129",
+      "Days": [
+        {
+          "$ref": "92"
+        },
+        {
+          "$ref": "92"
+        },
+        {
+          "$ref": "92"
+        },
+        {
+          "$ref": "92"
+        },
+        {
+          "$ref": "92"
+        },
+        {
+          "$id": "130",
+          "Type": "Fraction",
+          "Values": [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.4,
+            0.8,
+            0.4,
+            0.2,
+            0.2,
+            0.4,
+            1.0,
+            0.4,
+            0.2,
+            0.2,
+            0.4,
+            1.0,
+            0.4,
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Residential",
+          "Name": "equipKitchenWeekEnd"
+        },
+        {
+          "$ref": "130"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "equipKitchen"
+    },
+    {
+      "$id": "131",
+      "Days": [
+        {
+          "$ref": "93"
+        },
+        {
+          "$ref": "93"
+        },
+        {
+          "$ref": "93"
+        },
+        {
+          "$ref": "93"
+        },
+        {
+          "$ref": "93"
+        },
+        {
+          "$id": "132",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Residential",
+          "Name": "lightsKitchenWeekEnd"
+        },
+        {
+          "$ref": "132"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "lightsKitchen"
+    },
+    {
+      "$id": "133",
+      "Days": [
+        {
+          "$ref": "94"
+        },
+        {
+          "$ref": "94"
+        },
+        {
+          "$ref": "94"
+        },
+        {
+          "$ref": "94"
+        },
+        {
+          "$ref": "94"
+        },
+        {
+          "$id": "134",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.2,
+            0.6,
+            1.0,
+            1.0,
+            0.2,
+            0.2,
+            1.0,
+            1.0,
+            0.6,
+            0.2,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Education",
+          "Name": "occLibraryWeekEnd"
+        },
+        {
+          "$ref": "134"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "occLibrary"
+    },
+    {
+      "$id": "135",
+      "Days": [
+        {
+          "$ref": "95"
+        },
+        {
+          "$ref": "95"
+        },
+        {
+          "$ref": "95"
+        },
+        {
+          "$ref": "95"
+        },
+        {
+          "$ref": "95"
+        },
+        {
+          "$id": "136",
+          "Type": "Fraction",
+          "Values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.2,
+            0.6,
+            1.0,
+            1.0,
+            0.2,
+            0.2,
+            1.0,
+            1.0,
+            0.6,
+            0.4,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Education",
+          "Name": "equipLibraryWeekEnd"
+        },
+        {
+          "$ref": "136"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "equipLibrary"
+    },
+    {
+      "$id": "137",
+      "Days": [
+        {
+          "$ref": "96"
+        },
+        {
+          "$ref": "96"
+        },
+        {
+          "$ref": "96"
+        },
+        {
+          "$ref": "96"
+        },
+        {
+          "$ref": "96"
+        },
+        {
+          "$id": "138",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Education",
+          "Name": "lightsLibraryWeekEnd"
+        },
+        {
+          "$ref": "138"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "lightsLibrary"
+    },
+    {
+      "$id": "139",
+      "Days": [
+        {
+          "$ref": "97"
+        },
+        {
+          "$ref": "97"
+        },
+        {
+          "$ref": "97"
+        },
+        {
+          "$ref": "97"
+        },
+        {
+          "$ref": "97"
+        },
+        {
+          "$id": "140",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.2,
+            0.4,
+            0.4,
+            0.4,
+            0.6,
+            0.6,
+            0.6,
+            0.4,
+            0.4,
+            0.6,
+            0.8,
+            0.6,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Commercial",
+          "Name": "occSuperMarketWeekEnd"
+        },
+        {
+          "$ref": "140"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "occSuperMarket"
+    },
+    {
+      "$id": "141",
+      "Days": [
+        {
+          "$ref": "98"
+        },
+        {
+          "$ref": "98"
+        },
+        {
+          "$ref": "98"
+        },
+        {
+          "$ref": "98"
+        },
+        {
+          "$ref": "98"
+        },
+        {
+          "$id": "142",
+          "Type": "Fraction",
+          "Values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Commercial",
+          "Name": "equipSuperMarketWeekEnd"
+        },
+        {
+          "$ref": "142"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "equipSuperMarket"
+    },
+    {
+      "$id": "143",
+      "Days": [
+        {
+          "$ref": "99"
+        },
+        {
+          "$ref": "99"
+        },
+        {
+          "$ref": "99"
+        },
+        {
+          "$ref": "99"
+        },
+        {
+          "$ref": "99"
+        },
+        {
+          "$id": "144",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Commercial",
+          "Name": "lightsSuperMarketWeekEnd"
+        },
+        {
+          "$ref": "144"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "lightsSuperMarket"
+    },
+    {
+      "$id": "145",
+      "Days": [
+        {
+          "$ref": "100"
+        },
+        {
+          "$ref": "100"
+        },
+        {
+          "$ref": "100"
+        },
+        {
+          "$ref": "100"
+        },
+        {
+          "$ref": "100"
+        },
+        {
+          "$id": "146",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.2,
+            0.4,
+            0.4,
+            0.4,
+            0.6,
+            0.6,
+            0.6,
+            0.4,
+            0.4,
+            0.6,
+            0.8,
+            0.6,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Commercial",
+          "Name": "occShoppingWeekEnd"
+        },
+        {
+          "$ref": "146"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "occShopping"
+    },
+    {
+      "$id": "147",
+      "Days": [
+        {
+          "$ref": "101"
+        },
+        {
+          "$ref": "101"
+        },
+        {
+          "$ref": "101"
+        },
+        {
+          "$ref": "101"
+        },
+        {
+          "$ref": "101"
+        },
+        {
+          "$id": "148",
+          "Type": "Fraction",
+          "Values": [
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Commercial",
+          "Name": "equipShoppingWeekEnd"
+        },
+        {
+          "$ref": "148"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "equipShopping"
+    },
+    {
+      "$id": "149",
+      "Days": [
+        {
+          "$ref": "102"
+        },
+        {
+          "$ref": "102"
+        },
+        {
+          "$ref": "102"
+        },
+        {
+          "$ref": "102"
+        },
+        {
+          "$ref": "102"
+        },
+        {
+          "$id": "150",
+          "Type": "Fraction",
+          "Values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "Comment": "No comments",
+          "DataSource": "",
+          "Category": "Commercial",
+          "Name": "lightsShoppingWeekEnd"
+        },
+        {
+          "$ref": "150"
+        }
+      ],
+      "Type": "Fraction",
+      "FromTo": [
+        1,
+        1,
+        12,
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "lightsShopping"
+    }
+  ],
+  "YearSchedules": [
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "103"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "occOffice"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "105"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "equipOffice"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "107"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "lightsOffice"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "109"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "occMeetingRoom"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "111"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "equipMeetingRoom"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "113"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Office",
+      "Name": "lightsMeetingRoom"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "115"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "occLectureHall"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "117"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "equipLectureHall"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "119"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "lightsLectureHall"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "121"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "occBedroom"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "123"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "equipBedroom"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "125"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "lightsBedroom"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "127"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "occKitchen"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "129"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "equipKitchen"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "131"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Residential",
+      "Name": "lightsKitchen"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "133"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "occLibrary"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "135"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "equipLibrary"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "137"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Education",
+      "Name": "lightsLibrary"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "139"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "occSuperMarket"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "141"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "equipSuperMarket"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "143"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "lightsSuperMarket"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "145"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "occShopping"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "147"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "equipShopping"
+    },
+    {
+      "Type": "Fraction",
+      "WeekSchedules": [
+        {
+          "$ref": "149"
+        }
+      ],
+      "MonthFrom": [
+        1
+      ],
+      "DayFrom": [
+        1
+      ],
+      "MonthTill": [
+        12
+      ],
+      "DayTill": [
+        31
+      ],
+      "Comment": "No comments",
+      "DataSource": "",
+      "Category": "Commercial",
+      "Name": "lightsShopping"
+    }
+  ],
   "ArraySchedules": [],
   "ZoneLoads": [
     {
-      "$id": "78",
+      "$id": "151",
       "PeopleDensity": 0.025,
       "MetabolicRate": 1.2,
       "EquipmentPowerDensity": 2.0,
@@ -2479,7 +5657,7 @@
       "Name": "BedroomLoads"
     },
     {
-      "$id": "79",
+      "$id": "152",
       "PeopleDensity": 0.2,
       "MetabolicRate": 1.2,
       "EquipmentPowerDensity": 40.0,
@@ -2498,7 +5676,7 @@
       "Name": "KitchenLoads"
     },
     {
-      "$id": "80",
+      "$id": "153",
       "PeopleDensity": 0.0714285714285714,
       "MetabolicRate": 1.2,
       "EquipmentPowerDensity": 7.0,
@@ -2515,11 +5693,30 @@
       "DataSource": "SIA Merkblatt 2026",
       "Category": "Office",
       "Name": "SingleOfficeLoads"
+    },
+    {
+      "$id": "154",
+      "PeopleDensity": 0.333333333333333,
+      "MetabolicRate": 1.2,
+      "EquipmentPowerDensity": 2.0,
+      "LightingPowerDensity": 16.0,
+      "IlluminanceTarget": 500.0,
+      "OccupancySchedule": "occMeetingRoom",
+      "EquipmentAvailibilitySchedule": "equipMeetingRoom",
+      "LightsAvailibilitySchedule": "lightsMeetingRoom",
+      "DimmingType": 2,
+      "PeopleIsOn": true,
+      "EquipmentIsOn": true,
+      "LightsIsOn": true,
+      "Comment": "No comments",
+      "DataSource": "SIA Merkblatt 2027",
+      "Category": "Office",
+      "Name": "MeetingRoomLoads"
     }
   ],
   "ZoneVentilations": [
     {
-      "$id": "81",
+      "$id": "155",
       "InfiltrationModel": 1,
       "NatVentIsOn": false,
       "SchedVentIsOn": false,
@@ -2542,7 +5739,7 @@
       "Name": "PoorAirTightness"
     },
     {
-      "$id": "82",
+      "$id": "156",
       "InfiltrationModel": 1,
       "NatVentIsOn": false,
       "SchedVentIsOn": false,
@@ -2563,12 +5760,60 @@
       "DataSource": "No data source",
       "Category": "Infiltration",
       "Name": "ModerateAirTightness"
+    },
+    {
+      "$id": "157",
+      "InfiltrationModel": 1,
+      "NatVentIsOn": false,
+      "SchedVentIsOn": false,
+      "InfiltrationIsOn": true,
+      "InfiltrationAch": 0.15,
+      "ScheduledVentilationAch": 0.6,
+      "ScheduledVentilationSchedule": "AllOn",
+      "NatVentSchedule": "AllOn",
+      "ScheduledVentilationSetPoint": 18.0,
+      "BuoyancyDrivenIsOn": true,
+      "WindDrivenIsOn": false,
+      "NatVentSetPoint": 18.0,
+      "NatVentMinOutAirTemp": 0.0,
+      "NatVentMaxOutAirTemp": 30.0,
+      "NatVentMaxRelHum": 90.0,
+      "AFN": false,
+      "Comment": "No comments",
+      "DataSource": "No data source",
+      "Category": "Infiltration",
+      "Name": "GoodAirTightness"
     }
   ],
-  "ZoneConstructions": [],
+  "ZoneConstructions": [
+    {
+      "$id": "158",
+      "RoofConstruction": "300mmInsulation 94mmSolidWood 24mmGypsum",
+      "FacadeConstruction": "300mmInsulation 94mmSolidWood 24mmGypsum",
+      "SlabConstruction": "150mmScreedWithImpactSoundInsulation 140mmSolidWood",
+      "PartitionConstruction": "12mmGypsum 78mmSolidWood 12mmGypsum",
+      "GroundConstruction": "120mmInsulation 200mmConcrete",
+      "GroundIsAdiabatic": false,
+      "RoofIsAdiabatic": false,
+      "FacadeIsAdiabatic": false,
+      "SlabIsAdiabatic": false,
+      "PartitionIsAdiabatic": false,
+      "InternalMassConstruction": "defaultConstruction",
+      "InternalMassExposedAreaPerArea": 0.0,
+      "SurfaceConvectionModelInside": 1,
+      "SurfaceConvectionModelOutside": 0,
+      "ZonePriority": 1,
+      "DaylightMeshResolution": 1.0,
+      "DaylightWorkplaneHeight": 0.8,
+      "Comment": "No comments",
+      "DataSource": "No data source",
+      "Category": "No Category",
+      "Name": "SolidWood"
+    }
+  ],
   "ZoneConditionings": [
     {
-      "$id": "83",
+      "$id": "159",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 19.0,
@@ -2600,7 +5845,7 @@
       "Name": "BedroomHeatingCoolingMechVent"
     },
     {
-      "$id": "84",
+      "$id": "160",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 20.0,
@@ -2632,7 +5877,7 @@
       "Name": "KitchenHeatingCoolingMechVent"
     },
     {
-      "$id": "85",
+      "$id": "161",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 20.0,
@@ -2664,7 +5909,7 @@
       "Name": "OfficeHeatingCoolingMechVent"
     },
     {
-      "$id": "86",
+      "$id": "162",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 20.0,
@@ -2696,7 +5941,7 @@
       "Name": "MeetingRoomHeatingCoolingMechVent"
     },
     {
-      "$id": "87",
+      "$id": "163",
       "CoolingCoeffOfPerf": 1.0,
       "HeatingCoeffOfPerf": 1.0,
       "HeatingSetpoint": 20.0,
@@ -2726,9 +5971,102 @@
       "DataSource": "No data source",
       "Category": "Education",
       "Name": "LectureHallHeatingCoolingMechVent"
+    },
+    {
+      "$id": "164",
+      "CoolingCoeffOfPerf": 1.0,
+      "HeatingCoeffOfPerf": 1.0,
+      "HeatingSetpoint": 20.0,
+      "CoolingSetpoint": 26.0,
+      "HeatIsOn": true,
+      "CoolIsOn": true,
+      "MechVentIsOn": false,
+      "HumidistatOnOff": false,
+      "HeatingLimitType": 0,
+      "CoolingLimitType": 0,
+      "MaxHeatingCapacity": 100.0,
+      "MaxCoolingCapacity": 100.0,
+      "MaxHeatFlow": 100.0,
+      "MaxCoolFlow": 100.0,
+      "HeatingSchedule": "AllOn",
+      "CoolingSchedule": "AllOn",
+      "MechVentSchedule": "AllOn",
+      "MinFreshAirPerson": 2.5,
+      "MinFreshAirArea": 0.3,
+      "EconomizerType": 0,
+      "HeatRecoveryType": 0,
+      "HeatRecoveryEfficiencySensible": 0.7,
+      "HeatRecoveryEfficiencyLatent": 0.65,
+      "MinHumidity": 20.0,
+      "MaxHumidity": 80.0,
+      "Comment": "No comments",
+      "DataSource": "No data source",
+      "Category": "No Category",
+      "Name": "No name"
     }
   ],
-  "DomHotWaters": [],
-  "ZoneDefinitions": [],
-  "WindowSettings": []
+  "DomHotWaters": [
+    {
+      "$id": "165",
+      "IsOn": false,
+      "WaterTemperatureInlet": 10.0,
+      "WaterSupplyTemperature": 60.0,
+      "WaterSchedule": "AllOn",
+      "FlowRatePerFloorArea": 0.03,
+      "Comment": "No comments",
+      "DataSource": "No data source",
+      "Category": "No Category",
+      "Name": "House"
+    }
+  ],
+  "ZoneDefinitions": [
+    {
+      "$id": "166",
+      "ZoneMultiplier": 1.0,
+      "Materials": {
+        "$ref": "158"
+      },
+      "Loads": {
+        "$ref": "151"
+      },
+      "Conditioning": {
+        "$ref": "159"
+      },
+      "DomHotWater": {
+        "$ref": "165"
+      },
+      "Ventilation": {
+        "$ref": "156"
+      },
+      "Comment": "No comments",
+      "DataSource": "No data source",
+      "Category": "No Category",
+      "Name": "Bedroom"
+    }
+  ],
+  "WindowSettings": [
+    {
+      "$id": "167",
+      "Type": 0,
+      "ShadingSystemSetPoint": 180.0,
+      "ShadingSystemTransmittance": 0.5,
+      "IsVirtualPartition": false,
+      "ZoneMixingIsOn": false,
+      "ZoneMixingDeltaTemperature": 2.0,
+      "ZoneMixingFlowRate": 0.001,
+      "Construction": "defaultGlazing",
+      "ShadingSystemAvailibilitySchedule": "AllOn",
+      "OperableArea": 0.8,
+      "ShadingSystemIsOn": true,
+      "ShadingSystemType": 0,
+      "ZoneMixingAvailibilitySchedule": "AllOn",
+      "AFN_TEMP_SETPT": 20.0,
+      "AFN_WIN_AVAIL": "AllOn",
+      "AFN_DISCHARGE_C": 0.65,
+      "Comment": "No comments",
+      "DataSource": "No data source",
+      "Category": "No Category",
+      "Name": "WindowNoShade"
+    }
+  ]
 }

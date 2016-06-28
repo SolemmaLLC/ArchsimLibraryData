@@ -26,16 +26,11 @@ namespace Excel2JSON
 
             var header = sh.GetRow(0);
 
-
-
-            //int i = 1; // skip first row
-            for (int i = 1; i < sh.LastRowNum; i++)
-            //while (sh.GetRow(i) != null)
+            for (int i = 1; i < sh.LastRowNum+1; i++)
             {
                 var row = sh.GetRow(i);
                 if (row == null) continue;
 
-                //i++;
 
                 StringBuilder sbCSharp;
                 StringBuilder sbJSON;
@@ -148,11 +143,6 @@ namespace Excel2JSON
             //  Debug.WriteLine(sbJSON.ToString());
         }
 
-
-
-
-
-
         internal static List<OpaqueConstruction> Constructions(XSSFSheet sh, ref Library lib)
         {
             if (sh == null) return null;
@@ -161,14 +151,10 @@ namespace Excel2JSON
 
             var header = sh.GetRow(0);
 
-            //int i = 1; // skip first row
-            for (int i = 1; i < sh.LastRowNum; i++)
-            //while (sh.GetRow(i) != null)
+            for (int i = 1; i < sh.LastRowNum + 1; i++)
             {
                 var row = sh.GetRow(i);
                 if (row == null) continue;
-
-                //i++;
 
                 try
                 {
@@ -186,7 +172,6 @@ namespace Excel2JSON
 
             return Objects;
         }
-
         private static OpaqueConstruction ParseConstruction(IRow row, IRow header, ref Library lib)
         {
 
@@ -208,7 +193,10 @@ namespace Excel2JSON
                 var head = header.GetCell(j);
                 string headVal = "";
 
-                if (head != null) headVal = head.StringCellValue.Trim().ToLower();
+                if (head != null)
+                {
+                    if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
+                }
 
 
 
@@ -273,7 +261,6 @@ namespace Excel2JSON
 
         }
 
-
         internal static List<ZoneDefinition> Zone(XSSFSheet sh, ref Library lib)
         {
             if (sh == null) return null;
@@ -285,14 +272,10 @@ namespace Excel2JSON
 
 
 
-            //int i = 1; // skip first row
-            for (int i = 1; i < sh.LastRowNum; i++)
-            //while (sh.GetRow(i) != null)
+            for (int i = 1; i < sh.LastRowNum + 1; i++)
             {
                 var row = sh.GetRow(i);
                 if (row == null) continue;
-
-                //i++;
 
 
                 try
@@ -325,7 +308,10 @@ namespace Excel2JSON
                 var head = header.GetCell(j);
                 string headVal = "";
 
-                if (head != null) headVal = head.StringCellValue.Trim().ToLower();
+                if (head != null)
+                {
+                    if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
+                }
 
 
                 if (cell == null) continue;
@@ -436,6 +422,117 @@ namespace Excel2JSON
 
 
             return c;
+
+        }
+
+        internal static List<YearSchedule> Schedule(XSSFSheet sh, ref Library lib)
+        {
+            if (sh == null) return null;
+
+            List<YearSchedule> Objects = new List<YearSchedule>();
+
+
+            var header = sh.GetRow(0);
+
+
+
+            for (int i = 1; i < sh.LastRowNum + 1; i++)
+            {
+                var row = sh.GetRow(i);
+                if (row == null) continue;
+
+
+                try
+                {
+                    YearSchedule mat;
+                    mat = ParseSchedule(row, header, ref lib);
+                    if (mat != null) { Objects.Add(mat); }
+                
+                  
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
+                    Logger.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
+                }
+
+            }
+
+            return Objects;
+        }
+        private static YearSchedule ParseSchedule(IRow row, IRow header, ref Library lib)
+        {
+
+
+
+            string name = "";
+            //string comment = "";
+            string source = "";
+            string category = "";
+         
+            List<double> values = new List<double>();
+
+
+
+            for (int j = 0; j < row.Cells.Count; j++)
+            {
+                var cell = row.GetCell(j);
+                var head = header.GetCell(j);
+                string headVal = "";
+
+                if (head != null) {
+
+                    if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
+                }
+
+
+
+                if (cell == null) continue;
+
+                if (cell.CellType == CellType.Blank) continue;
+
+
+                if (headVal == "name")
+                {
+                    name = cell.StringCellValue.Trim();
+                }
+                else if (headVal == "source")
+                {
+                    source = cell.StringCellValue.Trim();
+                }
+                else if (headVal == "category")
+                {
+                    category = cell.StringCellValue.Trim();
+                }
+               
+
+                else
+                {
+
+                    if (cell.CellType == CellType.Numeric)
+                    {
+                        values.Add(cell.NumericCellValue);
+                    }
+
+                    else if (cell.CellType == CellType.Formula)
+                    {
+                        if (cell.CachedFormulaResultType == CellType.Numeric)
+                        {
+                            values.Add(cell.NumericCellValue);
+                        }
+                      
+                    }
+                }
+
+            }
+
+            var first = values.Take(24);
+            var second = values.Skip(24).Take(24);
+
+
+            var sched =YearSchedule.QuickSchedule(name, first.ToArray(), second.ToArray(), category, source, ref lib);
+
+            return sched;
 
         }
     }

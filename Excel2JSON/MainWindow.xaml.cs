@@ -98,7 +98,6 @@ namespace Excel2JSON
                     Debug.WriteLine("WARNING: Duplicate name " +d.Name);
                     Logger.WriteLine("WARNING: Duplicate name " + d.Name);
                 }
-
                  hash = new HashSet<string>();
                 lib.OpaqueMaterials = lib.OpaqueMaterials.Where(x => hash.Add(x.Name)).ToList();
             }
@@ -108,13 +107,15 @@ namespace Excel2JSON
             lib.ZoneConditionings = Parse.Objects<ZoneConditioning>((XSSFSheet)wb.GetSheet("ZoneConditioning"));
             lib.ZoneVentilations = Parse.Objects<ZoneVentilation>((XSSFSheet)wb.GetSheet("ZoneVentilation"));
             lib.ZoneConstructions = Parse.Objects<ZoneConstruction>((XSSFSheet)wb.GetSheet("ZoneConstruction"));
+
             lib.DomHotWaters = Parse.Objects<DomHotWater>((XSSFSheet)wb.GetSheet("DomHotWater"));
 
-            
+            lib.WindowSettings = Parse.Objects<WindowSettings>((XSSFSheet)wb.GetSheet("Window"));
+
+
+            lib.YearSchedules = Parse.Schedule((XSSFSheet)wb.GetSheet("Schedule"), ref lib);
 
             lib.OpaqueConstructions = Parse.Constructions((XSSFSheet) wb.GetSheet("Construction"), ref lib);
-
-
             lib.ZoneDefinitions = Parse.Zone((XSSFSheet)wb.GetSheet("Zone"), ref lib);
 
 
