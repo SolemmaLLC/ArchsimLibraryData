@@ -185,19 +185,29 @@ namespace ArchsimLib
             YearSchedule AllOnYear = new YearSchedule("AllOn", "Fraction", snarr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
             Library.YearSchedules.Add(AllOnYear);
 
-            #endregion
+
+
+
+            Library.ZoneLoads.Add(new ZoneLoad() { Name = "NoLoads", PeopleIsOn = false, EquipmentIsOn = false , LightsIsOn = false, PeopleDensity = 0, IlluminanceTarget = 0, LightingPowerDensity = 0, EquipmentPowerDensity = 0, OccupancySchedule = "AllOn", EquipmentAvailibilitySchedule = "AllOn", LightsAvailibilitySchedule = "AllOn", Category = "Default", DataSource = "Default" });
+            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "NoConditioning", HeatIsOn=false, CoolIsOn =false, MechVentIsOn = false, HeatingSetpoint = 19, CoolingSetpoint = 26,  MinFreshAirPerson = 0, MinFreshAirArea = 0, Category = "Default" });
+            Library.ZoneVentilations.Add(new ZoneVentilation() { Name = "NoVentilationInfiltration", InfiltrationIsOn = false, InfiltrationAch = 0.15, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
+            Library.DomHotWaters.Add(new DomHotWater() { Name = "NoDHW", IsOn = false, FlowRatePerFloorArea = 0, WaterSchedule = "AllOn", WaterTemperatureInlet = 10, WaterSupplyTemperature = 60 });
+            Library.ZoneConstructions.Add(new ZoneConstruction() { Name = "Default", RoofConstruction = "defaultConstruction", FacadeConstruction = "defaultConstruction", SlabConstruction = "defaultConstruction", GroundConstruction = "defaultConstruction", PartitionConstruction = "defaultConstruction" });
+
 
             #endregion
 
+            #endregion
 
 
 
 
 
 
-    
 
- 
+
+
+
 
             #region  OpaqueMaterialsWithEEIndicators
 

@@ -81,7 +81,23 @@ namespace ArchsimLib
         public double AFN_DISCHARGE_C { get; set; } = 0.65;
 
 
+        //Frame
+        [DataMember]
+        public  bool HasFrame = false;
 
+        [DataMember, Units("m")]
+        public double FrameWidth { get; set; } = 0.05;
+        [DataMember, Units("m")]
+        public double FrameProjection { get; set; } = 0.01;
+        [DataMember, Units("W/m2-K")]
+        public double FrameConductance { get; set; } = 5.0;
+ 
+
+        [DataMember, Units("m")]
+        public double DividerWidth { get; set; } = 0.025;
+
+        [DataMember, Units("m")]
+        public double InsideSillRevealDepth { get; set; } = 0.2;
 
 
         public static WindowSettings fromJSON(string json)
