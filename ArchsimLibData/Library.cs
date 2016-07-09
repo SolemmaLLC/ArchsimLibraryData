@@ -189,6 +189,8 @@ namespace ArchsimLib
             }
         }
 
+        
+
         #endregion
 
         #region Add High Level Objects
@@ -229,7 +231,6 @@ namespace ArchsimLib
 
         }
 
-
         public ZoneConstruction Add(ZoneConstruction obj)
         {
             if (obj == null) return null;
@@ -266,7 +267,6 @@ namespace ArchsimLib
 
         }
 
-
         public DomHotWater Add(DomHotWater obj)
         {
             if (obj == null) return null;
@@ -285,7 +285,6 @@ namespace ArchsimLib
 
         }
 
-
         public ZoneDefinition Add(ZoneDefinition obj)
         {
             if (obj == null) return null;
@@ -302,9 +301,6 @@ namespace ArchsimLib
                 return oc;
             }
         }
-
-
-
 
         public WindowSettings Add(WindowSettings obj)
         {

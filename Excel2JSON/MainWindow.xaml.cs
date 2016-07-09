@@ -87,36 +87,44 @@ namespace Excel2JSON
 
             Library lib = LibraryDefaults.getHardCodedDefaultLib();
 
-            foreach(var o in Parse.Objects<OpaqueMaterial>((XSSFSheet)wb.GetSheet("Material"))) lib.OpaqueMaterials.Add(o);
+            foreach(var o in Parse.Objects<OpaqueMaterial>((XSSFSheet)wb.GetSheet("Material"))) lib.Add(o);
         
-            //if (lib.OpaqueMaterials.GroupBy(x => x.Name).Any(g => g.Count() > 1))
-            //{
-            //    var hash = new HashSet<string>();
-            //    var duplicates = lib.OpaqueMaterials.Where(x => !hash.Add(x.Name));
-            //    foreach (var d in duplicates) {
-            //        Debug.WriteLine("WARNING: Duplicate name " +d.Name);
-            //        Logger.WriteLine("WARNING: Duplicate name " + d.Name);
-            //    }
-            //     hash = new HashSet<string>();
-            //    lib.OpaqueMaterials = lib.OpaqueMaterials.Where(x => hash.Add(x.Name)).ToList();
-            //}
 
-            foreach (var o in Parse.Objects<GlazingConstructionSimple>((XSSFSheet)wb.GetSheet("GlazingConstructionSimple"))) lib.GlazingConstructionsSimple.Add(o);
+            foreach (var o in Parse.Objects<GlazingConstructionSimple>((XSSFSheet)wb.GetSheet("GlazingConstructionSimple"))) lib.Add(o);
             foreach (var o in Parse.Objects<ZoneLoad>((XSSFSheet)wb.GetSheet("ZoneLoad"))) lib.ZoneLoads.Add(o);
 
-            foreach(var o in   Parse.Objects<ZoneConditioning>((XSSFSheet)wb.GetSheet("ZoneConditioning"))) lib.ZoneConditionings.Add(o);
-            foreach(var o in   Parse.Objects<ZoneVentilation>((XSSFSheet)wb.GetSheet("ZoneVentilation"))) lib.ZoneVentilations.Add(o);
-            foreach (var o in  Parse.Objects<ZoneConstruction>((XSSFSheet)wb.GetSheet("ZoneConstruction"))) lib.ZoneConstructions.Add(o);
+            foreach(var o in   Parse.Objects<ZoneConditioning>((XSSFSheet)wb.GetSheet("ZoneConditioning"))) lib.Add(o);
+            foreach(var o in   Parse.Objects<ZoneVentilation>((XSSFSheet)wb.GetSheet("ZoneVentilation"))) lib.Add(o);
+            foreach (var o in  Parse.Objects<ZoneConstruction>((XSSFSheet)wb.GetSheet("ZoneConstruction"))) lib.Add(o);
 
-            foreach (var o in Parse.Objects<DomHotWater>((XSSFSheet)wb.GetSheet("DomHotWater"))) lib.DomHotWaters.Add(o);
-            foreach (var o in Parse.Objects<WindowSettings>((XSSFSheet)wb.GetSheet("Window"))) lib.WindowSettings.Add(o);
+            foreach (var o in Parse.Objects<DomHotWater>((XSSFSheet)wb.GetSheet("DomHotWater"))) lib.Add(o);
+            foreach (var o in Parse.Objects<WindowSettings>((XSSFSheet)wb.GetSheet("Window"))) lib.Add(o);
 
-            foreach (var o in  Parse.Schedule((XSSFSheet)wb.GetSheet("Schedule"), ref lib)) lib.YearSchedules.Add(o);
+            foreach (var o in  Parse.Schedule((XSSFSheet)wb.GetSheet("Schedule"), ref lib)) lib.Add(o);
 
-            foreach (var o in Parse.ArraySchedule((XSSFSheet)wb.GetSheet("ArraySchedule"), ref lib)) lib.ArraySchedules.Add(o);
+            foreach (var o in Parse.ArraySchedule((XSSFSheet)wb.GetSheet("ArraySchedule"), ref lib)) lib.Add(o);
 
-            foreach (var o in Parse.Constructions((XSSFSheet) wb.GetSheet("Construction"), ref lib)) lib.OpaqueConstructions.Add(o);
-            foreach (var o in Parse.Zone((XSSFSheet)wb.GetSheet("Zone"), ref lib)) lib.ZoneDefinitions.Add(o);
+            foreach (var o in Parse.Constructions((XSSFSheet) wb.GetSheet("Construction"), ref lib)) lib.Add(o);
+            foreach (var o in Parse.Zone((XSSFSheet)wb.GetSheet("Zone"), ref lib)) lib.Add(o);
+
+
+
+            //foreach (var o in Parse.Objects<GlazingConstructionSimple>((XSSFSheet)wb.GetSheet("GlazingConstructionSimple"))) lib.GlazingConstructionsSimple.Add(o);
+            //foreach (var o in Parse.Objects<ZoneLoad>((XSSFSheet)wb.GetSheet("ZoneLoad"))) lib.ZoneLoads.Add(o);
+
+            //foreach (var o in Parse.Objects<ZoneConditioning>((XSSFSheet)wb.GetSheet("ZoneConditioning"))) lib.ZoneConditionings.Add(o);
+            //foreach (var o in Parse.Objects<ZoneVentilation>((XSSFSheet)wb.GetSheet("ZoneVentilation"))) lib.ZoneVentilations.Add(o);
+            //foreach (var o in Parse.Objects<ZoneConstruction>((XSSFSheet)wb.GetSheet("ZoneConstruction"))) lib.ZoneConstructions.Add(o);
+
+            //foreach (var o in Parse.Objects<DomHotWater>((XSSFSheet)wb.GetSheet("DomHotWater"))) lib.DomHotWaters.Add(o);
+            //foreach (var o in Parse.Objects<WindowSettings>((XSSFSheet)wb.GetSheet("Window"))) lib.WindowSettings.Add(o);
+
+            //foreach (var o in Parse.Schedule((XSSFSheet)wb.GetSheet("Schedule"), ref lib)) lib.YearSchedules.Add(o);
+
+            //foreach (var o in Parse.ArraySchedule((XSSFSheet)wb.GetSheet("ArraySchedule"), ref lib)) lib.ArraySchedules.Add(o);
+
+            //foreach (var o in Parse.Constructions((XSSFSheet)wb.GetSheet("Construction"), ref lib)) lib.OpaqueConstructions.Add(o);
+            //foreach (var o in Parse.Zone((XSSFSheet)wb.GetSheet("Zone"), ref lib)) lib.ZoneDefinitions.Add(o);
 
 
             return lib;

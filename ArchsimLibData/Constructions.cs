@@ -84,7 +84,7 @@ namespace ArchsimLib
             oc.DataSource = source;
 
 
-            Library.OpaqueConstructions.Add(oc);
+            Library.Add(oc);
             return oc;
 
         }

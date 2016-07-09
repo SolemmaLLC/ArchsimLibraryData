@@ -92,8 +92,8 @@ namespace Excel2JSON
 
                 else if (cell.CellType == CellType.Boolean)
                 {
-                    sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.BooleanCellValue.ToString());
-                    sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.BooleanCellValue.ToString());
+                    sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.BooleanCellValue.ToString().ToLower());
+                    sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.BooleanCellValue.ToString().ToLower());
                 }
 
 
@@ -254,6 +254,7 @@ namespace Excel2JSON
 
             }
 
+            if (String.IsNullOrWhiteSpace(name)) return null;
 
             var c = OpaqueConstruction.QuickConstruction(name, type, cnames.ToArray(), cthick.ToArray(), category, source, ref lib);
 

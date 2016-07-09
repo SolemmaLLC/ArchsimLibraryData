@@ -89,7 +89,7 @@ namespace ArchsimLib
                 SolarAbsorptance= 0.7,
                 VisibleAbsorptance=0.7
             };
-            Library.OpaqueMaterials.Add(defaultMat);
+            Library.Add(defaultMat);
 
             GlazingMaterial defaultGMat = new GlazingMaterial() {
            Name = "defaultGlazingMat",
@@ -106,7 +106,7 @@ namespace ArchsimLib
                 IREmissivityFront=0.84,
                 IREmissivityBack=0.20
            };
-            Library.GlazingMaterials.Add( defaultGMat);
+            Library.Add( defaultGMat);
 
 
 
@@ -115,7 +115,7 @@ namespace ArchsimLib
             defaultConstruction.Layers.Add(defaultLay);
             defaultConstruction.Name = "defaultConstruction";
             defaultConstruction.Type = ConstructionTypes.Facade;// "Facade";
-            Library.OpaqueConstructions.Add( defaultConstruction);
+            Library.Add( defaultConstruction);
 
 
             Layer<WindowMaterialBase> defaultGLay = new Layer<WindowMaterialBase>(0.006, defaultGMat);
@@ -123,7 +123,7 @@ namespace ArchsimLib
             defaultGlazing.Layers.Add(defaultGLay);
             defaultGlazing.Name = "defaultGlazing";
             defaultGlazing.Type = GlazingConstructionTypes.Single;// "Single";
-            Library.GlazingConstructions.Add( defaultGlazing);
+            Library.Add( defaultGlazing);
 
 
             //AIRWALL
@@ -143,13 +143,13 @@ namespace ArchsimLib
                 IREmissivityFront = 0.005,
                 IREmissivityBack = 0.005
             };
-            Library.GlazingMaterials.Add(AirWallMat);
+            Library.Add(AirWallMat);
             Layer<WindowMaterialBase> airwallLayer = new Layer<WindowMaterialBase>(0.003, AirWallMat);
             GlazingConstruction airWall = new GlazingConstruction();
             airWall.Layers.Add(airwallLayer);
             airWall.Name = "Airwall";
             airWall.Type = GlazingConstructionTypes.Other;// "Other";
-            Library.GlazingConstructions.Add( airWall);
+            Library.Add( airWall);
 
 
 
@@ -188,11 +188,11 @@ namespace ArchsimLib
 
 
 
-            Library.ZoneLoads.Add(new ZoneLoad() { Name = "NoLoads", PeopleIsOn = false, EquipmentIsOn = false , LightsIsOn = false, PeopleDensity = 0, IlluminanceTarget = 0, LightingPowerDensity = 0, EquipmentPowerDensity = 0, OccupancySchedule = "AllOn", EquipmentAvailibilitySchedule = "AllOn", LightsAvailibilitySchedule = "AllOn", Category = "Default", DataSource = "Default" });
-            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "NoConditioning", HeatIsOn=false, CoolIsOn =false, MechVentIsOn = false, HeatingSetpoint = 19, CoolingSetpoint = 26,  MinFreshAirPerson = 0, MinFreshAirArea = 0, Category = "Default" });
-            Library.ZoneVentilations.Add(new ZoneVentilation() { Name = "NoVentilationInfiltration", InfiltrationIsOn = false, InfiltrationAch = 0.15, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
-            Library.DomHotWaters.Add(new DomHotWater() { Name = "NoDHW", IsOn = false, FlowRatePerFloorArea = 0, WaterSchedule = "AllOn", WaterTemperatureInlet = 10, WaterSupplyTemperature = 60 });
-            Library.ZoneConstructions.Add(new ZoneConstruction() { Name = "Default", RoofConstruction = "defaultConstruction", FacadeConstruction = "defaultConstruction", SlabConstruction = "defaultConstruction", GroundConstruction = "defaultConstruction", PartitionConstruction = "defaultConstruction" });
+            Library.Add(new ZoneLoad() { Name = "NoLoads", PeopleIsOn = false, EquipmentIsOn = false , LightsIsOn = false, PeopleDensity = 0, IlluminanceTarget = 0, LightingPowerDensity = 0, EquipmentPowerDensity = 0, OccupancySchedule = "AllOn", EquipmentAvailibilitySchedule = "AllOn", LightsAvailibilitySchedule = "AllOn", Category = "Default", DataSource = "Default" });
+            Library.Add(new ZoneConditioning() { Name = "NoConditioning", HeatIsOn=false, CoolIsOn =false, MechVentIsOn = false, HeatingSetpoint = 19, CoolingSetpoint = 26,  MinFreshAirPerson = 0, MinFreshAirArea = 0, Category = "Default" });
+            Library.Add(new ZoneVentilation() { Name = "NoVentilationInfiltration", InfiltrationIsOn = false, InfiltrationAch = 0.15, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
+            Library.Add(new DomHotWater() { Name = "NoDHW", IsOn = false, FlowRatePerFloorArea = 0, WaterSchedule = "AllOn", WaterTemperatureInlet = 10, WaterSupplyTemperature = 60 });
+            Library.Add(new ZoneConstruction() { Name = "Default", RoofConstruction = "defaultConstruction", FacadeConstruction = "defaultConstruction", SlabConstruction = "defaultConstruction", GroundConstruction = "defaultConstruction", PartitionConstruction = "defaultConstruction" });
 
 
             #endregion
@@ -337,7 +337,7 @@ namespace ArchsimLib
                 IREmissivityFront = 0.84,
                 IREmissivityBack = 0.20
             };
-            Library.GlazingMaterials.Add(gm1);
+            Library.Add(gm1);
                         
             //List of premade basic glazing constructions/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -353,7 +353,7 @@ namespace ArchsimLib
             gc1.Name = "DblClear Air 6_13_6";
             gc1.Type = GlazingConstructionTypes.Double;// "Double";
 
-            Library.GlazingConstructions.Add( gc1);
+            Library.Add( gc1);
 
 
 
@@ -409,41 +409,41 @@ namespace ArchsimLib
             var Values = new double[8760];
             for (int i = 0; i < 8760; i++) { Values[i] = (double)r.Next(1, 100) / 100.0; }
 
-            Library.ArraySchedules.Add(new ScheduleArray() { Name = "RandomBehavior", Category = "Random", Values = Values });
-            Library.ArraySchedules.Add(new ScheduleArray() { Name = "RandomBehavior2", Category = "Random", Values = Values });
+            Library.Add(new ScheduleArray() { Name = "RandomBehavior", Category = "Random", Values = Values });
+            //Library.ArraySchedules.Add(new ScheduleArray() { Name = "RandomBehavior2", Category = "Random", Values = Values });
 
 
             #endregion
 
 
-            Library.ZoneLoads.Add(new ZoneLoad() { Name = "BedroomLoads", PeopleDensity = 1.0 / 40.0, IlluminanceTarget = 200, LightingPowerDensity = 9.5, EquipmentPowerDensity = 2, OccupancySchedule = "occBedroom", EquipmentAvailibilitySchedule = "equipBedroom", LightsAvailibilitySchedule = "lightsBedroom", Category = "Residential" ,DataSource = "SIA Merkblatt 2024" });
-            Library.ZoneLoads.Add(new ZoneLoad() { Name = "KitchenLoads", PeopleDensity = 1.0 / 5.0, IlluminanceTarget = 500, LightingPowerDensity = 17, EquipmentPowerDensity = 40, OccupancySchedule = "occKitchen", EquipmentAvailibilitySchedule = "equipKitchen", LightsAvailibilitySchedule = "lightsKitchen", Category = "Residential" ,DataSource = "SIA Merkblatt 2024" });
-            Library.ZoneLoads.Add(new ZoneLoad() { Name = "SingleOfficeLoads", PeopleDensity = 1.0 / 14.0, IlluminanceTarget = 500, LightingPowerDensity = 16, EquipmentPowerDensity = 7, OccupancySchedule = "occOffice", EquipmentAvailibilitySchedule = "equipOffice", LightsAvailibilitySchedule = "lightsOffice", Category = "Office", DataSource = "SIA Merkblatt 2024" });
-            Library.ZoneLoads.Add(new ZoneLoad() { Name = "MeetingRoomLoads", PeopleDensity = 1.0 / 3.0, IlluminanceTarget = 500, LightingPowerDensity = 16, EquipmentPowerDensity = 2, OccupancySchedule = "occMeetingRoom", EquipmentAvailibilitySchedule = "equipMeetingRoom", LightsAvailibilitySchedule = "lightsMeetingRoom", Category = "Office", DataSource = "SIA Merkblatt 2024" });
+            Library.Add(new ZoneLoad() { Name = "BedroomLoads", PeopleDensity = 1.0 / 40.0, IlluminanceTarget = 200, LightingPowerDensity = 9.5, EquipmentPowerDensity = 2, OccupancySchedule = "occBedroom", EquipmentAvailibilitySchedule = "equipBedroom", LightsAvailibilitySchedule = "lightsBedroom", Category = "Residential" ,DataSource = "SIA Merkblatt 2024" });
+            Library.Add(new ZoneLoad() { Name = "KitchenLoads", PeopleDensity = 1.0 / 5.0, IlluminanceTarget = 500, LightingPowerDensity = 17, EquipmentPowerDensity = 40, OccupancySchedule = "occKitchen", EquipmentAvailibilitySchedule = "equipKitchen", LightsAvailibilitySchedule = "lightsKitchen", Category = "Residential" ,DataSource = "SIA Merkblatt 2024" });
+            Library.Add(new ZoneLoad() { Name = "SingleOfficeLoads", PeopleDensity = 1.0 / 14.0, IlluminanceTarget = 500, LightingPowerDensity = 16, EquipmentPowerDensity = 7, OccupancySchedule = "occOffice", EquipmentAvailibilitySchedule = "equipOffice", LightsAvailibilitySchedule = "lightsOffice", Category = "Office", DataSource = "SIA Merkblatt 2024" });
+            Library.Add(new ZoneLoad() { Name = "MeetingRoomLoads", PeopleDensity = 1.0 / 3.0, IlluminanceTarget = 500, LightingPowerDensity = 16, EquipmentPowerDensity = 2, OccupancySchedule = "occMeetingRoom", EquipmentAvailibilitySchedule = "equipMeetingRoom", LightsAvailibilitySchedule = "lightsMeetingRoom", Category = "Office", DataSource = "SIA Merkblatt 2024" });
 
-            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "BedroomHeatingCoolingMechVent", HeatingSetpoint = 19, CoolingSetpoint = 26,  MechVentIsOn = true, MinFreshAirPerson = 2.5, MinFreshAirArea = 0.3, Category = "Residential" });
-            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "KitchenHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.9, MinFreshAirArea = 0.9, Category = "Residential" });
-            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "OfficeHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 2.5, MinFreshAirArea = 0.3, Category = "Office" });
-            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "MeetingRoomHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.8, MinFreshAirArea = 0.3, Category = "Office" });
-            Library.ZoneConditionings.Add(new ZoneConditioning() { Name = "LectureHallHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.8, MinFreshAirArea = 0.3, Category = "Education" });
+            Library.Add(new ZoneConditioning() { Name = "BedroomHeatingCoolingMechVent", HeatingSetpoint = 19, CoolingSetpoint = 26,  MechVentIsOn = true, MinFreshAirPerson = 2.5, MinFreshAirArea = 0.3, Category = "Residential" });
+            Library.Add(new ZoneConditioning() { Name = "KitchenHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.9, MinFreshAirArea = 0.9, Category = "Residential" });
+            Library.Add(new ZoneConditioning() { Name = "OfficeHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 2.5, MinFreshAirArea = 0.3, Category = "Office" });
+            Library.Add(new ZoneConditioning() { Name = "MeetingRoomHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.8, MinFreshAirArea = 0.3, Category = "Office" });
+            Library.Add(new ZoneConditioning() { Name = "LectureHallHeatingCoolingMechVent", HeatingSetpoint = 20, CoolingSetpoint = 26, MechVentIsOn = true, MinFreshAirPerson = 3.8, MinFreshAirArea = 0.3, Category = "Education" });
 
-            Library.ZoneVentilations.Add(new ZoneVentilation() { Name = "PoorAirTightness", InfiltrationIsOn = true,  InfiltrationAch = 1.2, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
-            Library.ZoneVentilations.Add(new ZoneVentilation() { Name = "ModerateAirTightness", InfiltrationIsOn = true, InfiltrationAch = 0.5, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
-            Library.ZoneVentilations.Add(new ZoneVentilation() { Name = "GoodAirTightness", InfiltrationIsOn = true, InfiltrationAch = 0.15, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
+            Library.Add(new ZoneVentilation() { Name = "PoorAirTightness", InfiltrationIsOn = true,  InfiltrationAch = 1.2, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
+            Library.Add(new ZoneVentilation() { Name = "ModerateAirTightness", InfiltrationIsOn = true, InfiltrationAch = 0.5, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
+            Library.Add(new ZoneVentilation() { Name = "GoodAirTightness", InfiltrationIsOn = true, InfiltrationAch = 0.15, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
 
 
-            Library.DomHotWaters.Add(new DomHotWater() { Name = "House" , FlowRatePerFloorArea =0.03 , WaterSchedule = "AllOn" , WaterTemperatureInlet = 10, WaterSupplyTemperature = 60 });
+            Library.Add(new DomHotWater() { Name = "House" , FlowRatePerFloorArea =0.03 , WaterSchedule = "AllOn" , WaterTemperatureInlet = 10, WaterSupplyTemperature = 60 });
 
-            Library.ZoneConstructions.Add(new ZoneConstruction() { Name = "SolidWood", RoofConstruction = "300mmInsulation 94mmSolidWood 24mmGypsum", FacadeConstruction = "300mmInsulation 94mmSolidWood 24mmGypsum", SlabConstruction = "150mmScreedWithImpactSoundInsulation 140mmSolidWood", GroundConstruction = "120mmInsulation 200mmConcrete", PartitionConstruction = "12mmGypsum 78mmSolidWood 12mmGypsum" });
+            Library.Add(new ZoneConstruction() { Name = "SolidWood", RoofConstruction = "300mmInsulation 94mmSolidWood 24mmGypsum", FacadeConstruction = "300mmInsulation 94mmSolidWood 24mmGypsum", SlabConstruction = "150mmScreedWithImpactSoundInsulation 140mmSolidWood", GroundConstruction = "120mmInsulation 200mmConcrete", PartitionConstruction = "12mmGypsum 78mmSolidWood 12mmGypsum" });
 
 
             #region SimpleGlass
 
-            Library.GlazingConstructionsSimple.Add(new GlazingConstructionSimple("SinglePaneClr", "Single pane", "Standard clear", 0.913, 5.894, 0.905));
-            Library.GlazingConstructionsSimple.Add(new GlazingConstructionSimple("DoublePaneClr", "Double pane", "Standard clear", 0.812, 2.720, 0.764));
-            Library.GlazingConstructionsSimple.Add(new GlazingConstructionSimple("DoublePaneLoEe2", "Double pane", "Low emissivity coating on layer e2", 0.444, 1.493, 0.373));
-            Library.GlazingConstructionsSimple.Add(new GlazingConstructionSimple("DoublePaneLoEe3", "Double pane", "Low emissivity coating on layer e3", 0.769, 1.507, 0.649));
-            Library.GlazingConstructionsSimple.Add(new GlazingConstructionSimple("TriplePaneLoE", "Triple pane", "Low emissivity coating on layer e2 and e5", 0.661, 0.785, 0.764));
+            Library.Add(new GlazingConstructionSimple("SinglePaneClr", "Single pane", "Standard clear", 0.913, 5.894, 0.905));
+            Library.Add(new GlazingConstructionSimple("DoublePaneClr", "Double pane", "Standard clear", 0.812, 2.720, 0.764));
+            Library.Add(new GlazingConstructionSimple("DoublePaneLoEe2", "Double pane", "Low emissivity coating on layer e2", 0.444, 1.493, 0.373));
+            Library.Add(new GlazingConstructionSimple("DoublePaneLoEe3", "Double pane", "Low emissivity coating on layer e3", 0.769, 1.507, 0.649));
+            Library.Add(new GlazingConstructionSimple("TriplePaneLoE", "Triple pane", "Low emissivity coating on layer e2 and e5", 0.661, 0.785, 0.764));
 
 
             #endregion
@@ -455,7 +455,7 @@ namespace ArchsimLib
             
 
 
-            Library.ZoneDefinitions.Add(new ZoneDefinition());
+            Library.Add(new ZoneDefinition());
 
 
 
