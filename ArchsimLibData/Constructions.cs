@@ -161,8 +161,8 @@ namespace ArchsimLib
     public class BaseConstruction : LibraryComponent
     {
 
-        [DataMember]
-        public virtual string Category { get; set; } = "Uncategorized";
+        //[DataMember]
+        //public virtual string Category { get; set; } = "Uncategorized";
 
 
         [DataMember]

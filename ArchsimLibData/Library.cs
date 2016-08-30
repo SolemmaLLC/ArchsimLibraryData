@@ -189,7 +189,24 @@ namespace ArchsimLib
             }
         }
 
-        
+        public FloorDefinition Add(FloorDefinition obj)
+        {
+            if (obj == null) return null;
+            if (FloorDefinitions == null) FloorDefinitions = new List<FloorDefinition>();
+            if (!FloorDefinitions.Any(i => i.Name == obj.Name))
+            {
+                FloorDefinitions.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = FloorDefinitions.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
+        }
+
+
 
         #endregion
 
@@ -462,6 +479,8 @@ namespace ArchsimLib
         public IList<ZoneDefinition> ZoneDefinitions;
         [DataMember(Order = 30)]
         public IList<WindowSettings> WindowSettings;
+        [DataMember(Order = 30)]
+        public IList<FloorDefinition> FloorDefinitions;
 
 
         public Library()

@@ -100,6 +100,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ExcelFileReader.cs" />
     <Compile Include="Excel\Cell.cs" />
     <Compile Include="Excel\Row.cs" />
     <Compile Include="Excel\SharedStrings.cs" />
@@ -111,6 +112,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ParseLib.cs" />
     <Compile Include="ParseObjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

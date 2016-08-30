@@ -188,10 +188,10 @@ namespace ArchsimLib
 
 
 
-            Library.Add(new ZoneLoad() { Name = "NoLoads", PeopleIsOn = false, EquipmentIsOn = false , LightsIsOn = false, PeopleDensity = 0, IlluminanceTarget = 0, LightingPowerDensity = 0, EquipmentPowerDensity = 0, OccupancySchedule = "AllOn", EquipmentAvailibilitySchedule = "AllOn", LightsAvailibilitySchedule = "AllOn", Category = "Default", DataSource = "Default" });
-            Library.Add(new ZoneConditioning() { Name = "NoConditioning", HeatIsOn=false, CoolIsOn =false, MechVentIsOn = false, HeatingSetpoint = 19, CoolingSetpoint = 26,  MinFreshAirPerson = 0, MinFreshAirArea = 0, Category = "Default" });
-            Library.Add(new ZoneVentilation() { Name = "NoVentilationInfiltration", InfiltrationIsOn = false, InfiltrationAch = 0.15, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
-            Library.Add(new DomHotWater() { Name = "NoDHW", IsOn = false, FlowRatePerFloorArea = 0, WaterSchedule = "AllOn", WaterTemperatureInlet = 10, WaterSupplyTemperature = 60 });
+            Library.Add(new ZoneLoad() { Name = "Off", PeopleIsOn = false, EquipmentIsOn = false , LightsIsOn = false, PeopleDensity = 0, IlluminanceTarget = 0, LightingPowerDensity = 0, EquipmentPowerDensity = 0, OccupancySchedule = "AllOn", EquipmentAvailibilitySchedule = "AllOn", LightsAvailibilitySchedule = "AllOn", Category = "Default", DataSource = "Default" });
+            Library.Add(new ZoneConditioning() { Name = "Off", HeatIsOn=false, CoolIsOn =false, MechVentIsOn = false, HeatingSetpoint = 19, CoolingSetpoint = 26,  MinFreshAirPerson = 0, MinFreshAirArea = 0, Category = "Default" });
+            Library.Add(new ZoneVentilation() { Name = "Off", InfiltrationIsOn = false, InfiltrationAch = 0.15, InfiltrationModel = InfiltrationModel.Wind, Category = "Infiltration" });
+            Library.Add(new DomHotWater() { Name = "Off", IsOn = false, FlowRatePerFloorArea = 0, WaterSchedule = "AllOn", WaterTemperatureInlet = 10, WaterSupplyTemperature = 60 });
             Library.Add(new ZoneConstruction() { Name = "Default", RoofConstruction = "defaultConstruction", FacadeConstruction = "defaultConstruction", SlabConstruction = "defaultConstruction", GroundConstruction = "defaultConstruction", PartitionConstruction = "defaultConstruction" });
 
 
@@ -434,6 +434,7 @@ namespace ArchsimLib
 
             Library.Add(new DomHotWater() { Name = "House" , FlowRatePerFloorArea =0.03 , WaterSchedule = "AllOn" , WaterTemperatureInlet = 10, WaterSupplyTemperature = 60 });
 
+
             Library.Add(new ZoneConstruction() { Name = "SolidWood", RoofConstruction = "300mmInsulation 94mmSolidWood 24mmGypsum", FacadeConstruction = "300mmInsulation 94mmSolidWood 24mmGypsum", SlabConstruction = "150mmScreedWithImpactSoundInsulation 140mmSolidWood", GroundConstruction = "120mmInsulation 200mmConcrete", PartitionConstruction = "12mmGypsum 78mmSolidWood 12mmGypsum" });
 
 
@@ -452,10 +453,13 @@ namespace ArchsimLib
             #region ZoneDefTemplates
 
 
-            
+
 
 
             Library.Add(new ZoneDefinition());
+
+
+
 
 
 

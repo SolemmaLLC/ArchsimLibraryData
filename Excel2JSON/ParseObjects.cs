@@ -9,17 +9,19 @@ using ArchsimLib;
 using Excel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
+using System.IO;
+using System.Globalization;
 
 namespace Excel2JSON
 {
     internal static class Parse
     {
-
-
-
-        internal static List<T> Objects<T>(XSSFSheet sh)
+        internal static List<T> Objects<T>(IWorkbook wb , string sheetName )
         {
+            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
+            ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
+
 
             List<T> Objects = new List<T>();
 
@@ -34,10 +36,37 @@ namespace Excel2JSON
 
                 StringBuilder sbCSharp;
                 StringBuilder sbJSON;
+                sbCSharp = new StringBuilder();
+                sbJSON = new StringBuilder();
+                sbCSharp.Append("{ ");
+                sbJSON.Append("{ ");
+                //ParseObject(row, header, out sbJSON, out sbCSharp);
 
-                ParseObject(row, header, out sbJSON, out sbCSharp);
+                for (int j = 0; j < row.Cells.Count; j++)
+                {
+                    var cell = row.GetCell(j);
+                    var head = header.GetCell(j);
 
+                    if (cell == null || head == null) continue;
 
+                    if (cell.CellType == CellType.Blank) continue;
+
+                    
+                    string txt = GetFormattedValue(cell,  formulaEvaluator);
+                    txt = Formating.RemoveSpecialCharactersLeaveSpaces(txt.Trim());
+                    
+                    sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = \"" + txt + "\"");
+                    sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : \"" + txt + "\"");
+
+                    if (j != row.Cells.Count - 1)
+                    {
+                        sbCSharp.Append(", ");
+                        sbJSON.Append(", ");
+                    }
+
+                }
+                sbCSharp.Append(" }");
+                sbJSON.Append(" }");
 
 
                 T mat;
@@ -54,97 +83,153 @@ namespace Excel2JSON
 
             return Objects;
         }
-        private static void ParseObject(IRow row, IRow header, out StringBuilder sbJSON, out StringBuilder sbCSharp)
+       
+
+
+
+        //internal static List<T> ObjectsOld<T>(XSSFSheet sh)
+        //{
+        //    if (sh == null) return null;
+
+        //    List<T> Objects = new List<T>();
+
+
+        //    var header = sh.GetRow(0);
+
+        //    for (int i = 1; i < sh.LastRowNum + 1; i++)
+        //    {
+        //        var row = sh.GetRow(i);
+        //        if (row == null) continue;
+
+
+        //        StringBuilder sbCSharp;
+        //        StringBuilder sbJSON;
+
+        //        ParseObject(row, header, out sbJSON, out sbCSharp);
+
+
+
+
+        //        T mat;
+        //        try
+        //        {
+        //            mat = Serialization.Deserialize<T>(sbJSON.ToString());
+        //            Objects.Add(mat);
+        //        }
+        //        catch
+        //        {
+        //            Debug.WriteLine(sh.SheetName + " Row " + i + " " + sbJSON + "  is not valid");
+        //        }
+        //    }
+
+        //    return Objects;
+        //}
+        //private static void ParseObject(IRow row, IRow header, out StringBuilder sbJSON, out StringBuilder sbCSharp)
+        //{
+        //    sbCSharp = new StringBuilder();
+        //    sbJSON = new StringBuilder();
+        //    sbCSharp.Append("{ ");
+        //    sbJSON.Append("{ ");
+
+
+
+
+        //    for (int j = 0; j < row.Cells.Count; j++)
+        //    {
+        //        var cell = row.GetCell(j);
+        //        var head = header.GetCell(j);
+
+        //        if (cell == null || head == null) continue;
+
+        //        if (cell.CellType == CellType.Blank) continue;
+
+
+        //        if (cell.CellType == CellType.Numeric)
+        //        {
+        //            sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.NumericCellValue);
+        //            sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.NumericCellValue);
+        //        }
+
+
+
+        //        if (cell.CellType == CellType.Formula)
+        //        {
+        //            //numeric formula
+        //            try
+        //            {
+        //                sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.NumericCellValue);
+        //                sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.NumericCellValue);
+        //            }
+        //            //string formula
+        //            catch
+        //            {
+        //                sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.StringCellValue);
+        //                sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.StringCellValue);
+        //            }
+        //        }
+
+
+
+        //        else if (cell.CellType == CellType.Boolean)
+        //        {
+        //            sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.BooleanCellValue.ToString().ToLower());
+        //            sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.BooleanCellValue.ToString().ToLower());
+        //        }
+
+
+
+
+
+        //        else if (cell.CellType == CellType.String)
+        //        {
+        //            bool truefalse;
+
+        //            // is it a boolean?
+        //            if (bool.TryParse(cell.StringCellValue, out truefalse))
+        //            {
+        //                sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.StringCellValue.Trim());
+        //                sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.StringCellValue.Trim());
+        //            }
+
+        //            else
+        //            {
+        //                string txt = "";
+        //                if (!String.IsNullOrWhiteSpace(cell.StringCellValue))
+        //                {
+        //                    txt = Formating.RemoveSpecialCharactersLeaveSpaces(cell.StringCellValue.Trim());
+        //                }
+        //                sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = \"" + txt + "\"");
+        //                sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : \"" + txt + "\"");
+
+        //            }
+        //        }
+
+
+
+
+
+
+        //        if (j != row.Cells.Count - 1)
+        //        {
+        //            sbCSharp.Append(", ");
+        //            sbJSON.Append(", ");
+        //        }
+
+        //    }
+        //    sbCSharp.Append(" }");
+        //    sbJSON.Append(" }");
+
+        //    //  Debug.WriteLine(sbCSharp.ToString());
+        //    //  Debug.WriteLine(sbJSON.ToString());
+        //}
+
+
+
+
+        internal static List<OpaqueConstruction> Constructions(IWorkbook wb, string sheetName, ref Library lib)
         {
-            sbCSharp = new StringBuilder();
-            sbJSON = new StringBuilder();
-            sbCSharp.Append("{ ");
-            sbJSON.Append("{ ");
-
-
-
-
-            for (int j = 0; j < row.Cells.Count; j++)
-            {
-                var cell = row.GetCell(j);
-                var head = header.GetCell(j);
-
-                if (cell == null || head == null) continue;
-
-                if (cell.CellType == CellType.Blank) continue;
-
-
-                if (cell.CellType == CellType.Numeric)
-                {
-                    sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.NumericCellValue);
-                    sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.NumericCellValue);
-                }
-
-
-
-                if (cell.CellType == CellType.Formula)
-                {
-                    sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.NumericCellValue);
-                    sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.NumericCellValue);
-                }
-
-
-
-                else if (cell.CellType == CellType.Boolean)
-                {
-                    sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.BooleanCellValue.ToString().ToLower());
-                    sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.BooleanCellValue.ToString().ToLower());
-                }
-
-
-
-
-
-                else if (cell.CellType == CellType.String)
-                {
-                    bool truefalse;
-
-                    // is it a boolean?
-                    if (bool.TryParse(cell.StringCellValue, out truefalse))
-                    {
-                        sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.StringCellValue.Trim());
-                        sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.StringCellValue.Trim());
-                    }
-
-                    else
-                    {
-                        string txt = "";
-                        if (!String.IsNullOrWhiteSpace(cell.StringCellValue))
-                        {
-                            txt = Formating.RemoveSpecialCharactersLeaveSpaces(cell.StringCellValue.Trim());
-                        }
-                        sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = \"" + txt + "\"");
-                        sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : \"" + txt + "\"");
-
-                    }
-                }
-
-
-
-
-
-
-                if (j != row.Cells.Count - 1)
-                {
-                    sbCSharp.Append(", ");
-                    sbJSON.Append(", ");
-                }
-
-            }
-            sbCSharp.Append(" }");
-            sbJSON.Append(" }");
-
-            //  Debug.WriteLine(sbCSharp.ToString());
-            //  Debug.WriteLine(sbJSON.ToString());
-        }
-
-        internal static List<OpaqueConstruction> Constructions(XSSFSheet sh, ref Library lib)
-        {
+            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
+            ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
             List<OpaqueConstruction> Objects = new List<OpaqueConstruction>();
@@ -262,8 +347,10 @@ namespace Excel2JSON
 
         }
 
-        internal static List<ZoneDefinition> Zone(XSSFSheet sh, ref Library lib)
+        internal static List<ZoneDefinition> Zone(IWorkbook wb, string sheetName, ref Library lib)
         {
+            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
+            ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
             List<ZoneDefinition> Objects = new List<ZoneDefinition>();
@@ -426,8 +513,10 @@ namespace Excel2JSON
 
         }
 
-        internal static List<YearSchedule> Schedule(XSSFSheet sh, ref Library lib)
+        internal static List<YearSchedule> Schedule(IWorkbook wb, string sheetName, ref Library lib)
         {
+            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
+            ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
             List<YearSchedule> Objects = new List<YearSchedule>();
@@ -538,8 +627,10 @@ namespace Excel2JSON
 
         }
 
-        internal static List<ScheduleArray> ArraySchedule(XSSFSheet sh, ref Library lib)
+        internal static List<ScheduleArray> ArraySchedule(IWorkbook wb, string sheetName, ref Library lib)
         {
+            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
+            ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
             List<ScheduleArray> Objects = new List<ScheduleArray>();
@@ -601,5 +692,62 @@ namespace Excel2JSON
             return Objects;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private static string GetFormattedValue(ICell cell, IFormulaEvaluator formulaEvaluator)
+        {
+            DataFormatter dataFormatter = new DataFormatter(CultureInfo.InvariantCulture);
+            string returnValue = string.Empty;
+            if (cell != null)
+            {
+                try
+                {
+                    // Get evaluated and formatted cell value
+                    returnValue = dataFormatter.FormatCellValue(cell, formulaEvaluator);
+                }
+                catch
+                {
+                    // When failed in evaluating the formula, use stored values instead...
+                    // and set cell value for reference from formulae in other cells...
+                    if (cell.CellType == CellType.Formula)
+                    {
+                        switch (cell.CachedFormulaResultType)
+                        {
+                            case CellType.String:
+                                returnValue = cell.StringCellValue;
+                                cell.SetCellValue(cell.StringCellValue);
+                                break;
+                            case CellType.Numeric:
+                                returnValue = dataFormatter.FormatRawCellContents
+                                (cell.NumericCellValue, 0, cell.CellStyle.GetDataFormatString());
+                                cell.SetCellValue(cell.NumericCellValue);
+                                break;
+                            case CellType.Boolean:
+                                returnValue = cell.BooleanCellValue.ToString().ToLower();
+                                cell.SetCellValue(cell.BooleanCellValue);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            return (returnValue ?? string.Empty).Trim();
+        }
     }
+
 }

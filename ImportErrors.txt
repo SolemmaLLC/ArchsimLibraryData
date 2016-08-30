@@ -2,8 +2,6 @@
 
 Material Stainless Steel contained invalid entries that have been auto corrected 
 Material Steel contained invalid entries that have been auto corrected 
-Material Stainless Steel contained invalid entries that have been auto corrected 
-Material Steel contained invalid entries that have been auto corrected 
 Material 100TRANS contained invalid entries that have been auto corrected 
 Construction  150mmScreedWithImpactSoundInsulation 140mmSolidWood name contained invalid characters and has been auto corrected to 150mmScreedWithImpactSoundInsulation 140mmSolidWoo
 
