@@ -264,12 +264,12 @@ namespace ArchsimLib
             DaySchedule someDaySchedule = new DaySchedule(Name, "Fraction", dayArray.ToList());
             someDaySchedule.DataSource = dataSource;
             someDaySchedule.Category = category;
-            Library.Add(someDaySchedule);
+            someDaySchedule = Library.Add(someDaySchedule);
             DaySchedule[] daySchedulesArray = { someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule };
             WeekSchedule someWeekSchedule = new WeekSchedule(Name, daySchedulesArray, "Fraction");
             someWeekSchedule.DataSource = dataSource;
             someWeekSchedule.Category = category;
-            Library.Add(someWeekSchedule);
+            someWeekSchedule = Library.Add(someWeekSchedule);
             WeekSchedule[] weekSchedulesArray = { someWeekSchedule };
             YearSchedule someYearSchedule = new YearSchedule(Name, "Fraction", weekSchedulesArray.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
             someYearSchedule.DataSource = dataSource;
@@ -292,18 +292,18 @@ namespace ArchsimLib
             DaySchedule someDaySchedule = new DaySchedule(Name, "Fraction", dayArray.ToList());
             someDaySchedule.DataSource = dataSource;
             someDaySchedule.Category = category;
-            Library.Add(someDaySchedule);
+            someDaySchedule = Library.Add(someDaySchedule);
 
             DaySchedule weSchedule = new DaySchedule(Name + "WeekEnd", "Fraction", dayArray.ToList());
             weSchedule.DataSource = dataSource;
             weSchedule.Category = category;
-            Library.Add(weSchedule);
+            weSchedule = Library.Add(weSchedule);
 
             DaySchedule[] daySchedulesArray = { someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, weSchedule, weSchedule };
             WeekSchedule someWeekSchedule = new WeekSchedule(Name, daySchedulesArray, "Fraction");
             someWeekSchedule.DataSource = dataSource;
             someWeekSchedule.Category = category;
-            Library.Add(someWeekSchedule);
+            someWeekSchedule = Library.Add(someWeekSchedule);
 
             WeekSchedule[] weekSchedulesArray = { someWeekSchedule };
             YearSchedule someYearSchedule = new YearSchedule(Name, "Fraction", weekSchedulesArray.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());

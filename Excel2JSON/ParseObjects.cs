@@ -14,11 +14,23 @@ using System.Globalization;
 
 namespace Excel2JSON
 {
-    internal static class Parse
+    internal class Parse
     {
-        internal static List<T> Objects<T>(IWorkbook wb , string sheetName )
+        IWorkbook wb;
+        IFormulaEvaluator formulaEvaluator;
+        DataFormatter dataFormatter;
+        Library lib;
+
+        internal Parse(IWorkbook _wb, ref Library _lib) {
+            wb = _wb;
+            lib = _lib;
+            formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
+            dataFormatter = new DataFormatter(CultureInfo.InvariantCulture);
+        }
+
+        internal List<T> Objects<T>(string sheetName)
         {
-            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
+    
             ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
@@ -52,7 +64,7 @@ namespace Excel2JSON
                     if (cell.CellType == CellType.Blank) continue;
 
                     
-                    string txt = GetFormattedValue(cell,  formulaEvaluator);
+                    string txt = GetFormattedValue(cell);
                     txt = Formating.RemoveSpecialCharactersLeaveSpaces(txt.Trim());
                     
                     sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = \"" + txt + "\"");
@@ -86,149 +98,8 @@ namespace Excel2JSON
        
 
 
-
-        //internal static List<T> ObjectsOld<T>(XSSFSheet sh)
-        //{
-        //    if (sh == null) return null;
-
-        //    List<T> Objects = new List<T>();
-
-
-        //    var header = sh.GetRow(0);
-
-        //    for (int i = 1; i < sh.LastRowNum + 1; i++)
-        //    {
-        //        var row = sh.GetRow(i);
-        //        if (row == null) continue;
-
-
-        //        StringBuilder sbCSharp;
-        //        StringBuilder sbJSON;
-
-        //        ParseObject(row, header, out sbJSON, out sbCSharp);
-
-
-
-
-        //        T mat;
-        //        try
-        //        {
-        //            mat = Serialization.Deserialize<T>(sbJSON.ToString());
-        //            Objects.Add(mat);
-        //        }
-        //        catch
-        //        {
-        //            Debug.WriteLine(sh.SheetName + " Row " + i + " " + sbJSON + "  is not valid");
-        //        }
-        //    }
-
-        //    return Objects;
-        //}
-        //private static void ParseObject(IRow row, IRow header, out StringBuilder sbJSON, out StringBuilder sbCSharp)
-        //{
-        //    sbCSharp = new StringBuilder();
-        //    sbJSON = new StringBuilder();
-        //    sbCSharp.Append("{ ");
-        //    sbJSON.Append("{ ");
-
-
-
-
-        //    for (int j = 0; j < row.Cells.Count; j++)
-        //    {
-        //        var cell = row.GetCell(j);
-        //        var head = header.GetCell(j);
-
-        //        if (cell == null || head == null) continue;
-
-        //        if (cell.CellType == CellType.Blank) continue;
-
-
-        //        if (cell.CellType == CellType.Numeric)
-        //        {
-        //            sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.NumericCellValue);
-        //            sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.NumericCellValue);
-        //        }
-
-
-
-        //        if (cell.CellType == CellType.Formula)
-        //        {
-        //            //numeric formula
-        //            try
-        //            {
-        //                sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.NumericCellValue);
-        //                sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.NumericCellValue);
-        //            }
-        //            //string formula
-        //            catch
-        //            {
-        //                sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.StringCellValue);
-        //                sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.StringCellValue);
-        //            }
-        //        }
-
-
-
-        //        else if (cell.CellType == CellType.Boolean)
-        //        {
-        //            sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.BooleanCellValue.ToString().ToLower());
-        //            sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.BooleanCellValue.ToString().ToLower());
-        //        }
-
-
-
-
-
-        //        else if (cell.CellType == CellType.String)
-        //        {
-        //            bool truefalse;
-
-        //            // is it a boolean?
-        //            if (bool.TryParse(cell.StringCellValue, out truefalse))
-        //            {
-        //                sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = " + cell.StringCellValue.Trim());
-        //                sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : " + cell.StringCellValue.Trim());
-        //            }
-
-        //            else
-        //            {
-        //                string txt = "";
-        //                if (!String.IsNullOrWhiteSpace(cell.StringCellValue))
-        //                {
-        //                    txt = Formating.RemoveSpecialCharactersLeaveSpaces(cell.StringCellValue.Trim());
-        //                }
-        //                sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = \"" + txt + "\"");
-        //                sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : \"" + txt + "\"");
-
-        //            }
-        //        }
-
-
-
-
-
-
-        //        if (j != row.Cells.Count - 1)
-        //        {
-        //            sbCSharp.Append(", ");
-        //            sbJSON.Append(", ");
-        //        }
-
-        //    }
-        //    sbCSharp.Append(" }");
-        //    sbJSON.Append(" }");
-
-        //    //  Debug.WriteLine(sbCSharp.ToString());
-        //    //  Debug.WriteLine(sbJSON.ToString());
-        //}
-
-
-
-
-        internal static List<OpaqueConstruction> Constructions(IWorkbook wb, string sheetName, ref Library lib)
+        internal List<OpaqueConstruction> Constructions(string sheetName)
         {
-            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
             ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
@@ -244,7 +115,7 @@ namespace Excel2JSON
                 try
                 {
                     OpaqueConstruction mat;
-                    mat = ParseConstruction(row, header, ref lib);
+                    mat = ParseConstruction(row, header);
                     if (mat != null) { Objects.Add(mat); }
                 }
                 catch (Exception e)
@@ -252,12 +123,11 @@ namespace Excel2JSON
                     Debug.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
                     Logger.WriteLine("ERROR: " + sh.SheetName + " Row " + i + "  is not valid " + e.Message);
                 }
-
             }
 
             return Objects;
         }
-        private static OpaqueConstruction ParseConstruction(IRow row, IRow header, ref Library lib)
+        private  OpaqueConstruction ParseConstruction(IRow row, IRow header)
         {
 
 
@@ -280,7 +150,7 @@ namespace Excel2JSON
 
                 if (head != null)
                 {
-                    if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
+                    headVal = GetFormattedValue(head).ToLower();
                 }
 
 
@@ -292,20 +162,20 @@ namespace Excel2JSON
 
                 if (headVal == "name")
                 {
-                    name = cell.StringCellValue.Trim();
+                    name = GetFormattedValue(cell);
                 }
                 else if (headVal == "source")
                 {
-                    source = cell.StringCellValue.Trim();
+                    source = GetFormattedValue(cell);
                 }
                 else if (headVal == "category")
                 {
-                    category = cell.StringCellValue.Trim();
+                    category = GetFormattedValue(cell);
                 }
                 else if (headVal == "type")
                 {
                     ConstructionTypes ct = ConstructionTypes.Facade;
-                    if (ConstructionTypes.TryParse(cell.StringCellValue, out ct))
+                    if (ConstructionTypes.TryParse(GetFormattedValue(cell), out ct))
                     {
                         type = ct;
                     }
@@ -321,7 +191,7 @@ namespace Excel2JSON
 
                     else if (cell.CellType == CellType.String)
                     {
-                        cnames.Add(Formating.RemoveSpecialCharactersLeaveSpaces(cell.StringCellValue.Trim()));
+                        cnames.Add(Formating.RemoveSpecialCharactersLeaveSpaces(GetFormattedValue(cell)));
                     }
 
                     else if (cell.CellType == CellType.Formula)
@@ -347,9 +217,8 @@ namespace Excel2JSON
 
         }
 
-        internal static List<ZoneDefinition> Zone(IWorkbook wb, string sheetName, ref Library lib)
+        internal List<ZoneDefinition> Zone(string sheetName)
         {
-            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
             ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
@@ -369,7 +238,7 @@ namespace Excel2JSON
                 try
                 {
                     ZoneDefinition mat;
-                    mat = ParseZone(row, header, ref lib);
+                    mat = ParseZone(row, header);
                     Objects.Add(mat);
                 }
                 catch (Exception e)
@@ -382,7 +251,7 @@ namespace Excel2JSON
 
             return Objects;
         }
-        private static ZoneDefinition ParseZone(IRow row, IRow header, ref Library lib)
+        private ZoneDefinition ParseZone(IRow row, IRow header)
         {
 
 
@@ -398,7 +267,7 @@ namespace Excel2JSON
 
                 if (head != null)
                 {
-                    if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
+                    headVal = GetFormattedValue(head).ToLower();
                 }
 
 
@@ -409,12 +278,12 @@ namespace Excel2JSON
 
                 if (headVal == "name")
                 {
-                    name = cell.StringCellValue.Trim();
+                    name = GetFormattedValue(cell);
                     c.Name = name;
                 }
                 else if (headVal == "zoneload")
                 {
-                    string lookup = cell.StringCellValue.Trim();
+                    string lookup = GetFormattedValue(cell);
                     try
                     {
                         var setting = lib.ZoneLoads.First(x => x.Name == lookup);
@@ -431,7 +300,7 @@ namespace Excel2JSON
                 }
                 else if (headVal == "zoneconditioning")
                 {
-                    string lookup = cell.StringCellValue.Trim();
+                    string lookup = GetFormattedValue(cell);
                     try
                     {
                         var setting = lib.ZoneConditionings.First(x => x.Name == lookup);
@@ -448,7 +317,7 @@ namespace Excel2JSON
                 }
                 else if (headVal == "ventilation")
                 {
-                    string lookup = cell.StringCellValue.Trim();
+                    string lookup = GetFormattedValue(cell);
                     try
                     {
                         var setting = lib.ZoneVentilations.First(x => x.Name == lookup);
@@ -465,7 +334,7 @@ namespace Excel2JSON
                 }
                 else if (headVal == "domhotwater")
                 {
-                    string lookup = cell.StringCellValue.Trim();
+                    string lookup = GetFormattedValue(cell);
                     try
                     {
                         var setting = lib.DomHotWaters.First(x => x.Name == lookup);
@@ -482,7 +351,7 @@ namespace Excel2JSON
                 }
                 else if (headVal == "zoneconstruction")
                 {
-                    string lookup = cell.StringCellValue.Trim();
+                    string lookup = GetFormattedValue(cell);
                     try
                     {
                         var setting = lib.ZoneConstructions.First(x => x.Name == lookup);
@@ -513,9 +382,8 @@ namespace Excel2JSON
 
         }
 
-        internal static List<YearSchedule> Schedule(IWorkbook wb, string sheetName, ref Library lib)
+        internal  List<YearSchedule> Schedule( string sheetName)
         {
-            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
             ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
@@ -535,7 +403,7 @@ namespace Excel2JSON
                 try
                 {
                     YearSchedule mat;
-                    mat = ParseSchedule(row, header, ref lib);
+                    mat = ParseSchedule(row, header);
                     if (mat != null) { Objects.Add(mat); }
 
 
@@ -550,7 +418,7 @@ namespace Excel2JSON
 
             return Objects;
         }
-        private static YearSchedule ParseSchedule(IRow row, IRow header, ref Library lib)
+        private  YearSchedule ParseSchedule(IRow row, IRow header)
         {
 
 
@@ -573,7 +441,7 @@ namespace Excel2JSON
                 if (head != null)
                 {
 
-                    if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
+                    headVal = GetFormattedValue(head).ToLower();
                 }
 
 
@@ -585,15 +453,15 @@ namespace Excel2JSON
 
                 if (headVal == "name")
                 {
-                    name = cell.StringCellValue.Trim();
+                    name = GetFormattedValue(cell);
                 }
                 else if (headVal == "source")
                 {
-                    source = cell.StringCellValue.Trim();
+                    source = GetFormattedValue(cell);
                 }
                 else if (headVal == "category")
                 {
-                    category = cell.StringCellValue.Trim();
+                    category = GetFormattedValue(cell);
                 }
 
 
@@ -627,9 +495,8 @@ namespace Excel2JSON
 
         }
 
-        internal static List<ScheduleArray> ArraySchedule(IWorkbook wb, string sheetName, ref Library lib)
+        internal  List<ScheduleArray> ArraySchedule( string sheetName)
         {
-            IFormulaEvaluator formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
             ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
@@ -645,7 +512,7 @@ namespace Excel2JSON
                 if (head != null)
                 {
 
-                    if (head.CellType == CellType.String) headVal = head.StringCellValue.Trim().ToLower();
+                    headVal = GetFormattedValue(head).ToLower();
                 }
 
 
@@ -707,9 +574,9 @@ namespace Excel2JSON
 
 
 
-        private static string GetFormattedValue(ICell cell, IFormulaEvaluator formulaEvaluator)
+        private  string GetFormattedValue(ICell cell)
         {
-            DataFormatter dataFormatter = new DataFormatter(CultureInfo.InvariantCulture);
+
             string returnValue = string.Empty;
             if (cell != null)
             {

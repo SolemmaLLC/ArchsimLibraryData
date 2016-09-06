@@ -16,6 +16,9 @@ namespace Excel2JSON
 
         public  static Library Excel2Lib(string file)
         {
+            Library lib = LibraryDefaults.getHardCodedDefaultLib();
+
+
             XSSFWorkbook wb;
 
             // get sheets list from xlsx
@@ -25,7 +28,7 @@ namespace Excel2JSON
             }
 
 
-           
+            Parse Wr = new Parse(wb, ref lib);
          
 
 
@@ -36,29 +39,28 @@ namespace Excel2JSON
                 //  Logger.WriteLine("Worksheet " + wb.GetSheetAt(k).SheetName);
             }
 
-            Library lib = LibraryDefaults.getHardCodedDefaultLib();
+           
 
             //primitives
-            foreach (var o in Parse.Objects<OpaqueMaterial>(wb ,"Material")) lib.Add(o);
-            foreach (var o in Parse.Constructions(wb , "Construction", ref lib)) lib.Add(o);
-            foreach (var o in Parse.Objects<GlazingConstructionSimple>(wb ,"GlazingConstructionSimple")) lib.Add(o);
-            foreach (var o in Parse.Schedule(wb, "Schedule", ref lib)) lib.Add(o);
-            foreach (var o in Parse.ArraySchedule(wb, "ArraySchedule", ref lib)) lib.Add(o);
+            foreach (var o in Wr.Objects<OpaqueMaterial>("Material")) lib.Add(o);
+            foreach (var o in Wr.Constructions( "Construction")) lib.Add(o);
+            foreach (var o in Wr.Objects<GlazingConstructionSimple>("GlazingConstructionSimple")) lib.Add(o);
+            foreach (var o in Wr.Schedule("Schedule")) lib.Add(o);
+            foreach (var o in Wr.ArraySchedule("ArraySchedule")) lib.Add(o);
            
             //zone defs
-            foreach (var o in Parse.Objects<ZoneLoad>(wb ,"ZoneLoad")) lib.ZoneLoads.Add(o);
-            foreach (var o in Parse.Objects<ZoneConditioning>(wb ,"ZoneConditioning")) lib.Add(o);
-            foreach (var o in Parse.Objects<ZoneVentilation>(wb , "ZoneVentilation")) lib.Add(o);
-            foreach (var o in Parse.Objects<ZoneConstruction>(wb , "ZoneConstruction")) lib.Add(o);
-            foreach (var o in Parse.Objects<DomHotWater>( wb , "DomHotWater")) lib.Add(o);
+            foreach (var o in Wr.Objects<ZoneLoad>("ZoneLoad")) lib.ZoneLoads.Add(o);
+            foreach (var o in Wr.Objects<ZoneConditioning>("ZoneConditioning")) lib.Add(o);
+            foreach (var o in Wr.Objects<ZoneVentilation>( "ZoneVentilation")) lib.Add(o);
+            foreach (var o in Wr.Objects<ZoneConstruction>("ZoneConstruction")) lib.Add(o);
+            foreach (var o in Wr.Objects<DomHotWater>("DomHotWater")) lib.Add(o);
 
             //zone and window
-            foreach (var o in Parse.Objects<WindowSettings>(wb, "Window")) lib.Add(o);
-            foreach (var o in Parse.Zone(wb , "Zone", ref lib)) lib.Add(o);
+            foreach (var o in Wr.Objects<WindowSettings>("Window")) lib.Add(o);
+            foreach (var o in Wr.Zone("Zone")) lib.Add(o);
 
             //building
-
-            foreach (var o in Parse.Objects<FloorDefinition>(wb ,"Building")) lib.Add(o);
+            foreach (var o in Wr.Objects<FloorDefinition>("Building")) lib.Add(o);
 
             return lib;
 
