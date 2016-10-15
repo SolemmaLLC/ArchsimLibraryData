@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
-
+﻿using System.Runtime.Serialization;
 
 namespace ArchsimLib
 {
@@ -159,7 +153,7 @@ namespace ArchsimLib
         [DataMember]
         public string Optical { get; set; } = "SpectralAverage";
         /// <summary>
-        /// Name of spectral data set when Optical Data GasType = Spectral
+        /// Name of spectral data set when Optical Data Type = Spectral
         /// </summary>
         [DataMember]
         public string OpticalData { get; set; } = "";
@@ -295,7 +289,7 @@ namespace ArchsimLib
     public class GasMaterial : WindowMaterialBase
     {
       
-        string[] gases;
+        //string[] gases;
 
         [DataMember]
         public GasTypes GasType = GasTypes.AIR;

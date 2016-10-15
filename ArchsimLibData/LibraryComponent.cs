@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArchsimLib
 {
@@ -22,7 +18,11 @@ namespace ArchsimLib
     [DataContract]
     public abstract class LibraryComponent
    {
+        [DataMember, DefaultValue("No name")]
+        public string Name { get; set; } = "No name";
 
+        [DataMember, DefaultValue("No Category")]
+        public string Category { get; set; } = "No Category";
 
         [DataMember, DefaultValue("No comments")]
         public string Comment { get; set; } = "No comments";
@@ -30,21 +30,19 @@ namespace ArchsimLib
         [DataMember, DefaultValue("No data source")]
         public string DataSource { get; set; } = "No data source";
 
-        [DataMember, DefaultValue("No Category")]
-        public string Category { get; set; } = "No Category";
-
-        [DataMember, DefaultValue("No name")]
-        public string Name { get; set; } = "No name";
-
-
         [OnDeserializing]
         public void OnDeserializing(StreamingContext context)
         {
-            foreach (var prop in GetType().GetProperties())
+            foreach (PropertyInfo f in this.GetType().GetProperties())
             {
-                var att = prop.GetCustomAttribute<DefaultValueAttribute>();
-                if (att == null) { continue; }
-                prop.SetValue(this, att.Value);
+                foreach (Attribute attr in f.GetCustomAttributes(true))
+                {
+                    if (attr is DefaultValueAttribute)
+                    {
+                        DefaultValueAttribute dv = (DefaultValueAttribute)attr;
+                        f.SetValue(this, dv.Value, null);
+                    }
+                }
             }
         }
 
@@ -54,7 +52,6 @@ namespace ArchsimLib
         {
             return Serialization.Deserialize<T>(context);
         }
-
 
         public override string ToString()
         {

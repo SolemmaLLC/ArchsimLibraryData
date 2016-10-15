@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Reflection;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
-
+using System.Text;
 
 namespace ArchsimLib
 {
@@ -189,22 +187,7 @@ namespace ArchsimLib
             }
         }
 
-        public FloorDefinition Add(FloorDefinition obj)
-        {
-            if (obj == null) return null;
-            if (FloorDefinitions == null) FloorDefinitions = new List<FloorDefinition>();
-            if (!FloorDefinitions.Any(i => i.Name == obj.Name))
-            {
-                FloorDefinitions.Add(obj);
-                return obj;
-            }
-            else
-            {
-                var oc = FloorDefinitions.Single(o => o.Name == obj.Name);
-                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
-                return oc;
-            }
-        }
+    
 
 
 
@@ -337,6 +320,39 @@ namespace ArchsimLib
 
         }
 
+        public FloorDefinition Add(FloorDefinition obj)
+        {
+            if (obj == null) return null;
+            if (FloorDefinitions == null) FloorDefinitions = new List<FloorDefinition>();
+            if (!FloorDefinitions.Any(i => i.Name == obj.Name))
+            {
+                FloorDefinitions.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = FloorDefinitions.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
+        }
+
+        public BuildingDefinition Add(BuildingDefinition obj)
+        {
+            if (obj == null) return null;
+            if (FloorDefinitions == null) BuildingDefinitions = new List<BuildingDefinition>();
+            if (!BuildingDefinitions.Any(i => i.Name == obj.Name))
+            {
+                BuildingDefinitions.Add(obj);
+                return obj;
+            }
+            else
+            {
+                var oc = BuildingDefinitions.Single(o => o.Name == obj.Name);
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+                return oc;
+            }
+        }
         #endregion
 
         public T getElementByName<T>(string name)
@@ -422,9 +438,14 @@ namespace ArchsimLib
                 return (T)Convert.ChangeType(WindowSettings.Single(o => o.Name == name), typeof(T));
             }
 
-            // dont know what this is???
+            else if (typeof(T) == typeof(FloorDefinition))
+            {
+                return (T)Convert.ChangeType(FloorDefinitions.Single(o => o.Name == name), typeof(T));
+            }
 
-            else return (T)Convert.ChangeType(null, typeof(T));
+                // dont know what this is???
+
+                else return (T)Convert.ChangeType(null, typeof(T));
 
             }
             catch (Exception ex)
@@ -482,6 +503,9 @@ namespace ArchsimLib
         [DataMember(Order = 30)]
         public IList<FloorDefinition> FloorDefinitions;
 
+        [DataMember(Order = 40)]
+        public IList<BuildingDefinition> BuildingDefinitions;
+
 
         public Library()
         {
@@ -507,6 +531,10 @@ namespace ArchsimLib
             ZoneDefinitions = new List<ZoneDefinition>();
 
             WindowSettings = new List<WindowSettings>();
+
+            FloorDefinitions = new List<FloorDefinition>();
+
+            BuildingDefinitions = new List<BuildingDefinition>();
     }
 
   
@@ -545,7 +573,7 @@ namespace ArchsimLib
                 }
                 
             }
-            catch (Exception ex) { Debug.WriteLine("eplusIDF.Library import error " + ex.Message); }
+            catch (Exception ex) { Debug.WriteLine("Library import error " + ex.Message); }
             
           
         }
@@ -555,32 +583,70 @@ namespace ArchsimLib
             TimeStamp = ImportedLibrary.TimeStamp;
             Version = ImportedLibrary.Version;
 
-            OpaqueMaterials = ImportedLibrary.OpaqueMaterials;
-            GlazingMaterials = ImportedLibrary.GlazingMaterials;
-            GasMaterials = ImportedLibrary.GasMaterials;
-            OpaqueConstructions = ImportedLibrary.OpaqueConstructions;
-            GlazingConstructions = ImportedLibrary.GlazingConstructions;
-            GlazingConstructionsSimple = ImportedLibrary.GlazingConstructionsSimple;
-            DaySchedules = ImportedLibrary.DaySchedules;
-            WeekSchedules = ImportedLibrary.WeekSchedules;
-            YearSchedules = ImportedLibrary.YearSchedules;
-            ArraySchedules = ImportedLibrary.ArraySchedules;
+            this.Clear();
+
+            Merge(ImportedLibrary);
+
+            //OpaqueMaterials = ImportedLibrary.OpaqueMaterials;
+            //GlazingMaterials = ImportedLibrary.GlazingMaterials;
+            //GasMaterials = ImportedLibrary.GasMaterials;
+            //OpaqueConstructions = ImportedLibrary.OpaqueConstructions;
+            //GlazingConstructions = ImportedLibrary.GlazingConstructions;
+            //GlazingConstructionsSimple = ImportedLibrary.GlazingConstructionsSimple;
+            //DaySchedules = ImportedLibrary.DaySchedules;
+            //WeekSchedules = ImportedLibrary.WeekSchedules;
+            //YearSchedules = ImportedLibrary.YearSchedules;
+            //ArraySchedules = ImportedLibrary.ArraySchedules;
 
 
-            ZoneLoads = ImportedLibrary.ZoneLoads;
-            ZoneVentilations = ImportedLibrary.ZoneVentilations;
-            ZoneConstructions = ImportedLibrary.ZoneConstructions;
-            ZoneConditionings = ImportedLibrary.ZoneConditionings;
-            DomHotWaters = ImportedLibrary.DomHotWaters;
+            //ZoneLoads = ImportedLibrary.ZoneLoads;
+            //ZoneVentilations = ImportedLibrary.ZoneVentilations;
+            //ZoneConstructions = ImportedLibrary.ZoneConstructions;
+            //ZoneConditionings = ImportedLibrary.ZoneConditionings;
+            //DomHotWaters = ImportedLibrary.DomHotWaters;
 
 
-            ZoneDefinitions = ImportedLibrary.ZoneDefinitions;
+            //ZoneDefinitions = ImportedLibrary.ZoneDefinitions;
 
-            WindowSettings = ImportedLibrary.WindowSettings;
+            //WindowSettings = ImportedLibrary.WindowSettings;
+
+            //FloorDefinitions = ImportedLibrary.FloorDefinitions;
 
         }
 
+        public void Merge(Library ImportedLibrary)
+        {
+            TimeStamp = ImportedLibrary.TimeStamp;
+            Version = ImportedLibrary.Version;
 
+            foreach (var o in ImportedLibrary.OpaqueMaterials) this.Add(o);
+            foreach (var o in ImportedLibrary.GlazingMaterials) this.Add(o);
+            foreach (var o in ImportedLibrary.GasMaterials) this.Add(o);
+            foreach (var o in ImportedLibrary.OpaqueConstructions) this.Add(o);
+            foreach (var o in ImportedLibrary.GlazingConstructions) this.Add(o);
+            foreach (var o in ImportedLibrary.GlazingConstructionsSimple) this.Add(o);
+            foreach (var o in ImportedLibrary.DaySchedules) this.Add(o);
+            foreach (var o in ImportedLibrary.WeekSchedules) this.Add(o);
+            foreach (var o in ImportedLibrary.YearSchedules) this.Add(o);
+            foreach (var o in ImportedLibrary.ArraySchedules) this.Add(o);
+
+
+            foreach (var o in ImportedLibrary.ZoneLoads) this.Add(o);
+            foreach (var o in ImportedLibrary.ZoneVentilations) this.Add(o);
+            foreach (var o in ImportedLibrary.ZoneConstructions) this.Add(o);
+            foreach (var o in ImportedLibrary.ZoneConditionings) this.Add(o);
+            foreach (var o in ImportedLibrary.DomHotWaters) this.Add(o);
+
+
+            foreach (var o in ImportedLibrary.ZoneDefinitions) this.Add(o);
+
+            foreach (var o in ImportedLibrary.WindowSettings) this.Add(o);
+
+            foreach (var o in ImportedLibrary.FloorDefinitions) this.Add(o);
+
+            foreach (var o in ImportedLibrary.BuildingDefinitions) this.Add(o);
+
+        }
 
         /// <summary>
         /// Copies the data of one object to another. The target object 'pulls' properties of the first. 
@@ -634,7 +700,7 @@ namespace ArchsimLib
             }
         }
 
-  public void Clear()
+        public void Clear()
         {
 
             try
@@ -659,11 +725,42 @@ namespace ArchsimLib
                 ZoneDefinitions.Clear();
 
                 WindowSettings.Clear();
+                FloorDefinitions.Clear();
+                BuildingDefinitions.Clear();
             }
             catch { }
         }
 
+        public override string ToString()
+        {
 
+            StringBuilder sb = new StringBuilder();
+         
+            sb.AppendLine("OpaqueMaterial [" + OpaqueMaterials.Count + "]");
+            //sb.AppendLine("GlazingMaterial [" + GlazingMaterials.Count + "]");
+            //sb.AppendLine("GasMaterial [" + GasMaterials.Count + "]");
+            sb.AppendLine("GlazingConstructionsSimple [" + GlazingConstructionsSimple.Count + "]");
+            sb.AppendLine("OpaqueConstruction [" + OpaqueConstructions.Count + "]");
+            //sb.AppendLine("GlazingConstruction " + GlazingConstructions.Count + "]");
+            sb.AppendLine("DaySchedule [" + DaySchedules.Count + "]");
+            sb.AppendLine("WeekSchedule [" + WeekSchedules.Count + "]");
+            sb.AppendLine("YearSchedule [" + YearSchedules.Count + "]");
+            sb.AppendLine("ArraySchedule [" + ArraySchedules.Count + "]");
+            sb.AppendLine("ZoneLoad [" + ZoneLoads.Count + "]");
+            sb.AppendLine("ZoneVentilation [" + ZoneVentilations.Count + "]");
+            sb.AppendLine("ZoneConstruction [" + ZoneConstructions.Count + "]");
+            sb.AppendLine("ZoneConditioning [" + ZoneConditionings.Count + "]");
+            sb.AppendLine("DomHotWater [" + DomHotWaters.Count + "]");
+            sb.AppendLine("ZoneDefinition [" + ZoneDefinitions.Count + "]");
+            sb.AppendLine("WindowSetting [" + WindowSettings.Count + "]");
+            sb.AppendLine("FloorDefinitions [" + FloorDefinitions.Count + "]");
+            sb.AppendLine("BuildingDefinition [" + BuildingDefinitions.Count + "]");
+
+
+            return sb.ToString();
+
+           // return base.ToString();
+        }
 
         #region CheckForInvalidObjs
 

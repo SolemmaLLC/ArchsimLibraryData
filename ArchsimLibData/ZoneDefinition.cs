@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 
 namespace ArchsimLib
 {
@@ -19,9 +12,11 @@ namespace ArchsimLib
         [DataMember, DefaultValue(1.0)]
         public double ZoneMultiplier { get; set; } = 1.0;
 
+        [DataMember, DefaultValue(45)]
+        public double RoofTiltAngle { get; set; } = 45;
 
-
-
+        [DataMember, DefaultValue(135)]
+        public double FloorTiltAngle { get; set; } = 135;
 
         //MAT
         //-----

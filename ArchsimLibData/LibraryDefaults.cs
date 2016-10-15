@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 namespace ArchsimLib
 {
@@ -172,20 +169,12 @@ namespace ArchsimLib
             int[] DayTo = { 31 };
 
 
-
-            #region AllOn
-
             double[] hourlyAllOnArr = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            DaySchedule hourlyAllOn = new DaySchedule("hourlyAllOn", "Fraction", hourlyAllOnArr.ToList());
-            Library.DaySchedules.Add( hourlyAllOn);
-            DaySchedule[] weekAllOnArr = { hourlyAllOn, hourlyAllOn, hourlyAllOn, hourlyAllOn, hourlyAllOn, hourlyAllOn, hourlyAllOn };
-            WeekSchedule weekAllOn = new WeekSchedule("weekAllOn", weekAllOnArr, "Fraction");
-            Library.WeekSchedules.Add( weekAllOn);
-            WeekSchedule[] snarr = { weekAllOn };
-            YearSchedule AllOnYear = new YearSchedule("AllOn", "Fraction", snarr.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
-            Library.YearSchedules.Add(AllOnYear);
+            YearSchedule.QuickSchedule("AllOn", hourlyAllOnArr, "Fraction", "Default Library", ref Library);
 
 
+            double[] hourlyAllOffArr = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            YearSchedule.QuickSchedule("AllOff", hourlyAllOffArr, "Fraction", "Default Library", ref Library);
 
 
             Library.Add(new ZoneLoad() { Name = "Off", PeopleIsOn = false, EquipmentIsOn = false , LightsIsOn = false, PeopleDensity = 0, IlluminanceTarget = 0, LightingPowerDensity = 0, EquipmentPowerDensity = 0, OccupancySchedule = "AllOn", EquipmentAvailibilitySchedule = "AllOn", LightsAvailibilitySchedule = "AllOn", Category = "Default", DataSource = "Default" });
@@ -195,11 +184,9 @@ namespace ArchsimLib
             Library.Add(new ZoneConstruction() { Name = "Default", RoofConstruction = "defaultConstruction", FacadeConstruction = "defaultConstruction", SlabConstruction = "defaultConstruction", GroundConstruction = "defaultConstruction", PartitionConstruction = "defaultConstruction" });
 
 
+
+
             #endregion
-
-            #endregion
-
-
 
 
 
@@ -454,20 +441,32 @@ namespace ArchsimLib
 
 
 
+            Library.Add(new WindowSettings());
+
 
 
             Library.Add(new ZoneDefinition());
 
 
+            var fl1 = Library.Add(new FloorDefinition() { BuildingID ="Default", Type =  "INT", Name= "Default_INT"});
+            var fl2 = Library.Add(new FloorDefinition() { BuildingID = "Default", Type = "B"  , Name= "Default_B"  });
+            var fl3 = Library.Add(new FloorDefinition() { BuildingID = "Default", Type = "G"  , Name= "Default_G"  });
+            var fl4 = Library.Add(new FloorDefinition() { BuildingID = "Default", Type = "R"  , Name= "Default_R" });
 
 
+
+            BuildingDefinition b = new BuildingDefinition { Name = "Default" };
+            b.Floors.Add(fl1);
+            b.Floors.Add(fl2);
+            b.Floors.Add(fl3);
+            b.Floors.Add(fl4);
+
+            Library.Add(b);
 
 
             #endregion
 
-
             ////--------------------------------------------------------------------------------serialization test
-
 
             //string xml = SerializeDeserialize.Serialize(Library);
 

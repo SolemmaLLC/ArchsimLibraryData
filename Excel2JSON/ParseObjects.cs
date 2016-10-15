@@ -81,6 +81,9 @@ namespace Excel2JSON
                 sbJSON.Append(" }");
 
 
+                Debug.WriteLine(sbCSharp.ToString());
+
+
                 T mat;
                 try
                 {

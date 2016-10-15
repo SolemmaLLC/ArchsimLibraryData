@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArchsimLib
+﻿namespace ArchsimLib
 {
     public enum InfiltrationModel { Constant, Wind };
     public enum ShadingType { ExteriorShade, InteriorShade };

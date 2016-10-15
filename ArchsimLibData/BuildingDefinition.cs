@@ -1,24 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ArchsimLib
 {
-
-
     [DataContract(IsReference = true)]
     public class FloorDefinition : LibraryComponent
     {
         [DataMember]
-        public string Type = "Int";
+        public string Type = "INT";
         [DataMember]
-        public string BuildingID = "";
-        [DataMember]
-        public string Floor = "";
+        public string BuildingID = "Default";
         [DataMember]
         public double NorthWWR = 0.5;
         [DataMember]
@@ -29,6 +20,29 @@ namespace ArchsimLib
         public double WestWWR = 0.5;
         [DataMember]
         public double RoofWWR = 0.5;
+
+
+        [DataMember]
+        public double   NorthOverhang   = 0;
+        [DataMember]
+        public double   EastOverhang    = 0;
+        [DataMember]
+        public double   SouthOverhang   = 0;
+        [DataMember]
+        public double   WestOverhang    = 0;
+        [DataMember]
+        public double   NorthWingwall   = 0;
+        [DataMember]
+        public double   EastWingwall    = 0;
+        [DataMember]
+        public double   SouthWingwall   = 0;
+        [DataMember]
+        public double   WestWingwall = 0;
+
+
+
+
+
         [DataMember]
         public string NorthWindowDefinition = "";
         [DataMember]
@@ -40,12 +54,17 @@ namespace ArchsimLib
         [DataMember]
         public string RoofWindowDefinition = "";
 
-
+        [DataMember]
+        public bool isBasement = false;
 
         [DataMember]
-        public string PerimeterZoneDefinition { get; set; } = "";
+        public string ZoneDefinition { get; set; } = "";
+       
+
+        // this can be used to override the zone construction
+        // TODO: reorganize data so that there is no more need to override
         [DataMember]
-        public string CoreZoneDefinition        { get; set; } = "";
+        public string ZoneConstruction { get; set; } = "";
 
 
 
@@ -53,46 +72,15 @@ namespace ArchsimLib
 
 
 
-    //[DataContract(IsReference = true)]
-    //public class BuildingDefinition : LibraryComponent
-    //{
+    [DataContract(IsReference = true)]
+    public class BuildingDefinition //: LibraryComponent
+    {
+        [DataMember]
+        public string Name = "Default";
+        [DataMember]
+        public List<FloorDefinition> Floors = new List<FloorDefinition>();
 
-    //    List<FloorDefinition> Floors = new List<FloorDefinition>();
-
-    //    [DataMember, DefaultValue(0)]
-    //    public int BasementFloors { get; set; } = 0;
-
-    //}
-
-    //[DataContract(IsReference = true)]
-    //public class FloorDefinition : LibraryComponent
-    //{
-    //    [DataMember]
-    //    public FloorType Type = FloorType._Unset_;
-    //    [DataMember, DefaultValue(1)]
-    //    public int Repeat { get; set; } = 1;
-
-
-    //    [DataMember]
-    //    public ZoneDefinition Perimeter { get; set; } = new ZoneDefinition();
-    //    [DataMember]
-    //    public ZoneDefinition Core { get; set; } = new ZoneDefinition();
-
-
-
-    //}
-
-
-    //public enum FloorType {
-
-    //    _Unset_,
-    //    Basement,
-    //    GroundFloor,
-    //    Roof,
-    //    Floor
-
-    //}
-
+    }
 }
 
 
