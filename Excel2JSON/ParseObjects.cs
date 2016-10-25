@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ArchsimLib;
-using Excel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.IO;
 using System.Globalization;
 
-namespace Excel2JSON
+namespace ArchsimLib.Excel
 {
     internal class Parse
     {
+
         IWorkbook wb;
         IFormulaEvaluator formulaEvaluator;
         DataFormatter dataFormatter;
@@ -81,9 +81,6 @@ namespace Excel2JSON
                 sbJSON.Append(" }");
 
 
-                Debug.WriteLine(sbCSharp.ToString());
-
-
                 T mat;
                 try
                 {
@@ -130,7 +127,8 @@ namespace Excel2JSON
 
             return Objects;
         }
-        private  OpaqueConstruction ParseConstruction(IRow row, IRow header)
+
+        private OpaqueConstruction ParseConstruction(IRow row, IRow header)
         {
 
 
@@ -144,10 +142,11 @@ namespace Excel2JSON
             List<double> cthick = new List<double>();
 
 
+            foreach (var cell in row.Cells)
 
-            for (int j = 0; j < row.Cells.Count; j++)
+            //for (int j = 0; j < row.Cells.Count; j++)
             {
-                var cell = row.GetCell(j);
+                int j = cell.ColumnIndex;
                 var head = header.GetCell(j);
                 string headVal = "";
 
@@ -219,6 +218,97 @@ namespace Excel2JSON
             return c;
 
         }
+
+        //private  OpaqueConstruction ParseConstruction(IRow row, IRow header)
+        //{
+
+
+        //    string name = "";
+        //    //string comment = "";
+        //    string source = "";
+        //    string category = "";
+        //    ConstructionTypes type = ConstructionTypes.Facade;
+
+        //    List<string> cnames = new List<string>();
+        //    List<double> cthick = new List<double>();
+
+
+
+
+        //    for (int j = 0; j < row.Cells.Count; j++)
+        //    {
+        //        var cell = row.GetCell(j);
+        //        var head = header.GetCell(j);
+        //        string headVal = "";
+
+        //        if (head != null)
+        //        {
+        //            headVal = GetFormattedValue(head).ToLower();
+        //        }
+
+
+
+        //        if (cell == null) continue;
+
+        //        if (cell.CellType == CellType.Blank) continue;
+
+
+        //        if (headVal == "name")
+        //        {
+        //            name = GetFormattedValue(cell);
+        //        }
+        //        else if (headVal == "source")
+        //        {
+        //            source = GetFormattedValue(cell);
+        //        }
+        //        else if (headVal == "category")
+        //        {
+        //            category = GetFormattedValue(cell);
+        //        }
+        //        else if (headVal == "type")
+        //        {
+        //            ConstructionTypes ct = ConstructionTypes.Facade;
+        //            if (ConstructionTypes.TryParse(GetFormattedValue(cell), out ct))
+        //            {
+        //                type = ct;
+        //            }
+        //        }
+
+        //        else
+        //        {
+
+        //            if (cell.CellType == CellType.Numeric)
+        //            {
+        //                cthick.Add(cell.NumericCellValue);
+        //            }
+
+        //            else if (cell.CellType == CellType.String)
+        //            {
+        //                cnames.Add(Formating.RemoveSpecialCharactersLeaveSpaces(GetFormattedValue(cell)));
+        //            }
+
+        //            else if (cell.CellType == CellType.Formula)
+        //            {
+        //                if (cell.CachedFormulaResultType == CellType.Numeric)
+        //                {
+        //                    cthick.Add(cell.NumericCellValue);
+        //                }
+        //                else if (cell.CachedFormulaResultType == CellType.String)
+        //                {
+        //                    cnames.Add(Formating.RemoveSpecialCharactersLeaveSpaces(cell.StringCellValue.Trim()));
+        //                }
+        //            }
+        //        }
+
+        //    }
+
+        //    if (String.IsNullOrWhiteSpace(name)) return null;
+
+        //    var c = OpaqueConstruction.QuickConstruction(name, type, cnames.ToArray(), cthick.ToArray(), category, source, ref lib);
+
+        //    return c;
+
+        //}
 
         internal List<ZoneDefinition> Zone(string sheetName)
         {

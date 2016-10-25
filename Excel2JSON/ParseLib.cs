@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Excel2JSON
+namespace ArchsimLib.Excel
 {
     public class ParseLib
     {
@@ -49,7 +49,7 @@ namespace Excel2JSON
             foreach (var o in Wr.ArraySchedule("ArraySchedule")) lib.Add(o);
            
             //zone defs
-            foreach (var o in Wr.Objects<ZoneLoad>("ZoneLoad")) lib.ZoneLoads.Add(o);
+            foreach (var o in Wr.Objects<ZoneLoad>("ZoneLoad")) lib.Add(o);
             foreach (var o in Wr.Objects<ZoneConditioning>("ZoneConditioning")) lib.Add(o);
             foreach (var o in Wr.Objects<ZoneVentilation>( "ZoneVentilation")) lib.Add(o);
             foreach (var o in Wr.Objects<ZoneConstruction>("ZoneConstruction")) lib.Add(o);
@@ -61,6 +61,16 @@ namespace Excel2JSON
 
             //building
             foreach (var o in Wr.Objects<FloorDefinition>("Building")) lib.Add(o);
+
+            // generate building templates from floors
+            var list = new HashSet<string>(lib.FloorDefinitions.Select(x => x.BuildingID).ToList()).ToList();
+            foreach (var n in list) {
+                BuildingDefinition bd = new BuildingDefinition { Name = n };
+                bd.Floors.AddRange( lib.FloorDefinitions.Where(x => x.BuildingID == n) );
+                lib.Add(bd);
+            }
+
+            
 
             return lib;
 
