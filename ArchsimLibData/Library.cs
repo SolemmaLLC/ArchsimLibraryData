@@ -72,6 +72,49 @@ namespace ArchsimLib
                 return oc;
             }
         }
+
+        public OpaqueMaterialNoMass Add(OpaqueMaterialNoMass obj)
+        {
+            if (obj == null) return null;
+            if (NoMass == null) NoMass = new List<OpaqueMaterialNoMass>();
+            if (!NoMass.Any(i => i.Name == obj.Name))
+            {
+
+                NoMass.Add(obj);
+
+                return obj;
+            }
+            else
+            {
+                var oc = NoMass.Single(o => o.Name == obj.Name);
+
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+
+                return oc;
+            }
+        }
+        public OpaqueMaterialAirGap Add(OpaqueMaterialAirGap obj)
+        {
+            if (obj == null) return null;
+            if (AirGap == null) AirGap = new List<OpaqueMaterialAirGap>();
+            if (!AirGap.Any(i => i.Name == obj.Name))
+            {
+
+                AirGap.Add(obj);
+
+                return obj;
+            }
+            else
+            {
+                var oc = AirGap.Single(o => o.Name == obj.Name);
+
+                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+
+                return oc;
+            }
+        }
+
+
         public GlazingMaterial Add(GlazingMaterial obj)
         {
             if (obj == null) return null;
@@ -161,12 +204,30 @@ namespace ArchsimLib
             if (!YearSchedules.Any(i => i.Name == obj.Name))
             {
                 YearSchedules.Add(obj);
+
+                foreach (var w in obj.WeekSchedules) {
+                    this.Add(w);
+                    foreach (var d in w.Days) {
+                        this.Add(d);
+                    }
+                }
+
                 return obj;
             }
             else
             {
                 var oc = YearSchedules.Single(o => o.Name == obj.Name);
                 CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+
+                foreach (var w in oc.WeekSchedules)
+                {
+                    this.Add(w);
+                    foreach (var d in w.Days)
+                    {
+                        this.Add(d);
+                    }
+                }
+
                 return oc;
             }
         }
@@ -464,6 +525,13 @@ namespace ArchsimLib
         //low level objects
         [DataMember(Order = 1)]
         public IList<OpaqueMaterial> OpaqueMaterials;
+
+        [DataMember(Order = 1)]
+        public IList<OpaqueMaterialNoMass> NoMass;
+        [DataMember(Order = 1)]
+        public IList<OpaqueMaterialAirGap> AirGap;
+
+
         [DataMember(Order = 1)]
         public IList<GlazingMaterial> GlazingMaterials;
         [DataMember(Order = 1)]
@@ -513,6 +581,9 @@ namespace ArchsimLib
             TimeStamp = DateTime.Now;
 
             OpaqueMaterials = new List<OpaqueMaterial>();
+            AirGap = new List<OpaqueMaterialAirGap>();
+            NoMass = new List<OpaqueMaterialNoMass>();
+
             GlazingMaterials = new List<GlazingMaterial>();
             GasMaterials = new List<GasMaterial>();
             OpaqueConstructions = new List<OpaqueConstruction>();
@@ -649,7 +720,8 @@ namespace ArchsimLib
         }
 
         /// <summary>
-        /// Copies the data of one object to another. The target object 'pulls' properties of the first. 
+        /// Copies the data of one object to another. The target object 'pulls' 
+        /// of the first. 
         /// This any matching properties are written to the target.
         /// 
         /// The object copy is a shallow copy only. Any nested types will be copied as 
@@ -737,6 +809,7 @@ namespace ArchsimLib
             StringBuilder sb = new StringBuilder();
          
             sb.AppendLine("OpaqueMaterial [" + OpaqueMaterials.Count + "]");
+            sb.AppendLine("AirGap and NoMass [" + AirGap.Count + NoMass.Count + "]");
             //sb.AppendLine("GlazingMaterial [" + GlazingMaterials.Count + "]");
             //sb.AppendLine("GasMaterial [" + GasMaterials.Count + "]");
             sb.AppendLine("GlazingConstructionsSimple [" + GlazingConstructionsSimple.Count + "]");

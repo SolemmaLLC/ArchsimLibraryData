@@ -5,13 +5,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ArchsimLib;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.IO;
 using System.Globalization;
 
-namespace ArchsimLib.Excel
+namespace ArchsimLib
 {
     internal class Parse
     {
@@ -21,7 +20,8 @@ namespace ArchsimLib.Excel
         DataFormatter dataFormatter;
         Library lib;
 
-        internal Parse(IWorkbook _wb, ref Library _lib) {
+        internal Parse(IWorkbook _wb, ref Library _lib)
+        {
             wb = _wb;
             lib = _lib;
             formulaEvaluator = WorkbookFactory.CreateFormulaEvaluator(wb);
@@ -30,7 +30,7 @@ namespace ArchsimLib.Excel
 
         internal List<T> Objects<T>(string sheetName)
         {
-    
+
             ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
 
@@ -63,10 +63,10 @@ namespace ArchsimLib.Excel
 
                     if (cell.CellType == CellType.Blank) continue;
 
-                    
+
                     string txt = GetFormattedValue(cell);
                     txt = Formating.RemoveSpecialCharactersLeaveSpaces(txt.Trim());
-                    
+
                     sbCSharp.Append(header.Cells[j].StringCellValue.Trim() + " = \"" + txt + "\"");
                     sbJSON.Append("\"" + header.Cells[j].StringCellValue.Trim() + "\"" + " : \"" + txt + "\"");
 
@@ -95,7 +95,7 @@ namespace ArchsimLib.Excel
 
             return Objects;
         }
-       
+
 
 
         internal List<OpaqueConstruction> Constructions(string sheetName)
@@ -136,7 +136,7 @@ namespace ArchsimLib.Excel
             //string comment = "";
             string source = "";
             string category = "";
-            ConstructionTypes type = ConstructionTypes.Facade;
+            ConstructionCategory type = ConstructionCategory.Facade;
 
             List<string> cnames = new List<string>();
             List<double> cthick = new List<double>();
@@ -176,8 +176,8 @@ namespace ArchsimLib.Excel
                 }
                 else if (headVal == "type")
                 {
-                    ConstructionTypes ct = ConstructionTypes.Facade;
-                    if (ConstructionTypes.TryParse(GetFormattedValue(cell), out ct))
+                    ConstructionCategory ct = ConstructionCategory.Facade;
+                    if (ConstructionCategory.TryParse(GetFormattedValue(cell), out ct))
                     {
                         type = ct;
                     }
@@ -475,7 +475,7 @@ namespace ArchsimLib.Excel
 
         }
 
-        internal  List<YearSchedule> Schedule( string sheetName)
+        internal List<YearSchedule> Schedule(string sheetName)
         {
             ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
@@ -495,9 +495,9 @@ namespace ArchsimLib.Excel
 
                 try
                 {
-                    YearSchedule mat;
-                    mat = ParseSchedule(row, header);
-                    if (mat != null) { Objects.Add(mat); }
+                    YearSchedule sched;
+                    sched = ParseSchedule(row, header);
+                    if (sched != null) { Objects.Add(sched); }
 
 
                 }
@@ -511,7 +511,7 @@ namespace ArchsimLib.Excel
 
             return Objects;
         }
-        private  YearSchedule ParseSchedule(IRow row, IRow header)
+        private YearSchedule ParseSchedule(IRow row, IRow header)
         {
 
 
@@ -520,7 +520,7 @@ namespace ArchsimLib.Excel
             //string comment = "";
             string source = "";
             string category = "";
-
+            ScheduleType type = ScheduleType.Fraction;
             List<double> values = new List<double>();
 
 
@@ -530,6 +530,7 @@ namespace ArchsimLib.Excel
                 var cell = row.GetCell(j);
                 var head = header.GetCell(j);
                 string headVal = "";
+
 
                 if (head != null)
                 {
@@ -556,7 +557,10 @@ namespace ArchsimLib.Excel
                 {
                     category = GetFormattedValue(cell);
                 }
-
+                //else if (headVal == "type")
+                //{
+                //    type =(ScheduleType)Enum.Parse(typeof(ScheduleType), GetFormattedValue(cell));
+                //}
 
                 else
                 {
@@ -578,17 +582,23 @@ namespace ArchsimLib.Excel
 
             }
 
+
+
+
+
+
+            if (String.IsNullOrWhiteSpace(name)) return null;
+
+            if (values.Max() > 1) type = ScheduleType.Temperature;
             var first = values.Take(24);
             var second = values.Skip(24).Take(24);
-
-
-            var sched = YearSchedule.QuickSchedule(name, first.ToArray(), second.ToArray(), category, source, ref lib);
+            var sched = YearSchedule.QuickSchedule(name, first.ToArray(), second.ToArray(), type, category, source, ref lib);
 
             return sched;
 
         }
 
-        internal  List<ScheduleArray> ArraySchedule( string sheetName)
+        internal List<ScheduleArray> ArraySchedule(string sheetName)
         {
             ISheet sh = wb.GetSheet(sheetName);
             if (sh == null) return null;
@@ -604,14 +614,17 @@ namespace ArchsimLib.Excel
 
                 if (head != null)
                 {
-
-                    headVal = GetFormattedValue(head).ToLower();
+                    headVal = GetFormattedValue(head);//.ToLower();
                 }
 
+                if (String.IsNullOrWhiteSpace(headVal)) continue;
 
                 var sched = new ScheduleArray();
                 sched.Values = new double[8760];
                 sched.Name = headVal;
+
+
+
                 Objects.Add(sched);
             }
 
@@ -631,14 +644,14 @@ namespace ArchsimLib.Excel
 
                     if (cell.CellType == CellType.Numeric)
                     {
-                        Objects[j].Values[i-1] = cell.NumericCellValue;
+                        Objects[j].Values[i - 1] = cell.NumericCellValue;
                     }
 
                     else if (cell.CellType == CellType.Formula)
                     {
                         if (cell.CachedFormulaResultType == CellType.Numeric)
                         {
-                            Objects[j].Values[i-1] = cell.NumericCellValue;
+                            Objects[j].Values[i - 1] = cell.NumericCellValue;
                         }
                     }
 
@@ -648,6 +661,15 @@ namespace ArchsimLib.Excel
 
 
             }
+
+
+            foreach (var s in Objects)
+            {
+
+                if (s.Values.Max() > 1) s.Type = ScheduleType.Temperature;
+
+            }
+
 
             return Objects;
         }
@@ -667,7 +689,7 @@ namespace ArchsimLib.Excel
 
 
 
-        private  string GetFormattedValue(ICell cell)
+        private string GetFormattedValue(ICell cell)
         {
 
             string returnValue = string.Empty;

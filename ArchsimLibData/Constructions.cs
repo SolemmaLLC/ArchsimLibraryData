@@ -6,22 +6,7 @@ using System.Runtime.Serialization;
 
 namespace ArchsimLib
 {
-    public enum ConstructionTypes  {
-            Facade,
-            Roof,
-            GroundFloor,
-            InteriorFloor,
-            ExteriorFloor,
-            Partition
-        };
-    public enum GlazingConstructionTypes
-    {
-        Other,
-        Single,
-        Double,
-        Triple,
-        Quadruple
-    };
+   
 
 
     [DataContract]
@@ -31,7 +16,7 @@ namespace ArchsimLib
         public List<Layer<OpaqueMaterial>> Layers = new List<Layer<OpaqueMaterial>>();
 
         [DataMember]
-        public ConstructionTypes Type = ConstructionTypes.Facade;
+        public ConstructionCategory Type = ConstructionCategory.Facade;
 
         public OpaqueConstruction() { }
 
@@ -48,7 +33,7 @@ namespace ArchsimLib
             return changed;
         }
 
-        public static OpaqueConstruction QuickConstruction(string name, ConstructionTypes type, string[] layers, double[] thickness, string category, string source,  ref Library Library)
+        public static OpaqueConstruction QuickConstruction(string name, ConstructionCategory type, string[] layers, double[] thickness, string category, string source,  ref Library Library)
         {
 
             OpaqueConstruction oc = new OpaqueConstruction();
@@ -56,8 +41,12 @@ namespace ArchsimLib
             {
                 try
                 {
+                    if (thickness.Length != layers.Length){ continue; }
+                    if (!(thickness[i] > 0)) { continue; }
+
                     if (Library.OpaqueMaterials.Any(x => x.Name == layers[i]))
                     {
+                       
                         var mat = Library.OpaqueMaterials.First(o => o.Name == layers[i]);
                         Layer<OpaqueMaterial> layer = new Layer<OpaqueMaterial>(thickness[i], mat);
                         oc.Layers.Add(layer);

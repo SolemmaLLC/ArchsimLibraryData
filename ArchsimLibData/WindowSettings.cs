@@ -74,6 +74,10 @@ namespace ArchsimLib
         public double AFN_DISCHARGE_C { get; set; } = 0.65;
 
 
+        [DataMember]
+        public AFNVentilationControl VentControl = AFNVentilationControl.Temperature;
+
+
         //Frame
         [DataMember]
         public  bool HasFrame = false;

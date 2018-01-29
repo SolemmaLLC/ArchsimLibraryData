@@ -10,24 +10,24 @@ namespace ArchsimLib
     {
 
         [DataMember]
-        public string Type = "Fraction";
+        public ScheduleType Type = ScheduleType.Fraction;
 
 
         [DataMember]
         public List<double> Values;
 
         public DaySchedule() { }
-        public DaySchedule(string _Name, string _Type, List<double> _Vals)
+        public DaySchedule(string name, ScheduleType type, List<double> vals)
         {
-            Name = _Name;
-            Type = _Type;
-            Values = _Vals;
+            Name = name;
+            Type = type;
+            Values = vals;
         }
-        public void Update(string _Name, string _Type, List<double> _Vals)
+        public void Update(string name, ScheduleType type, List<double> vals)
         {
-            Name = _Name;
-            Type = _Type;
-            Values = _Vals;
+            Name = name;
+            Type = type;
+            Values = vals;
         }
         public bool Correct()
         {
@@ -35,12 +35,12 @@ namespace ArchsimLib
 
             string cleanName = Formating.RemoveSpecialCharactersNotStrict(this.Name);
             if (this.Name != cleanName) { this.Name = cleanName; changed = true; }
-            if (this.Type == "Fraction")
+            if (this.Type == ScheduleType.Fraction)
             {
                 for (int i = 0; i < this.Values.Count; i++)
                 {
-                    if (this.Values[0] < 0) { this.Values[0] = 0; changed = true; }
-                    if (this.Values[0] > 1) { this.Values[0] = 1; changed = true; }
+                    if (this.Values[i] < 0) { this.Values[i] = 0; changed = true; }
+                    if (this.Values[i] > 1) { this.Values[i] = 1; changed = true; }
                 }
             }
             return changed;
@@ -59,23 +59,23 @@ namespace ArchsimLib
 
 
         [DataMember]
-        public string Type = "Fraction";
+        public ScheduleType Type = ScheduleType.Fraction;
 
         [DataMember]
         public int[] FromTo = { 1, 1, 12, 31 };
 
         public WeekSchedule() { }
-        public WeekSchedule(string _Name, DaySchedule[] _Days, string _Type)
+        public WeekSchedule(string name, DaySchedule[] days, ScheduleType type = ScheduleType.Fraction)
         {
-            Name = _Name;
-            Days = _Days;
-            Type = _Type;
+            Name = name;
+            Days = days;
+            Type = type;
         }
-        public void Update(string _Name, DaySchedule[] _Days, string _Type)
+        public void Update(string name, DaySchedule[] days, ScheduleType type = ScheduleType.Fraction)
         {
-            Name = _Name;
-            Days = _Days;
-            Type = _Type;
+            Name = name;
+            Days = days;
+            Type = type;
         }
         public bool Correct()
         {
@@ -102,7 +102,7 @@ namespace ArchsimLib
     {
 
         [DataMember]
-        public string Type = "Fraction";
+        public ScheduleType Type = ScheduleType.Fraction;
         [DataMember]
         public List<WeekSchedule> WeekSchedules = new List<WeekSchedule>();
         [DataMember]
@@ -116,15 +116,15 @@ namespace ArchsimLib
 
 
         public YearSchedule() { }
-        public YearSchedule(string _Name, string _Type, List<WeekSchedule> _WeekScheduleNames, List<int> _MonthFrom, List<int> _DayForm, List<int> _MonthTill, List<int> _DayTill)
+        public YearSchedule(string name, ScheduleType type, List<WeekSchedule> weekScheduleNames, List<int> monthFrom, List<int> dayForm, List<int> monthTill, List<int> dayTill)
         {
-            Name = _Name;
-            Type = _Type;
-            WeekSchedules = _WeekScheduleNames;
-            MonthFrom = _MonthFrom;
-            DayFrom = _DayForm;
-            MonthTill = _MonthTill;
-            DayTill = _DayTill;
+            Name = name;
+            Type = type;
+            WeekSchedules = weekScheduleNames;
+            MonthFrom = monthFrom;
+            DayFrom = dayForm;
+            MonthTill = monthTill;
+            DayTill = dayTill;
 
             for (int i = 0; i < WeekSchedules.Count; i++)
             {
@@ -140,16 +140,16 @@ namespace ArchsimLib
 
         }
 
-        public void Update(string _Name, string _Type, List<WeekSchedule> _WeekScheduleNames, List<int> _MonthFrom, List<int> _DayForm, List<int> _MonthTill, List<int> _DayTill)
+        public void Update(string name, ScheduleType type, List<WeekSchedule> weekScheduleNames, List<int> monthFrom, List<int> dayForm, List<int> monthTill, List<int> dayTill)
         {
 
-            Name = _Name;
-            Type = _Type;
-            WeekSchedules = _WeekScheduleNames;
-            MonthFrom = _MonthFrom;
-            DayFrom = _DayForm;
-            MonthTill = _MonthTill;
-            DayTill = _DayTill;
+            Name = name;
+            Type = type;
+            WeekSchedules = weekScheduleNames;
+            MonthFrom = monthFrom;
+            DayFrom = dayForm;
+            MonthTill = monthTill;
+            DayTill = dayTill;
 
             for (int i = 0; i < WeekSchedules.Count; i++)
             {
@@ -251,7 +251,7 @@ namespace ArchsimLib
         }
 
 
-        public static YearSchedule QuickSchedule(string Name, double[] dayArray, string category, string dataSource, ref Library Library)
+        public static YearSchedule QuickSchedule(string Name, double[] dayArray, ScheduleType type , string category, string dataSource, ref Library Library)
         {
 
 
@@ -260,17 +260,17 @@ namespace ArchsimLib
             int[] MonthTo = { 12 };
             int[] DayTo = { 31 };
 
-            DaySchedule someDaySchedule = new DaySchedule(Name, "Fraction", dayArray.ToList());
+            DaySchedule someDaySchedule = new DaySchedule(Name, type, dayArray.ToList());
             someDaySchedule.DataSource = dataSource;
             someDaySchedule.Category = category;
             someDaySchedule = Library.Add(someDaySchedule);
             DaySchedule[] daySchedulesArray = { someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule };
-            WeekSchedule someWeekSchedule = new WeekSchedule(Name, daySchedulesArray, "Fraction");
+            WeekSchedule someWeekSchedule = new WeekSchedule(Name, daySchedulesArray, type);
             someWeekSchedule.DataSource = dataSource;
             someWeekSchedule.Category = category;
             someWeekSchedule = Library.Add(someWeekSchedule);
             WeekSchedule[] weekSchedulesArray = { someWeekSchedule };
-            YearSchedule someYearSchedule = new YearSchedule(Name, "Fraction", weekSchedulesArray.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
+            YearSchedule someYearSchedule = new YearSchedule(Name, type, weekSchedulesArray.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
             someYearSchedule.DataSource = dataSource;
             someYearSchedule.Category = category;
 
@@ -279,7 +279,7 @@ namespace ArchsimLib
 
         }
 
-        public static YearSchedule QuickSchedule(string Name, double[] dayArray, double[] weArray, string category, string dataSource, ref Library Library)
+        public static YearSchedule QuickSchedule(string Name, double[] dayArray, double[] weArray, ScheduleType type , string category, string dataSource, ref Library Library)
         {
 
 
@@ -288,24 +288,24 @@ namespace ArchsimLib
             int[] MonthTo = { 12 };
             int[] DayTo = { 31 };
 
-            DaySchedule someDaySchedule = new DaySchedule(Name, "Fraction", dayArray.ToList());
+            DaySchedule someDaySchedule = new DaySchedule(Name, type, dayArray.ToList());
             someDaySchedule.DataSource = dataSource;
             someDaySchedule.Category = category;
             someDaySchedule = Library.Add(someDaySchedule);
 
-            DaySchedule weSchedule = new DaySchedule(Name + "WeekEnd", "Fraction", dayArray.ToList());
+            DaySchedule weSchedule = new DaySchedule(Name + "WeekEnd", type, weArray.ToList());
             weSchedule.DataSource = dataSource;
             weSchedule.Category = category;
             weSchedule = Library.Add(weSchedule);
 
             DaySchedule[] daySchedulesArray = { someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, someDaySchedule, weSchedule, weSchedule };
-            WeekSchedule someWeekSchedule = new WeekSchedule(Name, daySchedulesArray, "Fraction");
+            WeekSchedule someWeekSchedule = new WeekSchedule(Name, daySchedulesArray, type);
             someWeekSchedule.DataSource = dataSource;
             someWeekSchedule.Category = category;
             someWeekSchedule = Library.Add(someWeekSchedule);
 
             WeekSchedule[] weekSchedulesArray = { someWeekSchedule };
-            YearSchedule someYearSchedule = new YearSchedule(Name, "Fraction", weekSchedulesArray.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
+            YearSchedule someYearSchedule = new YearSchedule(Name, type, weekSchedulesArray.ToList(), MonthFrom.ToList(), DayFrom.ToList(), MonthTo.ToList(), DayTo.ToList());
             someYearSchedule.DataSource = dataSource;
             someYearSchedule.Category = category;
 
@@ -314,13 +314,11 @@ namespace ArchsimLib
 
         }
     }
-
-
     [DataContract]
     public class ScheduleArray : LibraryComponent
     {
         [DataMember]
-        public string Type = "Fraction";
+        public ScheduleType Type = ScheduleType.Fraction;
         [DataMember]
         public double[] Values;
 

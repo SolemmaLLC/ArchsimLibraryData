@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchsimLibData", "ArchsimLibData\ArchsimLibData.csproj", "{9750B115-DF4A-46EA-ABF9-CFA58BD61BD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excel2JSON", "Excel2JSON\Excel2JSON.csproj", "{DBCC64C3-3B5F-4070-A852-8525394E21BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVImportExport", "CSVImportExport\CSVImportExport.csproj", "{CA7F8652-F593-4DBD-B34B-188AE251F84E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +22,10 @@ Global
 		{DBCC64C3-3B5F-4070-A852-8525394E21BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBCC64C3-3B5F-4070-A852-8525394E21BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DBCC64C3-3B5F-4070-A852-8525394E21BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7F8652-F593-4DBD-B34B-188AE251F84E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7F8652-F593-4DBD-B34B-188AE251F84E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7F8652-F593-4DBD-B34B-188AE251F84E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7F8652-F593-4DBD-B34B-188AE251F84E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

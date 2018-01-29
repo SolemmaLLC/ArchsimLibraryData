@@ -15,15 +15,17 @@ namespace ArchsimLib
 
 
         [DataMember]
-        public double HeatingSetpoint { get; set; } = 20;//needed for trnsys 
+        public double HeatingSetpoint { get; set; } = 20;
         [DataMember]
-        public double CoolingSetpoint { get; set; } = 26;//needed for trnsys
-
-
-        //[DataMember]
-        //public string HeatingSetpointSchedule { get; set; }= "AllOn";
-        //[DataMember]
-        //public string CoolingSetpointSchedule { get; set; }= "AllOn";
+        public double CoolingSetpoint { get; set; } = 26;
+        [DataMember]
+        public bool HeatingSetpointConstant { get; set; } = true;
+        [DataMember]
+        public bool CoolingSetpointConstant { get; set; } = true;
+        [DataMember]
+        public string HeatingSetpointSchedule { get; set; } = "S21 B18 8to18";
+        [DataMember]
+        public string CoolingSetpointSchedule { get; set; } = "S25 B30 8to18";
 
 
         [DataMember]

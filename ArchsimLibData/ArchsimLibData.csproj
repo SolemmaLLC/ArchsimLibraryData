@@ -49,6 +49,7 @@
     <Compile Include="Constructions.cs" />
     <Compile Include="DomHotWater.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="Settings\DefaultDirectories.cs" />
     <Compile Include="Utilities\Formating.cs" />
     <Compile Include="Layer.cs" />
     <Compile Include="Library.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="LibraryEnums.cs" />
     <Compile Include="Materials.cs" />
     <Compile Include="Schedules.cs" />
+    <Compile Include="Utilities\Platform.cs" />
     <Compile Include="WindowSettings.cs" />
     <Compile Include="ZoneConditioning.cs" />
     <Compile Include="ZoneDefinition.cs" />

@@ -1,10 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace ArchsimLib
 {
     //---------------------------
     [DataContract(IsReference = true)]
-    public class OpaqueMaterialAirGap
+    public class OpaqueMaterialAirGap : BaseMaterial
     {
         /// <summary>
         /// Resistance {m2-K/w}
@@ -12,14 +13,13 @@ namespace ArchsimLib
         [DataMember]
         [Units("m2.K/w")]
         public double Resistance { get; set; } = 0.2079491;
-        [DataMember]
-        public string Name { get; set; } = "airGap";
+
 
         public OpaqueMaterialAirGap() { }
     }
 
     [DataContract(IsReference = true)]
-    public class OpaqueMaterialNoMass
+    public class OpaqueMaterialNoMass : BaseMaterial
     {
         /// <summary>
         /// Resistance {m2-K/w}
@@ -29,9 +29,12 @@ namespace ArchsimLib
         [Units("m2.K/w")]
         public double Resistance { get; set; } = 0.2079491;
         [DataMember]
-        public string Name { get; set; } = "NOMASS";
-        [DataMember]
         public string Roughness { get; set; } = "Rough";
+
+        /// <summary>
+        /// Set to defaults as used in EnergyPlus
+        /// </summary>
+
         [DataMember]
         [Units("0-1")]
         public double ThermalAbsorptance { get; set; } = 0.9;
@@ -72,10 +75,14 @@ namespace ArchsimLib
         [DataMember]
         [Units("J/kg.K")]
         public double SpecificHeat { get; set; } = 840;
-       
+
+
+        /// <summary>
+        /// Set to defaults as used in EnergyPlus
+        /// </summary>
         [DataMember]
         [Units("0-1")]
-        public double ThermalEmittance { get; set; } = 0.9;
+        public double ThermalAbsorptance { get; set; } = 0.9;
         [DataMember]
         [Units("0-1")]
         public double SolarAbsorptance { get; set; } = 0.7;
@@ -87,26 +94,35 @@ namespace ArchsimLib
         /// <summary>
         /// Dimensionless factor µ (DIN EN ISO 12572)
         /// </summary>
-        [DataMember]
-        [Units("Dimensionless")]
-        public double MoistureDiffusionResistance { get; set; } = 50;
+        //[DataMember]
+        //[Units("Dimensionless")]
+        //public double MoistureDiffusionResistance { get; set; } = 50;
 
 
 
         [DataMember]
         public bool PhaseChange { get; set; } = false;
         [DataMember]
-        public string PhaseChangeProperties { get; set; } = "";
-        [DataMember]
         public bool VariableConductivity { get; set; } = false;
+
         [DataMember]
-        public string VariableConductivityProperties { get; set; } = "";
+        [Units("W/m-K2")]
+        public double TemperatureCoefficientThermalConductivity = 0;
+        [DataMember]
+        [Units("C")]
+        public List<double> TemperatureArray { get; set; } = new List<double>();
+        [DataMember]
+        [Units("J/kg")]
+        public List<double> EnthalpyArray { get; set; } = new List<double>();
+        [DataMember]
+        [Units("W/m-K")]
+        public List<double> VariableConductivityArray { get; set; } = new List<double>();
 
 
 
         public OpaqueMaterial() { }
 
-    
+
         public bool Correct()
         {
             bool changed = false;
@@ -118,8 +134,8 @@ namespace ArchsimLib
             if (this.VisibleAbsorptance > 0.999) { this.VisibleAbsorptance = 0.999; changed = true; }
             if (this.SolarAbsorptance < 0.001) { this.SolarAbsorptance = 0.001; changed = true; }
             if (this.SolarAbsorptance > 0.999) { this.SolarAbsorptance = 0.999; changed = true; }
-            if (this.ThermalEmittance < 0.001) { this.ThermalEmittance = 0.001; changed = true; }
-            if (this.ThermalEmittance > 0.999) { this.ThermalEmittance = 0.999; changed = true; }
+            if (this.ThermalAbsorptance < 0.001) { this.ThermalAbsorptance = 0.001; changed = true; }
+            if (this.ThermalAbsorptance > 0.999) { this.ThermalAbsorptance = 0.999; changed = true; }
             if (this.SpecificHeat < 100) { this.SpecificHeat = 100; changed = true; }
             if (this.SpecificHeat > 5000) { this.SpecificHeat = 2000; changed = true; }
             if (this.Density < 10) { this.Density = 10; changed = true; }
@@ -221,15 +237,11 @@ namespace ArchsimLib
 
         public string Type { get; set; } = "Glass";
 
-        // public string SolarDiffusion = "No";
 
-        // public int youngsModulus = 72000000000;
-
-        // public double PoissonsRatio = 0.22;
 
 
         public GlazingMaterial() { }
-    
+
         public bool Correct()
         {
             bool changed = false;
@@ -288,7 +300,7 @@ namespace ArchsimLib
     [DataContract(IsReference = true)]
     public class GasMaterial : WindowMaterialBase
     {
-      
+
         //string[] gases;
 
         [DataMember]
@@ -315,15 +327,17 @@ namespace ArchsimLib
     }
 
 
-    public abstract class BaseMaterial  : LibraryComponent
+    public abstract class BaseMaterial : LibraryComponent
     {
-        [DataMember][Units("MJ/Kg")]
+        [DataMember]
+        [Units("MJ/Kg")]
         public double EmbodiedEnergy { get; set; } = 0;
 
         [DataMember]
         public double EmbodiedEnergyStdDev { get; set; }
 
-        [DataMember][Units("kgCO2eq/Kg")]
+        [DataMember]
+        [Units("kgCO2eq/Kg")]
         public double EmbodiedCarbon { get; set; } = 0;
 
         [DataMember]
@@ -333,33 +347,9 @@ namespace ArchsimLib
         [Units("$/m3")]
         public double Cost { get; set; } = 0;
 
-        [DataMember][Units("yr")]
+        [DataMember]
+        [Units("yr")]
         public int Life { get; set; } = 1;
-
-
-
-
-        //// -------------------------------------------------------obsolete
-        ////duplicate of life
-        //[DataMember]
-        //public double[] SubstitutionRatePattern { get; set; }
-        ////duplicate of life
-        //[DataMember]
-        //public double SubstitutionTimestep { get; set; }
-
-
-        //[DataMember]
-        //public double TransportCarbon { get; set; }
-
-        //[DataMember]
-        //public double TransportDistance { get; set; }
-
-        //[DataMember]
-        //public double TransportEnergy { get; set; }
-        //// -------------------------------------------------------obsolete
-
-
-
 
         public BaseMaterial() { }
 
