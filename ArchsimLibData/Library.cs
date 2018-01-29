@@ -34,7 +34,7 @@ namespace ArchsimLib
                 var oc = OpaqueConstructions.Single(o => o.Name == obj.Name);
 
                 CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
-                
+
                 return oc;
             }
         }
@@ -59,7 +59,7 @@ namespace ArchsimLib
         public OpaqueMaterial Add(OpaqueMaterial obj)
         {
             if (obj == null) return null;
-            if (OpaqueMaterials == null) OpaqueMaterials = new List<OpaqueMaterial >();
+            if (OpaqueMaterials == null) OpaqueMaterials = new List<OpaqueMaterial>();
             if (!OpaqueMaterials.Any(i => i.Name == obj.Name))
             {
                 OpaqueMaterials.Add(obj);
@@ -181,22 +181,22 @@ namespace ArchsimLib
                 return oc;
             }
         }
-        public WeekSchedule Add(WeekSchedule obj)
-        {
-            if (obj == null) return null;
-            if (WeekSchedules == null) WeekSchedules = new List<WeekSchedule>();
-            if (!WeekSchedules.Any(i => i.Name == obj.Name))
-            {
-                WeekSchedules.Add(obj);
-                return obj;
-            }
-            else
-            {
-                var oc = WeekSchedules.Single(o => o.Name == obj.Name);
-                CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
-                return oc;
-            }
-        }
+        //public WeekSchedule Add(WeekSchedule obj)
+        //{
+        //    if (obj == null) return null;
+        //    if (WeekSchedules == null) WeekSchedules = new List<WeekSchedule>();
+        //    if (!WeekSchedules.Any(i => i.Name == obj.Name))
+        //    {
+        //        WeekSchedules.Add(obj);
+        //        return obj;
+        //    }
+        //    else
+        //    {
+        //        var oc = WeekSchedules.Single(o => o.Name == obj.Name);
+        //        CopyObjectData(obj, oc, "", BindingFlags.Public | BindingFlags.Instance);
+        //        return oc;
+        //    }
+        //}
         public YearSchedule Add(YearSchedule obj)
         {
             if (obj == null) return null;
@@ -205,9 +205,11 @@ namespace ArchsimLib
             {
                 YearSchedules.Add(obj);
 
-                foreach (var w in obj.WeekSchedules) {
-                    this.Add(w);
-                    foreach (var d in w.Days) {
+                foreach (var w in obj.WeekSchedules)
+                {
+                    // this.Add(w);
+                    foreach (var d in w.Days)
+                    {
                         this.Add(d);
                     }
                 }
@@ -221,7 +223,7 @@ namespace ArchsimLib
 
                 foreach (var w in oc.WeekSchedules)
                 {
-                    this.Add(w);
+                    //this.Add(w);
                     foreach (var d in w.Days)
                     {
                         this.Add(d);
@@ -248,7 +250,7 @@ namespace ArchsimLib
             }
         }
 
-    
+
 
 
 
@@ -420,89 +422,89 @@ namespace ArchsimLib
         {
             // materials and constructions
 
-                try
+            try
+            {
+                if (typeof(T) == typeof(OpaqueConstruction))
                 {
-            if (typeof(T) == typeof(OpaqueConstruction))
-            {
                     return (T)Convert.ChangeType(OpaqueConstructions.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(GlazingConstruction))
-            {
-                return (T)Convert.ChangeType(GlazingConstructions.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(OpaqueMaterial))
-            {
-                return (T)Convert.ChangeType(OpaqueMaterials.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(GlazingMaterial))
-            {
-                return (T)Convert.ChangeType(GlazingMaterials.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(GasMaterial))
-            {
-                return (T)Convert.ChangeType(GasMaterials.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(GlazingConstructionSimple))
-            {
-                return (T)Convert.ChangeType(GlazingConstructionsSimple.Single(o => o.Name == name), typeof(T));
-            }
+                }
+                else if (typeof(T) == typeof(GlazingConstruction))
+                {
+                    return (T)Convert.ChangeType(GlazingConstructions.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(OpaqueMaterial))
+                {
+                    return (T)Convert.ChangeType(OpaqueMaterials.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(GlazingMaterial))
+                {
+                    return (T)Convert.ChangeType(GlazingMaterials.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(GasMaterial))
+                {
+                    return (T)Convert.ChangeType(GasMaterials.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(GlazingConstructionSimple))
+                {
+                    return (T)Convert.ChangeType(GlazingConstructionsSimple.Single(o => o.Name == name), typeof(T));
+                }
 
-            // schedules
+                // schedules
 
-            else if (typeof(T) == typeof(DaySchedule))
-            {
-                return (T)Convert.ChangeType(DaySchedules.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(WeekSchedule))
-            {
-                return (T)Convert.ChangeType(WeekSchedules.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(YearSchedule))
-            {
-                return (T)Convert.ChangeType(YearSchedules.Single(o => o.Name == name), typeof(T));
-            }
+                else if (typeof(T) == typeof(DaySchedule))
+                {
+                    return (T)Convert.ChangeType(DaySchedules.Single(o => o.Name == name), typeof(T));
+                }
+                //else if (typeof(T) == typeof(WeekSchedule))
+                //{
+                //    return (T)Convert.ChangeType(WeekSchedules.Single(o => o.Name == name), typeof(T));
+                //}
+                else if (typeof(T) == typeof(YearSchedule))
+                {
+                    return (T)Convert.ChangeType(YearSchedules.Single(o => o.Name == name), typeof(T));
+                }
 
-            else if (typeof(T) == typeof(ScheduleArray))
-            {
-                return (T)Convert.ChangeType(ArraySchedules.Single(o => o.Name == name), typeof(T));
-            }
+                else if (typeof(T) == typeof(ScheduleArray))
+                {
+                    return (T)Convert.ChangeType(ArraySchedules.Single(o => o.Name == name), typeof(T));
+                }
 
-            // zone def
+                // zone def
 
-            else if (typeof(T) == typeof(ZoneLoad))
-            {
-                return (T)Convert.ChangeType(ZoneLoads.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(ZoneVentilation))
-            {
-                return (T)Convert.ChangeType(ZoneVentilations.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(ZoneConstruction))
-            {
-                return (T)Convert.ChangeType(ZoneConstructions.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(ZoneConditioning))
-            {
-                return (T)Convert.ChangeType(ZoneConditionings.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(DomHotWater))
-            {
-                return (T)Convert.ChangeType(DomHotWaters.Single(o => o.Name == name), typeof(T));
-            }
-            else if (typeof(T) == typeof(ZoneDefinition))
-            {
-                return (T)Convert.ChangeType(ZoneDefinitions.Single(o => o.Name == name), typeof(T));
-            }
+                else if (typeof(T) == typeof(ZoneLoad))
+                {
+                    return (T)Convert.ChangeType(ZoneLoads.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(ZoneVentilation))
+                {
+                    return (T)Convert.ChangeType(ZoneVentilations.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(ZoneConstruction))
+                {
+                    return (T)Convert.ChangeType(ZoneConstructions.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(ZoneConditioning))
+                {
+                    return (T)Convert.ChangeType(ZoneConditionings.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(DomHotWater))
+                {
+                    return (T)Convert.ChangeType(DomHotWaters.Single(o => o.Name == name), typeof(T));
+                }
+                else if (typeof(T) == typeof(ZoneDefinition))
+                {
+                    return (T)Convert.ChangeType(ZoneDefinitions.Single(o => o.Name == name), typeof(T));
+                }
 
-            else if (typeof(T) == typeof(WindowSettings))
-            {
-                return (T)Convert.ChangeType(WindowSettings.Single(o => o.Name == name), typeof(T));
-            }
+                else if (typeof(T) == typeof(WindowSettings))
+                {
+                    return (T)Convert.ChangeType(WindowSettings.Single(o => o.Name == name), typeof(T));
+                }
 
-            else if (typeof(T) == typeof(FloorDefinition))
-            {
-                return (T)Convert.ChangeType(FloorDefinitions.Single(o => o.Name == name), typeof(T));
-            }
+                else if (typeof(T) == typeof(FloorDefinition))
+                {
+                    return (T)Convert.ChangeType(FloorDefinitions.Single(o => o.Name == name), typeof(T));
+                }
 
                 // dont know what this is???
 
@@ -511,7 +513,7 @@ namespace ArchsimLib
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Could not find " + name +": "+ ex.Message);
+                Debug.WriteLine("Could not find " + name + ": " + ex.Message);
                 return default(T);
             }
         }
@@ -545,8 +547,8 @@ namespace ArchsimLib
 
         [DataMember(Order = 10)]
         public IList<DaySchedule> DaySchedules;
-        [DataMember(Order = 11)]
-        public IList<WeekSchedule> WeekSchedules;
+        //[DataMember(Order = 11)]
+        //public IList<WeekSchedule> WeekSchedules;
         [DataMember(Order = 12)]
         public IList<YearSchedule> YearSchedules;
         [DataMember(Order = 13)]
@@ -590,7 +592,7 @@ namespace ArchsimLib
             GlazingConstructions = new List<GlazingConstruction>();
             GlazingConstructionsSimple = new List<GlazingConstructionSimple>();
             DaySchedules = new List<DaySchedule>();
-            WeekSchedules = new List<WeekSchedule>();
+            //WeekSchedules = new List<WeekSchedule>();
             YearSchedules = new List<YearSchedule>();
             ArraySchedules = new List<ScheduleArray>();
 
@@ -606,9 +608,9 @@ namespace ArchsimLib
             FloorDefinitions = new List<FloorDefinition>();
 
             BuildingDefinitions = new List<BuildingDefinition>();
-    }
+        }
 
-  
+
         public static Library fromJSON(string json)
         {
             return Serialization.Deserialize<Library>(json);
@@ -619,12 +621,12 @@ namespace ArchsimLib
             return Serialization.Serialize<Library>(this);
         }
 
-        public void Import(string path)
+        public string Import(string path)
         {
-            
+            string s = "";
             try
             {
-                
+
                 if (File.Exists(path))
                 {
                     Library ImportedLibrary = null;
@@ -632,7 +634,7 @@ namespace ArchsimLib
                     string json = File.ReadAllText(path);
                     ImportedLibrary = Library.fromJSON(json);
 
-                    string s = "";
+
                     if (ImportedLibrary.Correct(out s))
                     {
                         File.WriteAllText(errPath + "/ImportErrors.txt", s);
@@ -642,11 +644,11 @@ namespace ArchsimLib
 
                     Debug.WriteLine("Library loaded from " + path);
                 }
-                
+
             }
             catch (Exception ex) { Debug.WriteLine("Library import error " + ex.Message); }
-            
-          
+
+            return s;
         }
 
         public void Import(Library ImportedLibrary)
@@ -697,7 +699,7 @@ namespace ArchsimLib
             foreach (var o in ImportedLibrary.GlazingConstructions) this.Add(o);
             foreach (var o in ImportedLibrary.GlazingConstructionsSimple) this.Add(o);
             foreach (var o in ImportedLibrary.DaySchedules) this.Add(o);
-            foreach (var o in ImportedLibrary.WeekSchedules) this.Add(o);
+            //foreach (var o in ImportedLibrary.WeekSchedules) this.Add(o);
             foreach (var o in ImportedLibrary.YearSchedules) this.Add(o);
             foreach (var o in ImportedLibrary.ArraySchedules) this.Add(o);
 
@@ -785,7 +787,7 @@ namespace ArchsimLib
                 GlazingConstructions.Clear();
                 GlazingConstructionsSimple.Clear();
                 DaySchedules.Clear();
-                WeekSchedules.Clear();
+                //WeekSchedules.Clear();
                 YearSchedules.Clear();
                 ArraySchedules.Clear();
 
@@ -807,7 +809,7 @@ namespace ArchsimLib
         {
 
             StringBuilder sb = new StringBuilder();
-         
+
             sb.AppendLine("OpaqueMaterial [" + OpaqueMaterials.Count + "]");
             sb.AppendLine("AirGap and NoMass [" + AirGap.Count + NoMass.Count + "]");
             //sb.AppendLine("GlazingMaterial [" + GlazingMaterials.Count + "]");
@@ -816,7 +818,7 @@ namespace ArchsimLib
             sb.AppendLine("OpaqueConstruction [" + OpaqueConstructions.Count + "]");
             //sb.AppendLine("GlazingConstruction " + GlazingConstructions.Count + "]");
             sb.AppendLine("DaySchedule [" + DaySchedules.Count + "]");
-            sb.AppendLine("WeekSchedule [" + WeekSchedules.Count + "]");
+            //sb.AppendLine("WeekSchedule [" + WeekSchedules.Count + "]");
             sb.AppendLine("YearSchedule [" + YearSchedules.Count + "]");
             sb.AppendLine("ArraySchedule [" + ArraySchedules.Count + "]");
             sb.AppendLine("ZoneLoad [" + ZoneLoads.Count + "]");
@@ -832,7 +834,7 @@ namespace ArchsimLib
 
             return sb.ToString();
 
-           // return base.ToString();
+            // return base.ToString();
         }
 
         #region CheckForInvalidObjs
@@ -872,21 +874,21 @@ namespace ArchsimLib
 
             try
             {
-                foreach (GlazingMaterial op in this.GlazingMaterials)
+                foreach (GlazingMaterial om in this.GlazingMaterials)
                 {
 
                     // find strange names
-                    string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
-                    if (op.Name != cleanName)
+                    string cleanName = Formating.RemoveSpecialCharactersNotStrict(om.Name);
+                    if (om.Name != cleanName)
                     {
-                        errorReport += op.Name + " --> " + cleanName + " invalid characters have been removed" + "\r\n";
-                        op.Name = cleanName;
+                        errorReport += om.Name + " --> " + cleanName + " invalid characters have been removed" + "\r\n";
+                        om.Name = cleanName;
                     }
 
                     // autocorrect values out of range // extract as method
-                    if (op.Correct())
+                    if (om.Correct())
                     {
-                        errorReport += "Material " + op.Name + " contained invalid entries that have been auto corrected \r\n";
+                        errorReport += "Material " + om.Name + " contained invalid entries that have been auto corrected \r\n";
                     }
                 }
             }
@@ -978,33 +980,33 @@ namespace ArchsimLib
             }
 
         }
-        private void reportInvalidWeekSchedules(ref string errorReport)
-        {
-            try
-            {
-                foreach (WeekSchedule op in this.WeekSchedules)
-                {
+        //private void reportInvalidWeekSchedules(ref string errorReport)
+        //{
+        //    try
+        //    {
+        //        foreach (WeekSchedule op in this.WeekSchedules)
+        //        {
 
-                    // find strange names
-                    string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
-                    if (op.Name != cleanName)
-                    {
-                        errorReport += op.Name + " --> " + cleanName + " invalid characters have been removed" + "\r\n";
-                        op.Name = cleanName;
-                    }
+        //            // find strange names
+        //            string cleanName = Formating.RemoveSpecialCharactersNotStrict(op.Name);
+        //            if (op.Name != cleanName)
+        //            {
+        //                errorReport += op.Name + " --> " + cleanName + " invalid characters have been removed" + "\r\n";
+        //                op.Name = cleanName;
+        //            }
 
-                    // autocorrect values out of range // extract as method
-                    if (op.Correct())
-                    {
-                        errorReport += "Schedule " + op.Name + " contained invalid entries that have been auto corrected \r\n";
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                errorReport += ("reportInvalidWeekSchedules failed: " + ex.Message);// + " " + ex.InnerException.Message); }
-            }
-        }
+        //            // autocorrect values out of range // extract as method
+        //            if (op.Correct())
+        //            {
+        //                errorReport += "Schedule " + op.Name + " contained invalid entries that have been auto corrected \r\n";
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        errorReport += ("reportInvalidWeekSchedules failed: " + ex.Message);// + " " + ex.InnerException.Message); }
+        //    }
+        //}
         private void reportInvalidYearSchedules(ref string errorReport)
         {
 
@@ -1047,22 +1049,24 @@ namespace ArchsimLib
             reportInvalidOCons(ref a);
             reportInvalidGCons(ref a);
             reportInvalidDaySchedules(ref a);
-            reportInvalidWeekSchedules(ref a);
+            //reportInvalidWeekSchedules(ref a);
             reportInvalidYearSchedules(ref a);
 
 
 
-            err = "======= Error report =======\r\n\r\n" +
-                a + "\r\n=======  Report End  =======";
+            err =
+                // "======= Error report =======\r\n\r\n" +
+                a;
+            //+ "\r\n=======  Report End  =======";
 
             if (a == "") return false;
             else return true;
 
         }
 
-#endregion
-        
-      
+        #endregion
+
+
 
 
 

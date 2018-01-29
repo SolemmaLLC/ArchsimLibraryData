@@ -11,7 +11,7 @@ namespace ArchsimLib
         public bool isValid()
         {
 
-            var props = typeof(ZoneDefinition).GetProperties();
+            var props = typeof(WindowSettings).GetProperties();
 
             foreach (var prop in props)
             {
@@ -75,7 +75,7 @@ namespace ArchsimLib
 
 
         [DataMember]
-        public AFNVentilationControl VentControl = AFNVentilationControl.Temperature;
+        public AFNVentilationControl VentControl { get; set; } = AFNVentilationControl.Temperature;
 
 
         //Frame

@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace ArchsimLib
 {
-   
+
 
 
     [DataContract]
@@ -16,7 +16,7 @@ namespace ArchsimLib
         public List<Layer<OpaqueMaterial>> Layers = new List<Layer<OpaqueMaterial>>();
 
         [DataMember]
-        public ConstructionCategory Type = ConstructionCategory.Facade;
+        public ConstructionCategory Type { get; set; } = ConstructionCategory.Facade;
 
         public OpaqueConstruction() { }
 
@@ -33,7 +33,7 @@ namespace ArchsimLib
             return changed;
         }
 
-        public static OpaqueConstruction QuickConstruction(string name, ConstructionCategory type, string[] layers, double[] thickness, string category, string source,  ref Library Library)
+        public static OpaqueConstruction QuickConstruction(string name, ConstructionCategory type, string[] layers, double[] thickness, string category, string source, ref Library Library)
         {
 
             OpaqueConstruction oc = new OpaqueConstruction();
@@ -41,12 +41,12 @@ namespace ArchsimLib
             {
                 try
                 {
-                    if (thickness.Length != layers.Length){ continue; }
+                    if (thickness.Length != layers.Length) { continue; }
                     if (!(thickness[i] > 0)) { continue; }
 
                     if (Library.OpaqueMaterials.Any(x => x.Name == layers[i]))
                     {
-                       
+
                         var mat = Library.OpaqueMaterials.First(o => o.Name == layers[i]);
                         Layer<OpaqueMaterial> layer = new Layer<OpaqueMaterial>(thickness[i], mat);
                         oc.Layers.Add(layer);
@@ -60,8 +60,9 @@ namespace ArchsimLib
 
                     }
                 }
-                catch(Exception e) {
-                    Debug.WriteLine( e.Message);
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
                 }
 
             }
@@ -116,7 +117,8 @@ namespace ArchsimLib
         public double VisibleTransmittance { get; set; } = 0.898;
 
         public GlazingConstructionSimple() { }
-        public GlazingConstructionSimple(string name, string category,string comment, double tvis, double uval, double shgf ) {
+        public GlazingConstructionSimple(string name, string category, string comment, double tvis, double uval, double shgf)
+        {
 
             this.Name = name.Trim();
             this.Category = category.Trim();
@@ -149,23 +151,19 @@ namespace ArchsimLib
     public class BaseConstruction : LibraryComponent
     {
 
-        //[DataMember]
-        //public virtual string Category { get; set; } = "Uncategorized";
-
-
         [DataMember]
         [Units("MJ/m2")]
         public double EmbodiedEnergy { get; set; } = 0;
 
-        [DataMember]
-        public double EmbodiedEnergyStdDev { get; set; }
+        //[DataMember]
+        //public double EmbodiedEnergyStdDev { get; set; }
 
         [DataMember]
         [Units("kgCO2eq/m2")]
         public double EmbodiedCarbon { get; set; } = 0;
 
-        [DataMember]
-        public double EmbodiedCarbonStdDev { get; set; }
+        //[DataMember]
+        //public double EmbodiedCarbonStdDev { get; set; }
 
         [DataMember]
         [Units("$/m2")]
@@ -174,23 +172,6 @@ namespace ArchsimLib
         [DataMember]
         [Units("yr")]
         public int Life { get; set; } = 1;
-
-
-        //[DataMember]
-        //public double AssemblyEnergy { get; set; } = 0;
-        //[DataMember]
-        //public double AssemblyCarbon { get; set; } = 0;
-        //[DataMember]
-        //public double AssemblyCost { get; set; } = 0;
-        //[DataMember]
-        //public double DisassemblyCarbon { get; set; } = 0;
-        //[DataMember]
-        //public double DisassemblyEnergy { get; set; } = 0;
-
-
-        //[DataMember]
-        //public double Life { get; set; } = 0;
-
 
         public BaseConstruction() { }
 

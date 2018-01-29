@@ -14,7 +14,7 @@ namespace ArchsimLib
 
 
         [DataMember] //, JsonConverter(typeof(StringEnumConverter))
-        public InfiltrationModel InfiltrationModel = InfiltrationModel.Constant;
+        public InfiltrationModel InfiltrationModel { get; set; } = InfiltrationModel.Constant;
         [DataMember]
         public double InfiltrationAch { get; set; } = 0.1;
         [DataMember]

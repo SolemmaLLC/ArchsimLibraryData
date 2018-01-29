@@ -304,7 +304,7 @@ namespace ArchsimLib
         //string[] gases;
 
         [DataMember]
-        public GasTypes GasType = GasTypes.AIR;
+        public GasTypes GasType { get; set; } = GasTypes.AIR;
 
         public GasMaterial()
         {
