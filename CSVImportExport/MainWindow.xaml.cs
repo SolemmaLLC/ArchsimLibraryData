@@ -1,11 +1,13 @@
 ﻿using ArchsimLib;
 using CsvHelper;
+using CsvHelper.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,6 +32,83 @@ namespace CSVImportExport
     public partial class MainWindow : Window
 
     {
+
+
+
+        //public class MyClassMap : ClassMap<OpaqueMaterial>
+        //{
+        //    public MyClassMap()
+        //    {
+        //        Map(m => m.Name).Index(0);
+        //        AutoMap();
+        //    }
+        //}
+
+
+        public static void writeArrayScheduleCSV(string fp, List<ScheduleArray> schedules)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < schedules.Count; i++)
+            {
+                sb.Append(schedules[i].Name + ( (schedules.Count-1 == i) ? "" : "," ) );
+            }
+            sb.Append(System.Environment.NewLine);
+            for (int i = 0; i < schedules.Count; i++)
+            {
+                sb.Append(Enum.GetName(typeof(ScheduleType) ,schedules[i].Type) + ((schedules.Count - 1 == i) ? "" : ","));
+            }
+            sb.Append(System.Environment.NewLine);
+            for (int i = 0; i < schedules.Count; i++)
+            {
+                sb.Append(schedules[i].Category + ((schedules.Count - 1 == i) ? "" : ","));
+            }
+            sb.Append(System.Environment.NewLine);
+
+
+            for (int j = 0; j < schedules[0].Values.Length; j++)
+            {
+                for (int i = 0; i < schedules.Count; i++)
+                {
+                    sb.Append(schedules[i].Values[j] + ((schedules.Count - 1 == i) ? "" : ","));
+                }
+                sb.Append(System.Environment.NewLine);
+            }
+           System.IO.File.WriteAllText(fp, sb.ToString());
+        }
+
+        public static List<ScheduleArray> readArrayScheduleCSV(string fp )
+        {
+            var schedules = new List<ScheduleArray>();
+
+           string[] lines = System.IO.File.ReadAllLines(fp);
+
+            var header = lines[0].Split(',');
+            var types = lines[1].Split(',');
+            var cats = lines[2].Split(',');
+
+            for (int i =0; i < header.Length; i++) {
+
+                schedules.Add(new ScheduleArray() { Values = new double[8760], Name = header[i], Category = cats[i], Type = (ScheduleType)Enum.Parse(typeof(ScheduleType), types[i]) });
+            }
+
+            for (int i = 3; i < lines.Length; i++)
+            {
+
+                var lin = lines[i].Split(',');
+                for (int j = 0; j < lin.Length; j++) {
+
+
+                    schedules[j].Values[i - 3] = double.Parse(lin[j]);
+
+                }
+
+
+
+            }
+           
+            return schedules;
+        }
 
         public void writeYearCSV(string fp, List<YearSchedule> records)
         {
@@ -254,11 +333,88 @@ namespace CSVImportExport
             return records;
         }
 
+        public void writeGlazingConstructionsCSV(string fp, List<GlazingConstruction> records)
+        {
+            using (var sw = new StreamWriter(fp))
+            {
+                // var records = lib.OpaqueMaterials;
+                var csv = new CsvWriter(sw);
+                //csv.WriteRecords(records);
+                csv.WriteHeader(typeof(GlazingConstruction));
+                csv.WriteField("LayerCount");
+                csv.WriteField("Layers");
+
+                csv.NextRecord();
+
+                foreach (var record in records)
+                {
+                    //Write entire current record
+                    csv.WriteRecord(record);
+                    csv.WriteField(record.Layers.Count);
+                    foreach (var l in record.Layers)
+                    {
+
+                        csv.WriteField(l.Thickness);
+
+                    }
+                    foreach (var l in record.Layers)
+                    {
+
+                        csv.WriteField(l.Material.Name);
+
+                    }
+
+                    csv.NextRecord();
+                }
+            }
+        }
+        public List<GlazingConstruction> readGlazingConstructionsCSV(string fp, List<GlazingMaterial> mat)
+        {
+            var records = new List<GlazingConstruction>();
+            using (var sr = new StreamReader(fp))
+            {
+                var csv = new CsvReader(sr);
+                while (csv.Read())
+                {
+                    try
+                    {
+                        bool foundAllMaterials = true;
+                        GlazingConstruction record = csv.GetRecord<GlazingConstruction>();
+                        int layerCnt = csv.GetField<int>("LayerCount");
+                        int layerStartAt = csv.GetFieldIndex("LayerCount") + 1;
+                        for (int i = layerStartAt; i < layerStartAt + layerCnt; i++)
+                        {
+                            var thick = csv.GetField<double>(i);
+                            var name = csv.GetField<string>(i + layerCnt);
+                            if (mat.Any(x => x.Name == name))
+                            {
+                                var m = mat.First(x => x.Name == name);
+                                record.Layers.Add(new Layer<WindowMaterialBase>(thick, m));
+                            }
+                            else if (Enum.GetNames(typeof(GasTypes)).Any(x => x == name)) {
+                                var gas = (GasTypes)Enum.Parse(typeof(GasTypes), name);
+                                record.Layers.Add(new Layer<WindowMaterialBase>(thick, new GasMaterial( gas) ));
+                            }
+                            else { foundAllMaterials = false; }
+
+                        }
+                        if (foundAllMaterials) records.Add(record);
+                        else { System.Windows.MessageBox.Show(record.Name + " contains materials not found in library"); }
+                    }
+                    catch (Exception ex) { Debug.WriteLine(ex.Message); }
+                }
+            }
+            return records;
+        }
+
         public void writeOpaqueMaterialCSV(string fp, List<OpaqueMaterial> records) {
             using (var sw = new StreamWriter(fp))
             {
                // var records = lib.OpaqueMaterials;
                 var csv = new CsvWriter(sw);
+
+               // csv.Configuration.RegisterClassMap<MyClassMap>();
+
                 //csv.WriteRecords(records);
                 csv.WriteHeader(typeof(OpaqueMaterial));
                 csv.WriteField("TemperatureArray");
@@ -309,6 +465,8 @@ namespace CSVImportExport
 
         public void writeLibCSV<T>(string fp, List<T> records)
         {
+           
+
             using (var sw = new StreamWriter(fp))
             {
                 var csv = new CsvWriter(sw);
@@ -334,31 +492,70 @@ namespace CSVImportExport
 
             var lib = ArchsimLib.LibraryDefaults.getHardCodedDefaultLib();
 
-            
 
-            writeDayCSV(@"C:\Users\Timur\Desktop\DaySchedules.csv", lib.DaySchedules.ToList());
-            List<DaySchedule> inDaySchedules = readDayCSV(@"C:\Users\Timur\Desktop\DaySchedules.csv");
+            string folderPath = @"C:\Users\Timur\Desktop";
 
-            writeYearCSV(@"C:\Users\Timur\Desktop\YearSchedules.csv", lib.YearSchedules.ToList());
-            List<YearSchedule> inYearSchedules = readYearCSV(@"C:\Users\Timur\Desktop\YearSchedules.csv", inDaySchedules);
+            folderPath += @"\ArchsimLibrary-"+ lib.TimeStamp.Year + "-" + lib.TimeStamp.Month + "-" + lib.TimeStamp.Day + "-" + lib.TimeStamp.Hour + "-" + lib.TimeStamp.Minute;
 
-            writeOpaqueMaterialCSV(@"C:\Users\Timur\Desktop\OpaqueMaterials.csv", lib.OpaqueMaterials.ToList());
-            List<OpaqueMaterial> inOMat = readOpaqueMaterialCSV(@"C:\Users\Timur\Desktop\OpaqueMaterials.csv");
-
-            writeLibCSV<GlazingMaterial>(@"C:\Users\Timur\Desktop\GlazingMaterials.csv", lib.GlazingMaterials.ToList());
-            List<GlazingMaterial> inGMat = readLibCSV<GlazingMaterial>(@"C:\Users\Timur\Desktop\GlazingMaterials.csv");
-
-            writeLibCSV<ZoneVentilation>(@"C:\Users\Timur\Desktop\ZoneVentilations.csv", lib.ZoneVentilations.ToList());
-            List<ZoneVentilation> inZoneVentilation = readLibCSV<ZoneVentilation>(@"C:\Users\Timur\Desktop\ZoneVentilations.csv");
-
-            writeOpaqueConstructionsCSV(@"C:\Users\Timur\Desktop\OpaqueConstructions.csv", lib.OpaqueConstructions.ToList());
-            List<OpaqueConstruction> inOpaqueConstructions = readOpaqueConstructionsCSV(@"C:\Users\Timur\Desktop\OpaqueConstructions.csv", inOMat);
-
-            writeLibCSV<ZoneConditioning>(@"C:\Users\Timur\Desktop\ZoneConditioning.csv", lib.ZoneConditionings.ToList());
-            List<ZoneConditioning> inZoneConditioning = readLibCSV<ZoneConditioning>(@"C:\Users\Timur\Desktop\ZoneConditioning.csv");
+            if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
 
-        }
+            //Schedules
+            writeDayCSV(folderPath+@"\DaySchedules.csv", lib.DaySchedules.ToList());
+            List<DaySchedule> inDaySchedules = readDayCSV(folderPath + @"\DaySchedules.csv");
+
+            writeYearCSV(folderPath + @"\YearSchedules.csv", lib.YearSchedules.ToList());
+            List<YearSchedule> inYearSchedules = readYearCSV(folderPath + @"\YearSchedules.csv", inDaySchedules);
+
+            writeArrayScheduleCSV(folderPath + @"\ArraySchedules.csv", lib.ArraySchedules.ToList());
+            List<ScheduleArray> inArraySchedules = readArrayScheduleCSV(folderPath + @"\ArraySchedules.csv");
+
+
+            //Material Construction
+            writeOpaqueMaterialCSV(folderPath + @"\OpaqueMaterials.csv", lib.OpaqueMaterials.ToList());
+            List<OpaqueMaterial> inOMat = readOpaqueMaterialCSV(folderPath + @"\OpaqueMaterials.csv");
+
+            writeOpaqueConstructionsCSV(folderPath + @"\OpaqueConstructions.csv", lib.OpaqueConstructions.ToList());
+            List<OpaqueConstruction> inOpaqueConstructions = readOpaqueConstructionsCSV(folderPath + @"\OpaqueConstructions.csv", inOMat);
+
+            //Glazing
+            writeLibCSV<GlazingMaterial>(folderPath + @"\GlazingMaterials.csv", lib.GlazingMaterials.ToList());
+            List<GlazingMaterial> inGMat = readLibCSV<GlazingMaterial>(folderPath + @"\GlazingMaterials.csv");
+
+
+            writeGlazingConstructionsCSV(folderPath + @"\GlazingConstructions.csv", lib.GlazingConstructions.ToList());
+            List<GlazingConstruction> inGlazingConstructions = readGlazingConstructionsCSV(folderPath + @"\GlazingConstructions.csv", inGMat);
+
+
+            writeLibCSV<GlazingConstructionSimple>(folderPath + @"\GlazingConstructionSimple.csv", lib.GlazingConstructionsSimple.ToList());
+            List<GlazingConstructionSimple> inGlazingConstructionSimple = readLibCSV<GlazingConstructionSimple>(folderPath + @"\GlazingConstructionSimple.csv");
+
+
+            //Settings
+
+            writeLibCSV<WindowSettings>(folderPath + @"\WindowSettings.csv", lib.WindowSettings.ToList());
+            List<WindowSettings> inWindowSettings = readLibCSV<WindowSettings>(folderPath + @"\WindowSettings.csv");
+
+            writeLibCSV<ZoneVentilation>(folderPath + @"\ZoneVentilations.csv", lib.ZoneVentilations.ToList());
+            List<ZoneVentilation> inZoneVentilation = readLibCSV<ZoneVentilation>(folderPath + @"\ZoneVentilations.csv");
+
+            writeLibCSV<ZoneConditioning>(folderPath + @"\ZoneConditioning.csv", lib.ZoneConditionings.ToList());
+            List<ZoneConditioning> inZoneConditioning = readLibCSV<ZoneConditioning>(folderPath + @"\ZoneConditioning.csv");
+
+            writeLibCSV<ZoneConstruction>(folderPath + @"\ZoneConstruction.csv", lib.ZoneConstructions.ToList());
+            List<ZoneConstruction> inZoneConstruction = readLibCSV<ZoneConstruction>(folderPath + @"\ZoneConstruction.csv");
+
+            writeLibCSV<ZoneLoad>(folderPath + @"\ZoneLoad.csv", lib.ZoneLoads.ToList());
+            List<ZoneLoad> inZoneLoad = readLibCSV<ZoneLoad>(folderPath + @"\ZoneLoad.csv");
+
+            writeLibCSV<DomHotWater>(folderPath + @"\DomHotWater.csv", lib.DomHotWaters.ToList());
+            List<DomHotWater> inDomHotWater = readLibCSV<DomHotWater>(folderPath + @"\DomHotWater.csv");
+
+            writeLibCSV<ZoneDefinition>(folderPath + @"\ZoneDefinition.csv", lib.ZoneDefinitions.ToList());
+            List<ZoneDefinition> inZoneDefinition = readLibCSV<ZoneDefinition>(folderPath + @"\ZoneDefinition.csv");
+
+
+         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

@@ -44,7 +44,7 @@ namespace ArchsimLib
 
         public override string ToString()
         {
-            return "Material: " +Material.ToString() + " Thickness: " + Math.Round(Thickness,2) ;
+            return "Material: " +Material.ToString() + " Thickness: " + Math.Round(Thickness,4) ;
         }
     }
 
