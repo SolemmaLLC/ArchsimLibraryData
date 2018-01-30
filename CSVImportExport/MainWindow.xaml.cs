@@ -169,7 +169,7 @@ namespace CSVImportExport
 
                                 if (days.Any(x => x.Name == weekDay))
                                 {
-                                    weekSched.Days[i] = days.First(x => x.Name == weekDay);
+                                    weekSched.Days[j] = days.First(x => x.Name == weekDay);
                                 }
                                 else {
                                     foundAllSchedules = false;
