@@ -64,7 +64,7 @@ namespace ArchsimLib
         //AFN
 
         [DataMember]
-        [Units("Celsius")]
+        [Units("C")]
         public double AFN_TEMP_SETPT { get; set; } = 20;
 
         [DataMember]

@@ -12,10 +12,10 @@ namespace ArchsimLib
         [DataMember, DefaultValue(1.0)]
         public double ZoneMultiplier { get; set; } = 1.0;
 
-        [DataMember, DefaultValue(45)]
+        [DataMember, DefaultValue(45),Units("deg")]
         public double RoofTiltAngle { get; set; } = 45;
 
-        [DataMember, DefaultValue(135)]
+        [DataMember, DefaultValue(135), Units("deg")]
         public double FloorTiltAngle { get; set; } = 135;
 
         //MAT

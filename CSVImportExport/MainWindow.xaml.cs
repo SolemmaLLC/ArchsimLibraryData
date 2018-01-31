@@ -5,6 +5,7 @@ using CsvHelper.TypeConversion;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -68,9 +69,9 @@ namespace CSVImportExport
                 map.Name(new string[] { name , pi.Name });
 
                 // set default
-                var defaultValueAttribute = pi.GetCustomAttribute<Defaults>();
+                var defaultValueAttribute = pi.GetCustomAttribute<DefaultValueAttribute>();
                 if (defaultValueAttribute != null)
-                    map.Default(defaultValueAttribute.DefaultValue);
+                    map.Default(defaultValueAttribute.Value);
 
                 return map;
             }

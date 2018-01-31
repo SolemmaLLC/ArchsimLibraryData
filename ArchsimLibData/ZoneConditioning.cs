@@ -14,9 +14,9 @@ namespace ArchsimLib
 
 
 
-        [DataMember]
+        [DataMember ,Units("C")]
         public double HeatingSetpoint { get; set; } = 20;
-        [DataMember]
+        [DataMember, Units("C")]
         public double CoolingSetpoint { get; set; } = 26;
         [DataMember]
         public bool HeatingSetpointConstant { get; set; } = true;

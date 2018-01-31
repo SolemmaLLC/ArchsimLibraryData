@@ -111,6 +111,7 @@ namespace ArchsimLib
         /// W/m2-k
         /// </summary>
         [DataMember]
+        [Units("W/m2-k")]
         public double UVAL { get; set; } = 0.075;
 
         [DataMember]

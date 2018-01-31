@@ -6,12 +6,15 @@ namespace ArchsimLib
     public class DomHotWater : LibraryComponent
     {
         [DataMember]
+        [Units("C")]
         public double WaterTemperatureInlet { get; set; } = 10;
         [DataMember]
+        [Units("C")]
         public double WaterSupplyTemperature { get; set; } = 65;
         [DataMember]
         public string WaterSchedule { get; set; } = "AllOn";
-        [DataMember][Units("m3/h/m2")]
+        [DataMember]
+        [Units("m3/h/m2")]
         public double FlowRatePerFloorArea { get; set; } = 0.03;
         [DataMember]
         public bool IsOn = false;

@@ -13,14 +13,6 @@ namespace ArchsimLib
         }
         public string Unit { get; set; }
     }
-    public class Defaults : Attribute
-    {
-        public Defaults(string _Default)
-        {
-            DefaultValue = _Default;
-        }
-        public string DefaultValue { get; set; }
-    }
 
     [DataContract]
     public abstract class LibraryComponent
