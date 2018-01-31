@@ -9,22 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CSVImportExport
 {
-        
-    
+
+
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -33,7 +24,40 @@ namespace CSVImportExport
 
     {
 
+        public class AutoMap<T> : ClassMap<T>
+        {
+            public AutoMap()
+            {
+                var properties = typeof(T).GetProperties();
 
+                // map the name property first
+                var nameProperty = properties.FirstOrDefault(p => p.Name == "Name");
+                if (nameProperty != null)
+                    MapProperty(nameProperty).Index(0);
+
+                foreach (var prop in properties.Where(p => p != nameProperty))
+                    MapProperty(prop);
+            }
+
+            private MemberMap MapProperty(PropertyInfo pi)
+            {
+                var map = Map(typeof(T), pi);
+
+                // set name
+                string name = pi.Name;
+                var unitsAttribute = pi.GetCustomAttribute<Units>();
+                if (unitsAttribute != null)
+                    name = $"{name} {"["+unitsAttribute.Unit+"]"}";
+                map.Name(new string[] { name , pi.Name });
+              
+                //// set default
+                //var defaultValueAttribute = pi.GetCustomAttribute<DefaultValueAttribute>();
+                //if (defaultValueAttribute != null)
+                //    map.Default(defaultValueAttribute.Value);
+
+                return map;
+            }
+        }
 
         //public class MyClassMap : ClassMap<OpaqueMaterial>
         //{
@@ -410,10 +434,9 @@ namespace CSVImportExport
         public void writeOpaqueMaterialCSV(string fp, List<OpaqueMaterial> records) {
             using (var sw = new StreamWriter(fp))
             {
-               // var records = lib.OpaqueMaterials;
                 var csv = new CsvWriter(sw);
 
-               // csv.Configuration.RegisterClassMap<MyClassMap>();
+               // csv.Configuration.RegisterClassMap<AutoMap<OpaqueMaterial>>();
 
                 //csv.WriteRecords(records);
                 csv.WriteHeader(typeof(OpaqueMaterial));
@@ -444,6 +467,9 @@ namespace CSVImportExport
             {
                 
                 var csv = new CsvReader(sr);
+
+                //csv.Configuration.RegisterClassMap<AutoMap<OpaqueMaterial>>();
+
                 while (csv.Read())
                 {
                     try
@@ -470,6 +496,7 @@ namespace CSVImportExport
             using (var sw = new StreamWriter(fp))
             {
                 var csv = new CsvWriter(sw);
+                csv.Configuration.RegisterClassMap<AutoMap<T>>();
                 csv.WriteRecords(records);
             }
         }
@@ -479,6 +506,7 @@ namespace CSVImportExport
             using (var sr = new StreamReader(fp))
             {
                 var csv = new CsvReader(sr);
+                csv.Configuration.RegisterClassMap<AutoMap<T>>();
                 records = csv.GetRecords<T>().ToList();
             }
             return records;
@@ -493,7 +521,7 @@ namespace CSVImportExport
             var lib = ArchsimLib.LibraryDefaults.getHardCodedDefaultLib();
 
 
-            string folderPath = @"C:\Users\Timur\Desktop";
+            string folderPath = @"C:\DIVA\Temp";
 
             folderPath += @"\ArchsimLibrary-"+ lib.TimeStamp.Year + "-" + lib.TimeStamp.Month + "-" + lib.TimeStamp.Day + "-" + lib.TimeStamp.Hour + "-" + lib.TimeStamp.Minute;
 
@@ -551,8 +579,8 @@ namespace CSVImportExport
             writeLibCSV<DomHotWater>(folderPath + @"\DomHotWater.csv", lib.DomHotWaters.ToList());
             List<DomHotWater> inDomHotWater = readLibCSV<DomHotWater>(folderPath + @"\DomHotWater.csv");
 
-            writeLibCSV<ZoneDefinition>(folderPath + @"\ZoneDefinition.csv", lib.ZoneDefinitions.ToList());
-            List<ZoneDefinition> inZoneDefinition = readLibCSV<ZoneDefinition>(folderPath + @"\ZoneDefinition.csv");
+            //writeLibCSV<ZoneDefinition>(folderPath + @"\ZoneDefinition.csv", lib.ZoneDefinitions.ToList());
+            //List<ZoneDefinition> inZoneDefinition = readLibCSV<ZoneDefinition>(folderPath + @"\ZoneDefinition.csv");
 
 
          }
