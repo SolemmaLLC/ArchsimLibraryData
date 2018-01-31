@@ -1,6 +1,7 @@
 ﻿using ArchsimLib;
 using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,19 @@ using System.Windows.Forms;
 namespace CSVImportExport
 {
 
+        public class MyDoubleListConverter : ITypeConverter
+        {
+        public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData) {
 
+           return  JsonConvert.SerializeObject(value);
+
+        }
+
+        public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        {
+           return JsonConvert.DeserializeObject<List<double>>(text);
+        }
+    }
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,7 +36,7 @@ namespace CSVImportExport
     public partial class MainWindow : Window
 
     {
-
+        
         public class AutoMap<T> : ClassMap<T>
         {
             public AutoMap()
@@ -43,17 +56,21 @@ namespace CSVImportExport
             {
                 var map = Map(typeof(T), pi);
 
+                if (typeof(List<double>) == pi.PropertyType) {
+                    map.TypeConverter<MyDoubleListConverter>();
+                }
+
                 // set name
                 string name = pi.Name;
                 var unitsAttribute = pi.GetCustomAttribute<Units>();
                 if (unitsAttribute != null)
                     name = $"{name} {"["+unitsAttribute.Unit+"]"}";
                 map.Name(new string[] { name , pi.Name });
-              
-                //// set default
-                //var defaultValueAttribute = pi.GetCustomAttribute<DefaultValueAttribute>();
-                //if (defaultValueAttribute != null)
-                //    map.Default(defaultValueAttribute.Value);
+
+                // set default
+                var defaultValueAttribute = pi.GetCustomAttribute<Defaults>();
+                if (defaultValueAttribute != null)
+                    map.Default(defaultValueAttribute.DefaultValue);
 
                 return map;
             }
@@ -431,68 +448,66 @@ namespace CSVImportExport
             return records;
         }
 
-        public void writeOpaqueMaterialCSV(string fp, List<OpaqueMaterial> records) {
-            using (var sw = new StreamWriter(fp))
-            {
-                var csv = new CsvWriter(sw);
+        //public void writeOpaqueMaterialCSV(string fp, List<OpaqueMaterial> records) {
+        //    using (var sw = new StreamWriter(fp))
+        //    {
+        //        var csv = new CsvWriter(sw);
 
-               // csv.Configuration.RegisterClassMap<AutoMap<OpaqueMaterial>>();
+        //       // csv.Configuration.RegisterClassMap<AutoMap<OpaqueMaterial>>();
 
-                //csv.WriteRecords(records);
-                csv.WriteHeader(typeof(OpaqueMaterial));
-                csv.WriteField("TemperatureArray");
-                csv.WriteField("EnthalpyArray");
-                csv.WriteField("VariableConductivityArray");
-                csv.NextRecord();
+        //        //csv.WriteRecords(records);
+        //        csv.WriteHeader(typeof(OpaqueMaterial));
+        //        csv.WriteField("TemperatureArray");
+        //        csv.WriteField("EnthalpyArray");
+        //        csv.WriteField("VariableConductivityArray");
+        //        csv.NextRecord();
 
-                foreach (var record in records)
-                {
-                    //Write entire current record
-                    csv.WriteRecord(record);
-                    if (record.VariableConductivity || record.PhaseChange)
-                    {
-                        //write record field by field
-                        csv.WriteField(JsonConvert.SerializeObject(record.TemperatureArray));
-                        csv.WriteField(JsonConvert.SerializeObject(record.EnthalpyArray));
-                        csv.WriteField(JsonConvert.SerializeObject(record.VariableConductivityArray));
-                    }
-                    csv.NextRecord();
-                }
-            }
-        }
-        public List<OpaqueMaterial> readOpaqueMaterialCSV(string fp)
-        {
-            var records = new List<OpaqueMaterial>();
-            using (var sr = new StreamReader(fp))
-            {
+        //        foreach (var record in records)
+        //        {
+        //            //Write entire current record
+        //            csv.WriteRecord(record);
+        //            if (record.VariableConductivity || record.PhaseChange)
+        //            {
+        //                //write record field by field
+        //                csv.WriteField(JsonConvert.SerializeObject(record.TemperatureArray));
+        //                csv.WriteField(JsonConvert.SerializeObject(record.EnthalpyArray));
+        //                csv.WriteField(JsonConvert.SerializeObject(record.VariableConductivityArray));
+        //            }
+        //            csv.NextRecord();
+        //        }
+        //    }
+        //}
+        //public List<OpaqueMaterial> readOpaqueMaterialCSV(string fp)
+        //{
+        //    var records = new List<OpaqueMaterial>();
+        //    using (var sr = new StreamReader(fp))
+        //    {
                 
-                var csv = new CsvReader(sr);
+        //        var csv = new CsvReader(sr);
 
-                //csv.Configuration.RegisterClassMap<AutoMap<OpaqueMaterial>>();
+        //        //csv.Configuration.RegisterClassMap<AutoMap<OpaqueMaterial>>();
 
-                while (csv.Read())
-                {
-                    try
-                    {
-                        OpaqueMaterial record = csv.GetRecord<OpaqueMaterial>();
-                        if (record.VariableConductivity || record.PhaseChange)
-                        {
-                            record.TemperatureArray = JsonConvert.DeserializeObject<List<double>>(csv.GetField<string>("TemperatureArray"));
-                            record.EnthalpyArray = JsonConvert.DeserializeObject<List<double>>(csv.GetField<string>("EnthalpyArray"));
-                            record.VariableConductivityArray = JsonConvert.DeserializeObject<List<double>>(csv.GetField<string>("VariableConductivityArray"));
-                        }
-                        records.Add(record);
-                    }
-                    catch (Exception ex) { Debug.WriteLine(ex.Message); }
-                }
-            }
-            return records;
-        }
+        //        while (csv.Read())
+        //        {
+        //            try
+        //            {
+        //                OpaqueMaterial record = csv.GetRecord<OpaqueMaterial>();
+        //                if (record.VariableConductivity || record.PhaseChange)
+        //                {
+        //                    record.TemperatureArray = JsonConvert.DeserializeObject<List<double>>(csv.GetField<string>("TemperatureArray"));
+        //                    record.EnthalpyArray = JsonConvert.DeserializeObject<List<double>>(csv.GetField<string>("EnthalpyArray"));
+        //                    record.VariableConductivityArray = JsonConvert.DeserializeObject<List<double>>(csv.GetField<string>("VariableConductivityArray"));
+        //                }
+        //                records.Add(record);
+        //            }
+        //            catch (Exception ex) { Debug.WriteLine(ex.Message); }
+        //        }
+        //    }
+        //    return records;
+        //}
 
         public void writeLibCSV<T>(string fp, List<T> records)
         {
-           
-
             using (var sw = new StreamWriter(fp))
             {
                 var csv = new CsvWriter(sw);
@@ -540,8 +555,10 @@ namespace CSVImportExport
 
 
             //Material Construction
-            writeOpaqueMaterialCSV(folderPath + @"\OpaqueMaterials.csv", lib.OpaqueMaterials.ToList());
-            List<OpaqueMaterial> inOMat = readOpaqueMaterialCSV(folderPath + @"\OpaqueMaterials.csv");
+            //writeOpaqueMaterialCSV(folderPath + @"\OpaqueMaterials.csv", lib.OpaqueMaterials.ToList());
+            //List<OpaqueMaterial> inOMat = readOpaqueMaterialCSV(folderPath + @"\OpaqueMaterials.csv");
+            writeLibCSV<OpaqueMaterial>(folderPath + @"\OpaqueMaterials.csv", lib.OpaqueMaterials.ToList());
+            List<OpaqueMaterial> inOMat = readLibCSV<OpaqueMaterial>(folderPath + @"\OpaqueMaterials.csv");
 
             writeOpaqueConstructionsCSV(folderPath + @"\OpaqueConstructions.csv", lib.OpaqueConstructions.ToList());
             List<OpaqueConstruction> inOpaqueConstructions = readOpaqueConstructionsCSV(folderPath + @"\OpaqueConstructions.csv", inOMat);
@@ -606,4 +623,6 @@ namespace CSVImportExport
             }
         }
     }
+
+ 
 }
